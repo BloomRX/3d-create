@@ -135,13 +135,17 @@ try:
             spec.loader.exec_module(mod)
             w("arquivos importados OK")
     if mod is not None and hasattr(mod, "register"):
-        try:
-            mod.register()
-            w(">>> register() executou SEM ERRO <<<")
-            w("Se a aba 'Bloom' não estiver visível, feche e abra a N (ou reinicie o Blender).")
-        except Exception:
-            w(">>> register() FALHOU — ERRO EXATO: <<<")
-            w(traceback.format_exc())
+        if algum_carregado:
+            w("addon já carregado pelo Blender — NÃO vou chamar register() de novo "
+              "(chamar 2x dá 'already registered' e é falso alarme).")
+        else:
+            try:
+                mod.register()
+                w(">>> register() executou SEM ERRO <<<")
+                w("Se a aba 'Bloom' não estiver visível, feche e abra a N (ou reinicie o Blender).")
+            except Exception:
+                w(">>> register() FALHOU — ERRO EXATO: <<<")
+                w(traceback.format_exc())
 except Exception:
     w("ERRO ao importar do disco:")
     w(traceback.format_exc())

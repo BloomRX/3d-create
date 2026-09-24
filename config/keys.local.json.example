@@ -1,6 +1,0 @@
-{
-  "gemini": ["SUBSTITUA_PELA_CHAVE_1", "SUBSTITUA_PELA_CHAVE_2"],
-  "model": "gemini-3-flash",
-  "last_key_index": 0,
-  "cooldowns": {}
-}
