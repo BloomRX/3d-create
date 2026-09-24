@@ -12,8 +12,8 @@ tools_registry são importáveis sem bpy — o __init__ não carrega a UI.
 bl_info = {
     "name": "Bloom Agent",
     "author": "BloomRX",
-    "version": (0, 1, 0),
-    "blender": (4, 2, 0),
+    "version": (0, 1, 1),
+    "blender": (4, 0, 0),
     "location": "View3D > Sidebar (N) > Bloom",
     "description": "Agent que modela, rige, texturiza e exporta personagens (UE5/VRM) dentro do Blender",
     "category": "3D View",

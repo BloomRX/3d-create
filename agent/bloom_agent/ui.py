@@ -31,6 +31,7 @@ from .llm import Gemini, LLMError
 REAL_RUN = tools_registry.run  # referência p/ o timer (imune a monkeypatch)
 BRIDGE_PORT = 8791
 MAX_BACKUPS = 20
+ADDON_NAME = "bloom_agent"  # nome do package instalado (chave em preferences.addons)
 
 
 class _Stopped(Exception):
@@ -72,7 +73,7 @@ def _server() -> bridge_mod.BridgeServer:
 
 
 def _props():
-    prefs = bpy.context.preferences.addons.get(__name__)
+    prefs = bpy.context.preferences.addons.get(ADDON_NAME)
     return prefs.bloom_props if prefs else None
 
 

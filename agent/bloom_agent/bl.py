@@ -121,16 +121,28 @@ def save_blend(path: Path):
     return str(path)
 
 
+def _pick_engine(scn) -> str:
+    try:
+        engines = {e.identifier for e in type(scn.render.engine).enum_items}
+    except (AttributeError, RuntimeError):
+        engines = set()
+    if "BLENDER_EEVEE_NEXT" in engines:
+        return "BLENDER_EEVEE_NEXT"
+    if "BLENDER_EEVEE" in engines:
+        return "BLENDER_EEVEE"
+    return scn.render.engine  # último caso: usa o que já estiver
+
+
 def quick_render(path: Path, size: int = 512, from_viewport: bool = True) -> str:
     """Render rápido (Eevee) em PNG. `from_viewport` posiciona câmera no view atual."""
     _need_bpy()
-    from mathutils import Matrix  # noqa: F401  (garante import do util)
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     scn = scene()
     old_engine = scn.render.engine
     old_cam = scn.camera
     tmp_cam = None
+    cam_data = None
     try:
         if from_viewport:
             window = bpy.context.window_manager.windows[0]
@@ -145,12 +157,10 @@ def quick_render(path: Path, size: int = 512, from_viewport: bool = True) -> str
                     try:
                         tmp_cam.matrix_world = r3d.view_perspective_matrix
                     except AttributeError:
-                        tmp_cam.matrix_world = Matrix.Translation((3.0, 0.0, 1.5))
+                        tmp_cam.location = (3.5, -3.5, 1.8)
+                        tmp_cam.rotation_euler = (1.05, 0.0, 0.78)
                     scn.camera = tmp_cam
-        try:
-            scn.render.engine = "BLENDER_EEVEE_NEXT"
-        except TypeError:
-            scn.render.engine = "BLENDER_EEVEE"
+        scn.render.engine = _pick_engine(scn)
         scn.render.resolution_x = int(size)
         scn.render.resolution_y = int(size)
         scn.render.resolution_percentage = 100
@@ -166,14 +176,16 @@ def quick_render(path: Path, size: int = 512, from_viewport: bool = True) -> str
                 bpy.data.objects.remove(tmp_cam, do_unlink=True)
             except (ReferenceError, RuntimeError):
                 pass
-        try:
-            bpy.data.cameras.remove(cam_data)
-        except (ReferenceError, RuntimeError, NameError):
-            pass
+        if cam_data is not None:
+            try:
+                if cam_data.users == 0:
+                    bpy.data.cameras.remove(cam_data)
+            except (ReferenceError, RuntimeError):
+                pass
         scn.camera = old_cam
         try:
             scn.render.engine = old_engine
-        except TypeError:
+        except (TypeError, RuntimeError):
             pass
     return base64.b64encode(path.read_bytes()).decode("ascii")
 
