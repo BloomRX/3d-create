@@ -82,9 +82,12 @@ w("")
 # 4) painel e operadores ------------------------------------------------------
 w("--- 4) Painel/operadores registrados ---")
 try:
-    pans = [c.bl_idname for c in bpy.types.Panel.__subclasses__()
+    pans = [(c.bl_idname, c.__module__) for c in bpy.types.Panel.__subclasses__()
             if "BLOOM" in getattr(c, "bl_idname", "")]
-    w(f"painéis BLOOM: {pans or 'NENHUM'}")
+    for nome, modulo in pans:
+        w(f"painel: {nome}  (vem de: {modulo})")
+    if len(pans) > 1:
+        w("⚠️ painel duplicado — confirma a instalação dupla (seção 1).")
     ops = [a for a in dir(bpy.ops.bloom) if not a.startswith("_")]
     w(f"bpy.ops.bloom.*: {ops or 'NENHUM'}")
 except Exception:
@@ -96,14 +99,14 @@ w("--- 5) Onde você está olhando ---")
 try:
     win = bpy.context.window_manager.windows[0] if bpy.context.window_manager.windows else None
     if win:
+        achou = False
         for area in win.screen.areas:
             if area.type == "VIEW_3D":
-                for sp in area.spaces:
-                    if sp.type == "VIEW_3D":
-                        w(f"3D View encontrada — região UI (painel N): "
-                          f"{'existe' if sp.sidebar else 'não'}")
+                achou = True
+                regioes = [r.type for r in area.regions]
+                w(f"3D View encontrada — região N (UI) presente: {'SIM' if 'UI' in regioes else 'NÃO'}")
                 break
-        else:
+        if not achou:
             w("NENHUMA 3D View neste workspace (a aba Bloom só existe nela).")
 except Exception:
     w(traceback.format_exc())
