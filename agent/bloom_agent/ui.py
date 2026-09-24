@@ -73,8 +73,13 @@ def _server() -> bridge_mod.BridgeServer:
 
 
 def _props():
-    prefs = bpy.context.preferences.addons.get(ADDON_NAME)
-    return prefs.bloom_props if prefs else None
+    # as propriedades são registradas em bpy.types.Scene (ver __init__.register);
+    # ler de preferences.addons dava sempre None (o AddonPreferences não tem
+    # bloom_props) -> painel mostrava "propriedades não registradas".
+    scn = getattr(bpy.context, "scene", None)
+    if scn is None:
+        return None
+    return getattr(scn, "bloom_props", None)
 
 
 def _props_or(props):
