@@ -53,6 +53,16 @@ jobs/ stage_backups/  # gerados em runtime, fora do git
 > Google Drive (`MyDrive/3d-create/jobs/<id>`) automaticamente — a ponte
 > escolhe a rota.
 
+## Problemas?
+
+- Painel mostra "propriedades não registradas" ou a aba não aparece:
+  feche o Blender por completo, pull, gere o zip de novo
+  (`agent\zip_addon.bat`), remova o Bloom Agent antigo em
+  *Edit > Preferences > Add-ons > Remove*, instale o zip novo e habilite.
+- Ainda com problema: workspace **Scripting** > *Open* >
+  `agent/diagnostico.py` > botão ▶. Copie o texto `DIAGNOSTICO_BLOOM`
+  que aparece no editor e mande pra mim.
+
 ## Testes (sem Blender, sem rede)
 
 ```
