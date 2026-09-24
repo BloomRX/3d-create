@@ -420,6 +420,36 @@ def _action_restore(props):
 # operadores + painel
 # ---------------------------------------------------------------------------
 
+def _label(parent, text: str, icon: str | None = None):
+    """label com ícone OPCIONAL — ícone inexistente no Blender da pessoa não
+    pode derrubar o desenho do painel (ex.: 'CHAT' não existe no 5.x)."""
+    if icon:
+        try:
+            parent.label(text=text, icon=icon)
+            return
+        except TypeError:
+            pass
+    try:
+        parent.label(text=text)
+    except Exception:
+        pass
+
+
+def _safe_box(layout, fn, *args):
+    """Desenha uma seção do painel; se ela levantar, mostra o erro DENTRO do
+    painel (em vez de cortar o resto silenciosamente)."""
+    box = layout.box()
+    try:
+        fn(box, *args)
+    except Exception as e:
+        b2 = box.box()
+        try:
+            b2.alert = True
+        except Exception:
+            pass
+        _label(b2, f"⚠️ seção com erro: {type(e).__name__}: {e}")
+
+
 class BLOOM_OT_Send(Operator):
     bl_idname = "bloom.send"
     bl_label = "Enviar"
@@ -535,10 +565,21 @@ class BLOOM_PT_Main(Panel):
         if props is None:
             layout.label(text="propriedades não registradas")
             return
-        layout.label(text=props.status_text, icon="INFO")
+        try:
+            layout.label(text=props.status_text, icon="INFO")
+        except TypeError:
+            layout.label(text=props.status_text)
+        _safe_box(layout, self._sec_chat, props)
+        _safe_box(layout, self._sec_log, props)
+        _safe_box(layout, self._sec_keys, props)
+        _safe_box(layout, self._sec_bank, props)
+        _safe_box(layout, self._sec_bridge, props)
+        _safe_box(layout, self._sec_backups, props)
 
-        box = layout.box()
-        box.label(text="Chat", icon="CHAT")
+    # ---- seções (cada uma pode falhar sem matar as demais) ----
+
+    def _sec_chat(self, box, props):
+        _label(box, "Chat", "CHAT")
         box.prop(props, "mode", expand=True)
         if props.mode == "full":
             box.prop(props, "auto_approve", toggle=True, text="Auto-aprovar gates")
@@ -548,37 +589,37 @@ class BLOOM_PT_Main(Panel):
         row.operator("bloom.stop")
         row.operator("bloom.reset")
         box.prop(props, "ref_image")
-        box.label(text="A referência vai com a PRÓXIMA mensagem.", icon="IMAGE_DATA")
+        _label(box, "A referência vai com a PRÓXIMA mensagem.", "IMAGE_DATA")
 
-        box = layout.box()
-        box.label(text="Log", icon="TEXT")
+    def _sec_log(self, box, props):
+        _label(box, "Log", "TEXT")
         box.prop(props, "log_text")
         box.operator("bloom.clear_log", icon="X")
 
-        box = layout.box()
-        box.label(text="Chaves Gemini (local, fora do git)", icon="KEYS")
+    def _sec_keys(self, box, props):
+        _label(box, "Chaves Gemini (local, fora do git)", "KEYS")
         box.prop(props, "keys_text")
         box.operator("bloom.add_key")
 
-        box = layout.box()
-        box.label(text="Asset Bank (pasta local)", icon="FILE_FOLDER")
+    def _sec_bank(self, box, props):
+        _label(box, "Asset Bank (pasta local)", "FILE_FOLDER")
         box.prop(props, "bank_path")
         box.operator("bloom.scan_bank")
 
-        box = layout.box()
-        box.label(text=f"Ponte Colab (porta {BRIDGE_PORT})", icon="INTERNET")
+    def _sec_bridge(self, box, props):
+        _label(box, f"Ponte Colab (porta {BRIDGE_PORT})", "INTERNET")
         row = box.row(align=True)
         row.operator("bloom.bridge_toggle")
         row.operator("bloom.bridge_refresh")
-        box.label(text=props.ngrok_url_text or "ponte OFF", icon="URL")
+        _label(box, props.ngrok_url_text or "ponte OFF", "URL")
         box.operator("bloom.test_job")
         row = box.row(align=True)
         row.prop(props, "act_collect_id", text="job_id")
         row.operator("bloom.collect_job")
-        box.label(text="notebook: colab/test_bridge.ipynb", icon="FILE_TEXT")
+        _label(box, "notebook: colab/test_bridge.ipynb", "FILE_TEXT")
 
-        box = layout.box()
-        box.label(text="Backups de etapa", icon="TIME")
+    def _sec_backups(self, box, props):
+        _label(box, "Backups de etapa", "TIME")
         box.operator("bloom.restore_last")
 
 

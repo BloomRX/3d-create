@@ -26,7 +26,7 @@ def w(s=""):
     L.append(str(s))
 
 
-w("=== DIAGNÓSTICO BLOOM AGENT (v3) ===")
+w("=== DIAGNÓSTICO BLOOM AGENT (v4) ===")
 w(f"gerado: {datetime.now():%d/%m/%Y %H:%M}")
 w(f"Blender: {bpy.app.version_string}  (build {bpy.app.version})")
 w(f"Python: {sys.version.split()[0]}")
@@ -35,6 +35,7 @@ w("")
 # 1) estado do addon nas preferências --------------------------------------
 w("--- 1) Instalação/habilitação ---")
 prefs_mods = []
+algum_carregado = False
 try:
     import addon_utils
 
@@ -42,8 +43,22 @@ try:
         if "bloom" in mod.__name__.lower():
             enabled, loaded = addon_utils.check(mod.__name__)
             prefs_mods.append(mod.__name__)
+            algum_carregado = algum_carregado or loaded
+            arquivo = getattr(mod, "__file__", "?")
             w(f"instalado: {mod.__name__} | habilitado={enabled} carregado={loaded} "
-              f"| arquivo={getattr(mod, '__file__', '?')}")
+              f"| arquivo={arquivo}")
+            man = Path(arquivo).parent / "blender_manifest.toml" if arquivo != "?" else None
+            if man and man.is_file():
+                try:
+                    import tomllib
+
+                    dados = tomllib.loads(man.read_text(encoding="utf-8"))
+                    w(f"    manifest: versão {dados.get('version', '?')} "
+                      f"(mín Blender {dados.get('blender_version_min', '?')})")
+                except Exception as e:
+                    w(f"    manifest: erro lendo: {e}")
+            else:
+                w("    manifest: SEM blender_manifest.toml (zip antigo/legado!)")
     ativos = [k for k in bpy.context.preferences.addons.keys() if "bloom" in k.lower()]
     w(f"ativas em preferences.addons: {ativos or 'NENHUMA'}")
     if len(prefs_mods) > 1:
