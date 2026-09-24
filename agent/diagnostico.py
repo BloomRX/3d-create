@@ -9,9 +9,13 @@ O resultado aparece NO PRÓPRIO EDITOR DE TEXTO (arquivo "DIAGNOSTICO_BLOOM").
 Selecione tudo (Ctrl+A), copie (Ctrl+C) e cole na conversa com o agent.
 Também é impresso no Console do Sistema (Window > Toggle System Console).
 """
+import importlib
+import importlib.util
+import os
 import sys
 import traceback
 from datetime import datetime
+from pathlib import Path
 
 import bpy
 
@@ -22,79 +26,128 @@ def w(s=""):
     L.append(str(s))
 
 
-w("=== DIAGNÓSTICO BLOOM AGENT ===")
+w("=== DIAGNÓSTICO BLOOM AGENT (v3) ===")
 w(f"gerado: {datetime.now():%d/%m/%Y %H:%M}")
 w(f"Blender: {bpy.app.version_string}  (build {bpy.app.version})")
 w(f"Python: {sys.version.split()[0]}")
-try:
-    w(f"Sistema: {bpy.app.build_platform.decode() if isinstance(bpy.app.build_platform, bytes) else bpy.app.build_platform}")
-except Exception:
-    pass
 w("")
 
 # 1) estado do addon nas preferências --------------------------------------
 w("--- 1) Instalação/habilitação ---")
+prefs_mods = []
 try:
     import addon_utils
 
     for mod in addon_utils.modules():
         if "bloom" in mod.__name__.lower():
             enabled, loaded = addon_utils.check(mod.__name__)
-            info = getattr(mod, "__bl_info__", {}) or {}
+            prefs_mods.append(mod.__name__)
             w(f"instalado: {mod.__name__} | habilitado={enabled} carregado={loaded} "
-              f"| versão={info.get('version')} | arquivo={getattr(mod, '__file__', '?')}")
+              f"| arquivo={getattr(mod, '__file__', '?')}")
     ativos = [k for k in bpy.context.preferences.addons.keys() if "bloom" in k.lower()]
-    w(f"chaves ativas em preferences.addons: {ativos or 'NENHUMA'}")
+    w(f"ativas em preferences.addons: {ativos or 'NENHUMA'}")
+    if len(prefs_mods) > 1:
+        w("⚠️ MAIS DE UMA INSTALAÇÃO — rode agent\\limpar_instalacoes.bat")
+    for p in prefs_mods:
+        if enabled and not loaded:
+            w(f"⚠️ '{p}' está HABILITADO mas NÃO CARREGADO = o register() deu erro "
+              f"(a seção 3 abaixo mostra o traceback exato).")
 except Exception:
     w(traceback.format_exc())
 w("")
 
-# 2) import do package -------------------------------------------------------
+# 2) import do código (vale o nome de extensão OU o legado) ------------------
 w("--- 2) Import do código ---")
-try:
-    import bloom_agent
+mod = None
+candidatos = prefs_mods + ["bloom_agent", "bl_ext.user_default.bloom_agent"]
+vistos = []
+for nome in candidatos:
+    if nome in vistos:
+        continue
+    vistos.append(nome)
+    try:
+        m = importlib.import_module(nome)
+        w(f"import OK: {nome} -> {getattr(m, '__file__', '?')}")
+        if mod is None:
+            mod = m
+    except ModuleNotFoundError:
+        w(f"import não disponível: {nome}")
+    except Exception:
+        w(f"import ERRO em {nome}:")
+        w(traceback.format_exc())
+if mod is None:
+    w("(nenhum importável — normal p/ extensão; a seção 3 carrega do disco)")
+w("")
 
-    w(f"import OK | {bloom_agent.__file__}")
-    w(f"_IN_BLENDER = {getattr(bloom_agent, '_IN_BLENDER', '?')}")
+# 3) carregar (register) COM CAPTURA DE ERRO --------------------------------
+w("--- 3) Tentativa de carregar (register) ---")
+
+
+def _carregar_do_disco():
+    """Acha a pasta do addon no disco e importa como pacote novo."""
+    raizes = [
+        Path(os.environ.get("APPDATA", "")) / "Blender Foundation" / "Blender",
+        Path(bpy.utils.user_resource("EXTENSIONS")).parents[1]
+        if bpy.utils.user_resource("EXTENSIONS") else None,
+    ]
+    pastas = []
+    for r in raizes:
+        if not r:
+            continue
+        pastas += [Path(p) for p in
+                   r.glob(os.path.join("*", "extensions", "user_default", "bloom_agent"))]
+        pastas += [Path(p) for p in
+                   r.glob(os.path.join("*", "scripts", "addons", "bloom_agent"))]
+    for d in pastas:
+        if (d / "__init__.py").is_file():
+            return d
+    return None
+
+
+try:
+    if mod is None:
+        pasta = _carregar_do_disco()
+        if pasta is None:
+            w("❌ não achei a pasta do addon no disco (addon não instalado?).")
+        else:
+            w(f"carregando de: {pasta}")
+            spec = importlib.util.spec_from_file_location(
+                f"bloom_probe_{datetime.now():%H%M%S}",
+                pasta / "__init__.py",
+                submodule_search_locations=[str(pasta)])
+            mod = importlib.util.module_from_spec(spec)
+            sys.modules[spec.name] = mod
+            spec.loader.exec_module(mod)
+            w("arquivos importados OK")
+    if mod is not None and hasattr(mod, "register"):
+        try:
+            mod.register()
+            w(">>> register() executou SEM ERRO <<<")
+            w("Se a aba 'Bloom' não estiver visível, feche e abra a N (ou reinicie o Blender).")
+        except Exception:
+            w(">>> register() FALHOU — ERRO EXATO: <<<")
+            w(traceback.format_exc())
 except Exception:
-    w("import FALHOU:")
+    w("ERRO ao importar do disco:")
     w(traceback.format_exc())
 w("")
 
-# 3) registro das propriedades na cena ---------------------------------------
-w("--- 3) Propriedades (Scene.bloom_props) ---")
-try:
-    import bloom_agent.ui as _u
-
-    w(f"ui import OK | _State.root = {_u._State.root}")
-except Exception:
-    w(traceback.format_exc())
+# 4) resultado após a tentativa ----------------------------------------------
+w("--- 4) Estado agora ---")
 try:
     prop = bpy.types.Scene.bl_rna.properties.get("bloom_props")
-    w(f"registrado em Scene: {'SIM' if prop else 'NÃO'}")
-    scn = bpy.context.scene
-    p = getattr(scn, "bloom_props", None) if scn else None
-    w(f"instância acessível na cena atual: {'SIM' if p is not None else 'NÃO'}")
-except Exception:
-    w(traceback.format_exc())
-w("")
-
-# 4) painel e operadores ------------------------------------------------------
-w("--- 4) Painel/operadores registrados ---")
-try:
+    w(f"bloom_props registrado em Scene: {'SIM' if prop else 'NÃO'}")
     pans = [(c.bl_idname, c.__module__) for c in bpy.types.Panel.__subclasses__()
             if "BLOOM" in getattr(c, "bl_idname", "")]
     for nome, modulo in pans:
-        w(f"painel: {nome}  (vem de: {modulo})")
-    if len(pans) > 1:
-        w("⚠️ painel duplicado — confirma a instalação dupla (seção 1).")
-    ops = [a for a in dir(bpy.ops.bloom) if not a.startswith("_")]
-    w(f"bpy.ops.bloom.*: {ops or 'NENHUM'}")
+        w(f"painel: {nome}  (de: {modulo})")
+    if not pans:
+        w("nenhum painel BLOOM registrado")
 except Exception:
     w(traceback.format_exc())
 w("")
 
-# 5) contexto da janela atual -------------------------------------------------
+# 5) contexto da janela -------------------------------------------------------
 w("--- 5) Onde você está olhando ---")
 try:
     win = bpy.context.window_manager.windows[0] if bpy.context.window_manager.windows else None
@@ -115,7 +168,6 @@ w(">>> COPIE ESTE ARQUIVO INTEIRO E COLE NA CONVERSA <<<")
 
 texto = "\n".join(L)
 
-# mostra no editor de texto atual
 try:
     sd = bpy.context.space_data
     if sd is not None and sd.type == "TEXT_EDITOR":
@@ -128,17 +180,13 @@ try:
 except Exception:
     pass
 
-# salva cópia em arquivo
 try:
-    import os
-
     caminho = os.path.join(bpy.app.tempdir, "diagnostico_bloom.txt")
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(texto + "\n")
-    L2 = f"cópia salva em: {caminho}"
-    print(L2)
+    l2 = f"cópia salva em: {caminho}"
 except Exception:
-    L2 = "(não consegui salvar cópia em arquivo)"
+    l2 = "(não consegui salvar cópia em arquivo)"
 print(texto)
 print("\n" + "=" * 60)
-print(L2)
+print(l2)

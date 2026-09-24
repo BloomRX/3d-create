@@ -103,8 +103,8 @@ class BloomProperties(PropertyGroup):
     keys_text: StringProperty(default="", description="Chave(s) Gemini — uma por linha")
     bank_path: StringProperty(default="", subtype="FILE_PATH",
                               description="Pasta do Asset Bank no seu PC")
-    ngrok_url_text: StringProperty(default="", subtype="NONE")
-    status_text: StringProperty(default="", subtype="NONE")
+    ngrok_url_text: StringProperty(default="")
+    status_text: StringProperty(default="")
     act_collect_id: StringProperty(default="")
 
 
@@ -589,3 +589,4 @@ _CLASSES = [
     BLOOM_OT_BridgeRefresh, BLOOM_OT_TestJob, BLOOM_OT_CollectJob, BLOOM_OT_RestoreLast,
     BLOOM_PT_Main,
 ]
+
