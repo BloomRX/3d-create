@@ -92,7 +92,7 @@ def _props_or(props):
 
 class BloomProperties(PropertyGroup):
     user_input: StringProperty(default="", description="Mensagem para o agent")
-    log_text: StringProperty(default="", subtype="NONE")
+    log_text: StringProperty(default="")
     mode: EnumProperty(
         items=[("step", "Passo a passo", "Faça só o estágio pedido e espere a próxima instrução"),
                ("full", "Pleno", "Roda o fluxo completo (corpo→rig→UV→textura→peças→export) com gates")],
