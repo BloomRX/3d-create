@@ -3,7 +3,7 @@
 O arquivo padrão é config/keys.local.json (gitignored). Estrutura:
     {
       "gemini": ["chave1", "chave2"],
-      "model": "gemini-3-flash",
+      "model": "gemini-flash-latest",
       "last_key_index": 0,
       "cooldowns": {"0": 1735690000.0}   # index -> epoch até quando a chave descansa
     }
@@ -19,8 +19,10 @@ import os
 import time
 from pathlib import Path
 
-DEFAULT_MODEL = "gemini-3-flash"
-FALLBACK_MODELS = ["gemini-3-flash", "gemini-2.5-flash", "gemini-3.1-flash-lite"]
+DEFAULT_MODEL = "gemini-flash-latest"
+FALLBACK_MODELS = ["gemini-flash-latest", "gemini-3-flash", "gemini-2.5-flash",
+                   "gemini-flash-lite-latest", "gemini-2.5-flash-lite",
+                   "gemini-2.0-flash"]
 
 KEYS_FILE_REL = "config/keys.local.json"
 

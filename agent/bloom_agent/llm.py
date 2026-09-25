@@ -132,6 +132,7 @@ class Gemini:
         self.model = model or self.data.get("model") or keysmod.DEFAULT_MODEL
         self.timeout = timeout
         self.last_key_masked: str | None = None
+        self._model_ok = False  # confirmado via ListModels?
 
     # --- chaves -----------------------------------------------------------
     def status(self) -> dict:
@@ -170,6 +171,53 @@ class Gemini:
             raise LLMError(_error_message(status, payload))
         return status, payload
 
+    # --- modelo -----------------------------------------------------------
+    def list_models(self) -> list:
+        """IDs de modelos que suportam generateContent com as chaves atuais."""
+        last = None
+        for key in self.data["gemini"]:
+            try:
+                with urllib.request.urlopen(
+                        f"{API_BASE}/models?key={key}",
+                        timeout=self.timeout) as resp:
+                    payload = json.loads(resp.read().decode("utf-8"))
+                out = []
+                for m in payload.get("models", []):
+                    if "generateContent" in (m.get("supportedGenerationMethods") or []):
+                        out.append((m.get("name") or "").split("models/")[-1])
+                return out
+            except Exception as e:
+                last = e
+        raise LLMError(f"ListModels falhou: {last}")
+
+    def _confirm_model(self):
+        """Garante que self.model existe p/ a chave; se não, escolhe um
+        fallback disponível e salva a escolha."""
+        if self._model_ok:
+            return
+        try:
+            ids = set(self.list_models())
+        except Exception:
+            self._model_ok = True  # não bloqueia: o generate dirá o erro real
+            return
+        if self.model in ids:
+            self._model_ok = True
+            return
+        pick = next((p for p in keysmod.FALLBACK_MODELS
+                     if p != self.model and p in ids), None)
+        if pick is None:
+            raise LLMError(
+                f"modelo '{self.model}' não disponível p/ sua chave e nenhum "
+                "fallback conhecido também. Disponíveis: "
+                + ", ".join(sorted(ids)[:25]))
+        old = self.model
+        self.model = pick
+        self._model_ok = True
+        self.data["model"] = pick
+        self._persist()
+        print(f"bloom_agent: modelo '{old}' indisponível -> usando '{pick}'",
+              flush=True)
+
     # --- chat ---------------------------------------------------------------
     def chat(self, parts: list | None = None, system: str = "", tools: list | None = None,
              contents: list | None = None) -> dict:
@@ -182,8 +230,6 @@ class Gemini:
             if not parts:
                 raise ValueError("chat(): informe `parts` ou `contents`")
             contents = [{"role": "user", "parts": parts_to_wire(parts)}]
-        body = build_request(system, contents, tools or [], self.model)
-        url = f"{API_BASE}/models/{self.model}:generateContent"
 
         tried = set()
         last_err = None
@@ -198,8 +244,12 @@ class Gemini:
                     )
                 raise last_err or LLMError("Nenhuma chave configurada.")
             tried.add(idx)
+            self._confirm_model()
+            body = build_request(system, contents, tools or [], self.model)
+            url = f"{API_BASE}/models/{self.model}:generateContent"
             try:
                 _, payload = self._call_once(url, body)
+                self._model_ok = True
                 return {**parse_response(payload), "model": self.model,
                         "key_masked": self.last_key_masked}
             except LLMError as e:
@@ -207,6 +257,13 @@ class Gemini:
                 if msg.startswith("quota:"):
                     last_err = e  # tenta a próxima chave
                     continue
+                if "404" in msg and "not found" in msg:
+                    old = self.model
+                    self._model_ok = False
+                    self._confirm_model()  # pode trocar p/ um fallback válido
+                    if self.model != old:
+                        tried.discard(idx)  # 404 não gasta cota; repete a chave
+                        continue
                 raise
 
     # --- histórico -----------------------------------------------------------
