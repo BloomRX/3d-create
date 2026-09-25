@@ -81,10 +81,14 @@ def parse_response(data: dict) -> dict:
                     "name": fc.get("name", ""),
                     "args": fc.get("args", {}) or {},
                 })
+    raw = (data.get("candidates") or [{}])[0].get("content") or {}
     return {
         "text": "".join(text_parts).strip(),
         "tool_calls": tool_calls,
         "finish_reason": (data.get("candidates") or [{}])[0].get("finishReason", ""),
+        # conteúdo ORIGINAL do modelo (preserva thought_signature, exigida
+        # pelo Gemini 3.x quando o histórico volta com functionCall)
+        "raw_content": raw,
     }
 
 

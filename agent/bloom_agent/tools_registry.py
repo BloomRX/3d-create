@@ -146,7 +146,8 @@ def run(name: str, args: dict, ctx: dict) -> dict:
     if t is None:
         return {"ok": False, "text": f"Tool desconhecida: {name!r}.", "images": []}
     try:
-        mod = importlib.import_module("bloom_agent.tools.handlers")
+        # relativo: como extensão o pacote se chama bl_ext.user_default.bloom_agent
+        mod = importlib.import_module(".tools.handlers", package=__package__)
         fn = getattr(mod, t["fn"])
         result = fn(args or {}, ctx)
     except Exception as e:

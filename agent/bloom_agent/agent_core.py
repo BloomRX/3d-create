@@ -137,7 +137,11 @@ def handle_message(session: AgentSession, gem: Gemini, text: str, ctx: dict,
         while calls < MAX_TOOL_CALLS:
             emit("llm_call")
             resp = gem.chat(contents=session.history, system=SYSTEM_PROMPT, tools=tools)
-            session.history.append(Gemini.model_parts(resp.get("text", ""), resp.get("tool_calls")))
+            raw = resp.get("raw_content")
+            if raw and raw.get("parts"):
+                session.history.append(raw)  # mantém thought_signature
+            else:
+                session.history.append(Gemini.model_parts(resp.get("text", ""), resp.get("tool_calls")))
             tcs = resp.get("tool_calls") or []
             if not tcs:
                 reply = resp.get("text") or "(sem texto)"
