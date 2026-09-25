@@ -510,6 +510,17 @@ class BLOOM_OT_ClearLog(Operator):
         return {"FINISHED"}
 
 
+class BLOOM_OT_CopyLog(Operator):
+    bl_idname = "bloom.copy_log"
+    bl_label = "Copiar log"
+    bl_description = "Copia o log inteiro para a área de transferência (cole na conversa)"
+
+    def execute(self, context):
+        context.window_manager.clipboard = "\n".join(_State.log_lines)
+        self.report({"INFO"}, f"log copiado ({len(_State.log_lines)} linha(s))")
+        return {"FINISHED"}
+
+
 class BLOOM_OT_AddKey(Operator):
     bl_idname = "bloom.add_key"
     bl_label = "Adicionar chave(s)"
@@ -615,8 +626,16 @@ class BLOOM_PT_Main(Panel):
 
     def _sec_log(self, box, props):
         _label(box, "Log", "TEXT")
-        box.prop(props, "log_text")
-        box.operator("bloom.clear_log", icon="X")
+        lines = _State.log_lines[-14:]
+        if not lines:
+            _label(box, "(sem mensagens ainda)")
+        for ln in lines:
+            row = box.row()
+            row.scale_y = 0.85
+            row.label(text=ln[:120])
+        row = box.row(align=True)
+        row.operator("bloom.copy_log", icon="COPYDOWN")
+        row.operator("bloom.clear_log", icon="X")
 
     def _sec_keys(self, box, props):
         _label(box, "Chaves Gemini (local, fora do git)", "KEYS")
@@ -647,7 +666,7 @@ class BLOOM_PT_Main(Panel):
 
 _CLASSES = [
     BloomProperties,
-    BLOOM_OT_Send, BLOOM_OT_Stop, BLOOM_OT_Reset, BLOOM_OT_ClearLog,
+    BLOOM_OT_Send, BLOOM_OT_Stop, BLOOM_OT_Reset, BLOOM_OT_ClearLog, BLOOM_OT_CopyLog,
     BLOOM_OT_AddKey, BLOOM_OT_ScanBank, BLOOM_OT_BridgeToggle,
     BLOOM_OT_BridgeRefresh, BLOOM_OT_TestJob, BLOOM_OT_CollectJob, BLOOM_OT_RestoreLast,
     BLOOM_PT_Main,

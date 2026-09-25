@@ -171,7 +171,7 @@ class Gemini:
         return status, payload
 
     # --- chat ---------------------------------------------------------------
-    def chat(self, parts: list, system: str = "", tools: list | None = None,
+    def chat(self, parts: list | None = None, system: str = "", tools: list | None = None,
              contents: list | None = None) -> dict:
         """Uma chamada de chat com rotação automática de chaves.
 
@@ -179,6 +179,8 @@ class Gemini:
         já no formato da API, ex.: histórico + functionResponse).
         """
         if contents is None:
+            if not parts:
+                raise ValueError("chat(): informe `parts` ou `contents`")
             contents = [{"role": "user", "parts": parts_to_wire(parts)}]
         body = build_request(system, contents, tools or [], self.model)
         url = f"{API_BASE}/models/{self.model}:generateContent"
