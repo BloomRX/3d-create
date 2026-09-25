@@ -122,7 +122,14 @@ def _error_message(status: int, payload) -> str:
     if isinstance(payload, dict):
         err = payload.get("error", {})
         return f"HTTP {status}: {err.get('message', 'erro desconhecido')}"
-    return f"HTTP {status}: {str(payload)[:300]}"
+        return f"HTTP {status}: {str(payload)[:300]}"
+
+
+def _is_busy(msg: str) -> bool:
+    """503/500 do Google = sobrecarga momentânea do modelo."""
+    m = msg.lower()
+    return ("503" in m or "500" in m or "overloaded" in m
+            or "high demand" in m or "unavailable" in m)
 
 
 class Gemini:
@@ -218,6 +225,24 @@ class Gemini:
         print(f"bloom_agent: modelo '{old}' indisponível -> usando '{pick}'",
               flush=True)
 
+    def _switch_model(self, motivo: str) -> bool:
+        """Troca self.model por outro disponível (usado em 404 e 503 insistente)."""
+        try:
+            ids = set(self.list_models())
+        except Exception:
+            return False
+        pick = next((p for p in keysmod.FALLBACK_MODELS
+                     if p != self.model and p in ids), None)
+        if pick is None:
+            return False
+        old = self.model
+        self.model = pick
+        self._model_ok = True
+        self.data["model"] = pick
+        self._persist()
+        print(f"bloom_agent: {motivo}: '{old}' -> '{pick}'", flush=True)
+        return True
+
     # --- chat ---------------------------------------------------------------
     def chat(self, parts: list | None = None, system: str = "", tools: list | None = None,
              contents: list | None = None) -> dict:
@@ -233,6 +258,7 @@ class Gemini:
 
         tried = set()
         last_err = None
+        busy = 0  # tentativas sob 503/sobrecarga no modelo atual
         while True:
             idx = keysmod.pick_key(self.data)
             if idx is None or idx in tried:
@@ -258,12 +284,24 @@ class Gemini:
                     last_err = e  # tenta a próxima chave
                     continue
                 if "404" in msg and "not found" in msg:
-                    old = self.model
-                    self._model_ok = False
-                    self._confirm_model()  # pode trocar p/ um fallback válido
-                    if self.model != old:
-                        tried.discard(idx)  # 404 não gasta cota; repete a chave
+                    tried.discard(idx)  # 404 não gasta cota
+                    if self._switch_model("modelo indisponível"):
                         continue
+                    raise
+                if _is_busy(msg):
+                    busy += 1
+                    if busy <= 2:
+                        time.sleep(3 * busy)  # 3s, 6s — sobrecarga costuma passar
+                        tried.discard(idx)
+                        continue
+                    tried.discard(idx)
+                    if self._switch_model("modelo sobrecarregado"):
+                        busy = 0
+                        continue
+                    raise LLMError(
+                        "o modelo está sobrecarregado no lado do Google (503) "
+                        "e não achei alternativo livre. Espere ~1 minuto e "
+                        "mande a mensagem de novo.")
                 raise
 
     # --- histórico -----------------------------------------------------------
