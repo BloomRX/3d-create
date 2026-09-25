@@ -20,9 +20,9 @@ import time
 from pathlib import Path
 
 DEFAULT_MODEL = "gemini-flash-latest"
-FALLBACK_MODELS = ["gemini-flash-latest", "gemini-3-flash", "gemini-2.5-flash",
+FALLBACK_MODELS = ["gemini-flash-latest", "gemini-3.8-flash", "gemini-3-flash",
                    "gemini-flash-lite-latest", "gemini-2.5-flash-lite",
-                   "gemini-2.0-flash"]
+                   "gemini-2.5-flash", "gemini-2.0-flash"]
 
 KEYS_FILE_REL = "config/keys.local.json"
 

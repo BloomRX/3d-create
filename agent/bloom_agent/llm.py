@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import base64
 import json
+import re
 import time
 import urllib.error
 import urllib.request
@@ -125,6 +126,13 @@ def _error_message(status: int, payload) -> str:
         return f"HTTP {status}: {str(payload)[:300]}"
 
 
+def _is_model_gone(msg: str) -> bool:
+    """404 definitivo: modelo inexistente OU fechado p/ novos usuários."""
+    m = msg.lower()
+    return ("no longer available" in m
+            or ("404" in m and "not found" in m))
+
+
 def _is_busy(msg: str) -> bool:
     """503/500 do Google = sobrecarga momentânea do modelo."""
     m = msg.lower()
@@ -140,6 +148,7 @@ class Gemini:
         self.timeout = timeout
         self.last_key_masked: str | None = None
         self._model_ok = False  # confirmado via ListModels?
+        self._dead_models: set = set()  # aprendidos como mortos nesta sessão
 
     # --- chaves -----------------------------------------------------------
     def status(self) -> dict:
@@ -232,7 +241,21 @@ class Gemini:
         except Exception:
             return False
         pick = next((p for p in keysmod.FALLBACK_MODELS
-                     if p != self.model and p in ids), None)
+                     if p != self.model and p in ids
+                     and p not in self._dead_models), None)
+        if pick is None:
+            # busca ampla: QUALQUER flash disponível (nomes mudam toda semana;
+            # prioriza aliases 'latest' e versões mais novas)
+            def _score(i: str):
+                nums = re.findall(r"(\d+(?:\.\d+)?)", i)
+                return ("latest" in i, float(nums[0]) if nums else 0.0)
+            candidatos = sorted(
+                (i for i in ids if "flash" in i and not any(
+                    t in i for t in ("image", "tts", "thinking", "exp",
+                                     "robotics", "live", "computer"))),
+                key=_score, reverse=True)
+            pick = next((p for p in candidatos
+                         if p != self.model and p not in self._dead_models), None)
         if pick is None:
             return False
         old = self.model
@@ -283,11 +306,14 @@ class Gemini:
                 if msg.startswith("quota:"):
                     last_err = e  # tenta a próxima chave
                     continue
-                if "404" in msg and "not found" in msg:
+                if _is_model_gone(msg):
+                    self._dead_models.add(self.model)
                     tried.discard(idx)  # 404 não gasta cota
                     if self._switch_model("modelo indisponível"):
                         continue
-                    raise
+                    raise LLMError(
+                        f"modelo '{self.model}' indisponível p/ sua chave e "
+                        "nenhum alternativo livre. Erro: " + msg[:200])
                 if _is_busy(msg):
                     busy += 1
                     if busy <= 2:
