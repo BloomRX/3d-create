@@ -134,8 +134,6 @@ def _autosave_main(label: str) -> dict:
 def _ensure_timer():
     """Garante que o timer da main thread existe (se ele morrer uma vez,
     o Blender o desregistra — aqui a gente recria quando precisar dele)."""
-    if not _IN_BLENDER:
-        return
     try:
         if not bpy.app.timers.is_registered(_main_timer):
             bpy.app.timers.register(_main_timer, first_interval=0.1)

@@ -12,7 +12,7 @@ tools_registry são importáveis sem bpy — o __init__ não carrega a UI.
 bl_info = {
     "name": "Bloom Agent",
     "author": "BloomRX",
-    "version": (0, 1, 5),
+    "version": (0, 1, 6),
     "blender": (4, 0, 0),
     "location": "View3D > Sidebar (N) > Bloom",
     "description": "Agent que modela, rige, texturiza e exporta personagens (UE5/VRM) dentro do Blender",
@@ -34,7 +34,10 @@ def register():
     for cls in _ui._CLASSES:
         bpy.utils.register_class(cls)
     bpy.types.Scene.bloom_props = bpy.props.PointerProperty(type=_ui.BloomProperties)
-    _ui._ensure_timer()
+    try:
+        _ui._ensure_timer()
+    except Exception as _e:  # timer não pode impedir o registro do addon
+        print(f"bloom_agent: timer não registrado ({_e})", flush=True)
     _ui._log("Bloom Agent registrado. Configure a chave Gemini no painel (N > Bloom).")
 
 
