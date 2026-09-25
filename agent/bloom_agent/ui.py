@@ -15,6 +15,7 @@ import queue
 import threading
 import time
 import uuid
+from typing import NamedTuple
 from pathlib import Path
 
 import bpy
@@ -36,6 +37,13 @@ ADDON_NAME = "bloom_agent"  # nome do package instalado (chave em preferences.ad
 
 class _Stopped(Exception):
     pass
+
+
+class _ToolCall(NamedTuple):
+    """Mensagem worker->main; os DOIS lados usam atributos."""
+    token: str
+    name: str
+    args: dict
 
 
 class _State:
@@ -194,7 +202,7 @@ def _dispatch(name: str, args: dict, timeout: float = 3600.0) -> dict:
     if _State.stop_requested:
         raise _Stopped()
     token = uuid.uuid4().hex
-    call = {"token": token, "name": name, "args": args or {}}
+    call = _ToolCall(token=token, name=name, args=args or {})
     deadline = time.time() + timeout
     with _State.cond:
         _State.tool_queue.put(call)
