@@ -320,8 +320,13 @@ def _action_send(props):
     }
     _State.stop_requested = False
     props.user_input = ""
+    _State.running = True
+    _log(f"▶ {msg}")
     _State.worker = threading.Thread(target=_run_agent, args=(msg,), daemon=True)
     _State.worker.start()
+    # feedback IMEDIATO + timer garantido (não depende de ele estar vivo)
+    _ensure_timer()
+    _refresh_status(props)
 
 
 def _action_reset(props):
