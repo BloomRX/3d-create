@@ -59,17 +59,21 @@ def create_primitive(kind: str, name: str, location=(0.0, 0.0, 0.0), scale=(1.0,
     scn = scene()
     kind = (kind or "cube").lower()
     name = name or f"obj_{kind}"
-    ops = bpy.ops.mesh.primitive
+    # guarda: ops de mesh exigem OBJECT mode
+    ativo = bpy.context.object
+    if ativo is not None and ativo.mode != "OBJECT":
+        bpy.ops.object.mode_set(mode="OBJECT")
+    ops_mesh = bpy.ops.mesh  # no Blender 5.x NÃO cachear além do 1º nível
     if kind in ("cube", "cubo"):
-        ops.primitive_cube_add(size=1.0, location=location)
+        ops_mesh.primitive_cube_add(size=1.0, location=location)
     elif kind in ("ico_sphere", "sphere", "esfera"):
-        ops.primitive_ico_sphere_add(subdivisions=3, radius=0.5, location=location)
+        ops_mesh.primitive_ico_sphere_add(subdivisions=3, radius=0.5, location=location)
     elif kind in ("cylinder", "cilindro"):
-        ops.primitive_cylinder_add(vertices=32, radius=0.5, depth=1.0, location=location)
+        ops_mesh.primitive_cylinder_add(vertices=32, radius=0.5, depth=1.0, location=location)
     elif kind in ("cone", "cone2"):
-        ops.primitive_cone_add(vertices=32, radius1=0.5, radius2=0.0, depth=1.0, location=location)
+        ops_mesh.primitive_cone_add(vertices=32, radius1=0.5, radius2=0.0, depth=1.0, location=location)
     elif kind in ("plane", "plano"):
-        ops.primitive_plane_add(size=1.0, location=location)
+        ops_mesh.primitive_plane_add(size=1.0, location=location)
     elif kind == "metaball":
         me = bpy.data.metaballs.new(name)
         me.resolution = 0.05

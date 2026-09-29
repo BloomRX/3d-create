@@ -12,7 +12,7 @@ tools_registry são importáveis sem bpy — o __init__ não carrega a UI.
 bl_info = {
     "name": "Bloom Agent",
     "author": "BloomRX",
-    "version": (0, 2, 0),
+    "version": (0, 2, 1),
     "blender": (4, 0, 0),
     "location": "View3D > Sidebar (N) > Bloom",
     "description": "Agent que modela, rige, texturiza e exporta personagens (UE5/VRM) dentro do Blender",
@@ -26,11 +26,55 @@ except ImportError:  # ambiente sem Blender (testes de sandbox)
 
 _IN_BLENDER = bpy is not None
 
+from pathlib import Path  # noqa: E402  (usado nas assinaturas)
+
+
+def _data_root() -> "Path":
+    """Pasta de dados gravável (chaves/jobs/backups), à prova de mudanças de API."""
+    import os
+    try:
+        r = Path(bpy.utils.user_resource("CONFIG")) / "bloom_agent"
+        r.mkdir(parents=True, exist_ok=True)
+        if os.access(r, os.W_OK):
+            return r
+    except Exception:
+        pass
+    try:
+        r = Path(os.environ.get("APPDATA", "")) / "Blender Foundation" / "BloomAgent"
+        r.mkdir(parents=True, exist_ok=True)
+        return r
+    except Exception:
+        return Path(__file__).resolve().parent
+
+
+def _migrate_keys(nova_raiz: Path):
+    """Se a chave foi gravada na raiz antiga (junto da extensão), traz pra nova."""
+    from . import ui as _ui
+    from . import keys as keysmod
+    nova = keysmod.keys_path(nova_raiz)
+    if nova.exists():
+        return
+    antiga = Path(__file__).resolve().parents[2]  # raiz default antiga
+    velha = keysmod.keys_path(antiga)
+    if velha.is_file():
+        try:
+            nova.parent.mkdir(parents=True, exist_ok=True)
+            nova.write_bytes(velha.read_bytes())
+            print("bloom_agent: chaves migradas da pasta antiga", flush=True)
+        except OSError:
+            pass
+
 
 def register():
     if not _IN_BLENDER:
         return
     from . import ui as _ui
+    try:
+        raiz = _data_root()
+        _ui._State.root = raiz
+        _migrate_keys(raiz)
+    except Exception as _e:
+        print(f"bloom_agent: pasta de dados padrão ({_e})", flush=True)
     for cls in _ui._CLASSES:
         bpy.utils.register_class(cls)
     bpy.types.Scene.bloom_props = bpy.props.PointerProperty(type=_ui.BloomProperties)
@@ -38,7 +82,8 @@ def register():
         _ui._ensure_timer()
     except Exception as _e:  # timer não pode impedir o registro do addon
         print(f"bloom_agent: timer não registrado ({_e})", flush=True)
-    _ui._log("Bloom Agent registrado. Configure a chave Gemini no painel (N > Bloom).")
+    _ui._log(f"Bloom Agent registrado. Dados em: {_ui._State.root}")
+    _ui._log("Chave Gemini no painel (N > Bloom > Chaves Gemini).")
 
 
 def unregister():
