@@ -21,7 +21,9 @@ bloom_agent/      #   core: llm (Gemini + rotação de chaves), bridge (Colab),
 colab/            # notebooks Colab (test_bridge.ipynb no M0; geração 3D etc. depois)
 assets/README.md  # como funciona o Asset Bank (pasta LOCAL, fora do git)
 config/           # keys.local.json (fora do git) — chaves Gemini com rotação
-tests/            # testes do M0 (rodam sem Blender)
+tests/            # testes (rodam sem Blender): test_m0.py e test_m1_prep.py
+                  #   status: M0 ✅ | M1-prep ✅ (rig canônico + perfis de export)
+                  #   próximo: M1 visual (foto → personagem aprovado)
 jobs/ stage_backups/  # gerados em runtime, fora do git
 ```
 
@@ -66,7 +68,7 @@ jobs/ stage_backups/  # gerados em runtime, fora do git
 ## Testes (sem Blender, sem rede)
 
 ```
-python tests/test_m0.py
+python tests/test_m0.py  &&  python tests/test_m1_prep.py
 ```
 
 ## Status
