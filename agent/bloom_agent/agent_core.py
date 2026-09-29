@@ -18,7 +18,7 @@ from . import tools_registry
 from .llm import Gemini, LLMError
 
 MAX_TOOL_CALLS = 25          # por mensagem do usuário (anti-runaway)
-MAX_HISTORY = 90             # mensagens mantidas na conversa
+MAX_HISTORY = 48             # mensagens mantidas (free tier)
 
 SYSTEM_PROMPT = """Você é o Bloom Agent, um especialista em personagens 3D para jogos
 que opera DENTRO do Blender via ferramentas Python. O usuário fala português (BR);
@@ -88,6 +88,15 @@ MODOS
   roupas/cabelo → export). Em cada etapa importante (corpo, rig, export),
   pare e peça aprovação, EXETO se o usuário ativou auto-aprovação.
 
+ECONOMIA DE COTA (free tier — IMPORTANTE)
+- Agrupe ações independentes numa MESMA resposta com VÁRIAS functionCalls
+  (ex.: reference_backdrop + spawn_base_body juntos). Cada volta sua custa
+  uma chamada de API.
+- Prefira UM run_blender_python com o código completo em vez de 5 chamadas
+  pequenas.
+- render_view apenas em MARCOS (proporções aplicadas, antes do rig, pós-rig).
+  Nunca re-renderize a mesma vista só para "conferir de novo".
+
 REGRAS
 - Nunca inventou resultado: se o render mostrar problema, corrija antes de
   afirmar que está bom.
@@ -123,6 +132,24 @@ def _trim(history: list) -> None:
         del history[: len(history) - MAX_HISTORY]
 
 
+def _slim_images(history: list, keep: int = 2) -> int:
+    """Substitui imagens antigas do histórico por placeholders (cada chamada
+    re-envia TUDO; imagem já vista não precisa voltar — economiza cota).
+    Mantém as `keep` mais recentes (último render + referência)."""
+    imgs = []
+    for c in reversed(history):
+        if not isinstance(c, dict):
+            continue
+        for i, p in enumerate(c.get("parts") or []):
+            if isinstance(p, dict) and "inline_data" in p:
+                imgs.append((c, i))
+    cortadas = 0
+    for c, i in imgs[keep:]:
+        c["parts"][i] = {"text": "[imagem antiga removida p/ economizar cota]"}
+        cortadas += 1
+    return cortadas
+
+
 def handle_message(session: AgentSession, gem: Gemini, text: str, ctx: dict,
                    on_event=None) -> dict:
     """Roda uma mensagem do usuário até a resposta final do agent.
@@ -149,6 +176,7 @@ def handle_message(session: AgentSession, gem: Gemini, text: str, ctx: dict,
     parts.append({"text": text})
     session.history.append(Gemini.user_parts(parts))
     _trim(session.history)
+    _slim_images(session.history)
 
     tools = tools_registry.schemas_for_llm()
     calls = 0
@@ -190,6 +218,7 @@ def handle_message(session: AgentSession, gem: Gemini, text: str, ctx: dict,
                     session.history.append(Gemini.user_image(
                         b64, mime, caption=f"Render após {name}. Analise o que você vê e siga."))
                 _trim(session.history)
+                _slim_images(session.history)
         else:
             reply = (f"Cheguei no limite de {MAX_TOOL_CALLS} ferramentas por turno. "
                      "Resumo do estado: chame list_scene/scene_stats e diga o que fazer a seguir.")

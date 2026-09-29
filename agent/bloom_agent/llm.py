@@ -93,10 +93,13 @@ def parse_response(data: dict) -> dict:
 
 
 def _http_post(url: str, body: dict, timeout: int) -> tuple[int, dict | str]:
+    hdrs = {"Content-Type": "application/json"}
+    if headers:
+        hdrs.update(headers)
     req = urllib.request.Request(
         url,
         data=json.dumps(body).encode("utf-8"),
-        headers={"Content-Type": "application/json"},
+        headers=hdrs,
         method="POST",
     )
     try:
@@ -183,9 +186,10 @@ class Gemini:
             )
         key = self.data["gemini"][idx]
         self.last_key_masked = keysmod.mask(key)
-        status, payload = _http_post(f"{url}?key={key}", body, self.timeout)
+        status, payload = _http_post(url, body, self.timeout,
+                                     headers={"x-goog-api-key": key})
         if _is_quota_error(status, payload):
-            keysmod.mark_cooldown(self.data, idx, seconds=90)
+            keysmod.mark_cooldown(self.data, idx, seconds=90, model=self.model)
             keysmod.advance(self.data)
             self._persist()
             raise LLMError(f"quota:{status}")  # sinal interno: tentar próxima chave
@@ -298,10 +302,14 @@ class Gemini:
         last_err = None
         busy = 0  # tentativas sob 503/sobrecarga no modelo atual
         while True:
-            idx = keysmod.pick_key(self.data)
+            idx = keysmod.pick_key(self.data, model=self.model)
             if idx is None or idx in tried:
                 if last_err and str(last_err).startswith("quota:"):
-                    wait = keysmod.earliest_recovery(self.data)
+                    if self._switch_model("cota do modelo esgotou em todas as chaves"):
+                        tried.clear()
+                        busy = 0
+                        continue
+                    wait = keysmod.earliest_recovery(self.data, self.model)
                     if (not self._quota_waited) and 0 < wait <= 150:
                         # free tier: cooldowns são curtos — espera 1x em vez de abortar
                         self._quota_waited = True

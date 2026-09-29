@@ -111,14 +111,19 @@ def _now(data: dict) -> float:
     return float(data.get("_test_now", time.time()))
 
 
-def key_available(data: dict, index: int, now: float | None = None) -> bool:
+def key_available(data: dict, index: int, now: float | None = None,
+                  model: str = "") -> bool:
+    """Livre = sem cooldown NO MODELO pedido (coold. antigo sem modelo vale global)."""
     now = _now(data) if now is None else now
-    until = float(data["cooldowns"].get(str(index), 0) or 0)
+    until = max(
+        float(data["cooldowns"].get(f"{index}|{model}", 0) or 0),
+        float(data["cooldowns"].get(str(index), 0) or 0),  # formato antigo
+    )
     return now >= until
 
 
-def pick_key(data: dict) -> int | None:
-    """Primeira chave fora de cooldown, partindo de last_key_index."""
+def pick_key(data: dict, model: str = "") -> int | None:
+    """Primeira chave fora de cooldown (no modelo), partindo de last_key_index."""
     keys = data["gemini"]
     n = len(keys)
     if n == 0:
@@ -126,29 +131,33 @@ def pick_key(data: dict) -> int | None:
     start = int(data.get("last_key_index", 0) or 0) % n
     for step in range(n):
         i = (start + step) % n
-        if key_available(data, i):
+        if key_available(data, i, model=model):
             return i
     return None
 
 
-def earliest_recovery(data: dict) -> float:
-    """Quando a chave mais "bloqueada" volta (0 se todas livres)."""
+def earliest_recovery(data: dict, model: str = "") -> float:
+    """Quando volta a 1ª chave livre NO MODELO (0 se já há livre)."""
     now = _now(data)
-    best = 0.0
-    for i, until in data["cooldowns"].items():
-        try:
-            idx = int(i)
-            until = float(until)
-        except (TypeError, ValueError):
-            continue
-        if 0 <= idx < len(data["gemini"]) and until > now and until > best:
-            best = until
-    return best - now
+    best = None
+    n = len(data["gemini"])
+    for i in range(n):
+        if key_available(data, i, now=now, model=model):
+            return 0.0
+        for k in (f"{i}|{model}", str(i)):
+            try:
+                until = float(data["cooldowns"].get(k, 0) or 0)
+            except (TypeError, ValueError):
+                continue
+            if until > now and (best is None or until < best):
+                best = until
+    return (best - now) if best else 0.0
 
 
-def mark_cooldown(data: dict, index: int, seconds: float = 60.0, now: float | None = None) -> None:
+def mark_cooldown(data: dict, index: int, seconds: float = 60.0,
+                  now: float | None = None, model: str = "") -> None:
     now = _now(data) if now is None else now
-    data["cooldowns"][str(index)] = now + seconds
+    data["cooldowns"][f"{index}|{model}"] = now + seconds
 
 
 def advance(data: dict) -> None:
