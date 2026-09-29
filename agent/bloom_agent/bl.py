@@ -194,8 +194,8 @@ def quick_render(path: Path, size: int = 512, from_viewport: bool = True) -> str
     return base64.b64encode(path.read_bytes()).decode("ascii")
 
 
-def import_asset(path: Path, target_name: str | None = None):
-    """Importa glb/gltf/fbx/obj/blend a partir de um caminho local."""
+def import_asset(path: Path, target_name: str | None = None) -> list:
+    """Importa glb/gltf/fbx/obj/blend. Retorna a lista de objetos criados."""
     _need_bpy()
     path = Path(path)
     if not path.is_file():
@@ -203,28 +203,46 @@ def import_asset(path: Path, target_name: str | None = None):
     ext = path.suffix.lower()
     window = bpy.context.window_manager.windows[0]
     scn = bpy.context.scene
+    antes = set(bpy.data.objects.keys())
+
+    def _linkar_novos():
+        novos = [bpy.data.objects[n] for n in bpy.data.objects.keys() if n not in antes]
+        for ob in novos:
+            if ob.name not in scn.objects:
+                try:
+                    scn.collection.objects.link(ob)
+                except RuntimeError:
+                    pass
+            ob["bloom_just_imported"] = True
+        if target_name:
+            if len(novos) == 1:
+                novos[0].name = target_name
+            else:
+                for ob in novos:
+                    ob.name = f"{target_name}_{ob.name}"
+        return novos
+
     with bpy.context.temp_override(window=window, scene=scn):
         if ext in (".glb", ".gltf"):
             bpy.ops.import_scene.gltf(filepath=str(path))
+            return _linkar_novos()
         elif ext == ".fbx":
             bpy.ops.import_scene.fbx(filepath=str(path))
+            return _linkar_novos()
         elif ext == ".obj":
-            bpy.ops.wm.obj_import(filepath=str(path))
+            try:
+                bpy.ops.wm.obj_import(filepath=str(path))
+            except AttributeError:
+                bpy.ops.import_scene.obj(filepath=str(path))  # Blender <=3.x
+            return _linkar_novos()
         elif ext == ".blend":
-            libs = bpy.data.libraries.load(str(path), link=False, directories=["Object"])
-            if libs.objects:
-                names = [o.name for o in libs.objects]
-                for n in names:
-                    try:
-                        bpy.ops.wm.append(filepath=str(path), directory=f"Object/{n}")
-                    except RuntimeError:
-                        pass
+            # API real: context manager (append tudo: objetos trazem malhas,
+            # armatures, shape keys e materiais como dependências)
+            with bpy.data.libraries.load(str(path), link=False) as (de, para):
+                para.objects = list(de.objects)
+            return _linkar_novos()
         else:
             raise ValueError(f"Formato não suportado para import: {ext}")
-    if target_name:
-        for ob in scn.objects:
-            if ob.get("bloom_just_imported"):
-                ob.name = target_name
 
 
 def list_bank_files(bank_dir: Path, exts=(".glb", ".gltf", ".fbx", ".obj", ".blend")) -> list:

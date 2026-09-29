@@ -71,6 +71,7 @@ def _log(line: str):
 def _gemini() -> Gemini:
     if _State.gem is None:
         _State.gem = Gemini(keysmod.keys_path(_State.root))
+        _State.gem.on_log = _log  # esperas de cota / trocas de modelo no painel
     return _State.gem
 
 

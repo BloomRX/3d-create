@@ -153,6 +153,7 @@ class Gemini:
         self.last_key_masked: str | None = None
         self._model_ok = False  # confirmado via ListModels?
         self._dead_models: set = set()  # aprendidos como mortos nesta sessão
+        self._quota_waited = False  # já esperamos a cota liberar 1x?
 
     # --- chaves -----------------------------------------------------------
     def status(self) -> dict:
@@ -267,7 +268,11 @@ class Gemini:
         self._model_ok = True
         self.data["model"] = pick
         self._persist()
-        print(f"bloom_agent: {motivo}: '{old}' -> '{pick}'", flush=True)
+        msg = f"🔄 {motivo}: '{old}' -> '{pick}'"
+        print(f"bloom_agent: {msg}", flush=True)
+        if self.on_log:
+            try: self.on_log(msg)
+            except Exception: pass
         return True
 
     # --- chat ---------------------------------------------------------------
@@ -291,6 +296,19 @@ class Gemini:
             if idx is None or idx in tried:
                 if last_err and str(last_err).startswith("quota:"):
                     wait = keysmod.earliest_recovery(self.data)
+                    if (not self._quota_waited) and 0 < wait <= 150:
+                        # free tier: cooldowns são curtos — espera 1x em vez de abortar
+                        self._quota_waited = True
+                        total = int(min(wait + 2, 150))
+                        msg = f"⏳ cota esgotada: aguardando ~{total}s (rotação de chaves)…"
+                        print(f"bloom_agent: {msg}", flush=True)
+                        if self.on_log:
+                            try: self.on_log(msg)
+                            except Exception: pass
+                        for _ in range(total):
+                            time.sleep(1)
+                        tried.clear()
+                        continue
                     raise LLMError(
                         "Todas as chaves estouraram cota por agora. "
                         f"Tente de novo em ~{int(wait)}s ou adicione outra chave."

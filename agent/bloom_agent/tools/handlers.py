@@ -330,9 +330,13 @@ def spawn_base_body(args: dict, ctx: dict) -> dict:
     bank = _ctx_bank(ctx)
     achado = _find_body_in_bank(bank, gender)
     if achado:
-        bl.import_asset(achado, None)
-        return _ok(f"Corpo base importado do Asset Bank: {achado.name}. "
-                   "Procure shape keys de proporção antes de aplicar apply_body_proportions.")
+        novos = bl.import_asset(achado, None)
+        malhas = [n.name for n in novos if n.type == "MESH"]
+        rigs = [n.name for n in novos if n.type == "ARMATURE"]
+        return _ok(f"Corpo base '{achado.name}' importado: {len(novos)} objeto(s); "
+                   f"malhas: {malhas[:6]}; armatures: {rigs or 'nenhum'}. "
+                   "(data.shape_keys das malhas) antes de "
+                   "apply_body_proportions.")
     h = 1.70 if gender != "female" else 1.65
     resumo = _mannequin(h, "any" if gender not in ("female", "male") else gender)
     return _ok(f"Nenhum corpo base no Asset Bank ({bank}). Criei {resumo}. "
