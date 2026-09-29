@@ -141,6 +141,19 @@ def _is_model_gone(msg: str) -> bool:
             or ("404" in m and "not found" in m))
 
 
+def _is_daily_quota(payload) -> bool:
+    """429 com quotaId '*PerDay*' = cota DIÁRIA (não volta em minutos)."""
+    if not isinstance(payload, dict):
+        return False
+    try:
+        for d in (payload.get("error") or {}).get("details") or []:
+            if "PerDay" in str(d.get("quotaId", "")):
+                return True
+    except Exception:
+        pass
+    return False
+
+
 def _is_busy(msg: str) -> bool:
     """503/500 do Google = sobrecarga momentânea do modelo."""
     m = msg.lower()
@@ -158,6 +171,8 @@ class Gemini:
         self._model_ok = False  # confirmado via ListModels?
         self._dead_models: set = set()  # aprendidos como mortos nesta sessão
         self._quota_waited = False  # já esperamos a cota liberar 1x?
+        self._quota_daily = False  # 429 de cota DIÁRIA detectado
+        self._quota_switches = 0   # trocas de modelo por cota (anti-ping-pong)
         self.on_log = None  # callback opcional p/ log da UI
 
     # --- chaves -----------------------------------------------------------
@@ -193,6 +208,8 @@ class Gemini:
             keysmod.mark_cooldown(self.data, idx, seconds=90, model=self.model)
             keysmod.advance(self.data)
             self._persist()
+            if _is_daily_quota(payload):
+                self._quota_daily = True
             raise LLMError(f"quota:{status}")  # sinal interno: tentar próxima chave
         if status != 200:
             texto = _error_message(status, payload)
@@ -250,41 +267,44 @@ class Gemini:
         print(f"bloom_agent: modelo '{old}' indisponível -> usando '{pick}'",
               flush=True)
 
-    def _switch_model(self, motivo: str) -> bool:
-        """Troca self.model por outro disponível (usado em 404 e 503 insistente)."""
+    def _switch_model(self, motivo: str, require_free: bool = False) -> bool:
+        """Troca self.model por outro disponível. Com require_free=True (cota),
+        só aceita candidato que tenha ALGUMA chave fora de cooldown — evita
+        ping-pong entre dois modelos igualmente esgotados."""
         try:
             ids = set(self.list_models())
         except Exception:
             return False
-        pick = next((p for p in keysmod.FALLBACK_MODELS
-                     if p != self.model and p in ids
-                     and p not in self._dead_models), None)
-        if pick is None:
-            # busca ampla: QUALQUER flash disponível (nomes mudam toda semana;
-            # prioriza aliases 'latest' e versões mais novas)
-            def _score(i: str):
-                nums = re.findall(r"(\d+(?:\.\d+)?)", i)
-                return ("latest" in i, float(nums[0]) if nums else 0.0)
-            candidatos = sorted(
-                (i for i in ids if "flash" in i and not any(
-                    t in i for t in ("image", "tts", "thinking", "exp",
-                                     "robotics", "live", "computer"))),
-                key=_score, reverse=True)
-            pick = next((p for p in candidatos
-                         if p != self.model and p not in self._dead_models), None)
-        if pick is None:
-            return False
-        old = self.model
-        self.model = pick
-        self._model_ok = True
-        self.data["model"] = pick
-        self._persist()
-        msg = f"🔄 {motivo}: '{old}' -> '{pick}'"
-        print(f"bloom_agent: {msg}", flush=True)
-        if self.on_log:
-            try: self.on_log(msg)
-            except Exception: pass
-        return True
+
+        def _score(i: str):
+            nums = re.findall(r"(\d+(?:\.\d+)?)", i)
+            return ("latest" in i, float(nums[0]) if nums else 0.0)
+
+        preferidos = [p for p in keysmod.FALLBACK_MODELS
+                      if p != self.model and p in ids
+                      and p not in self._dead_models]
+        amplos = sorted(
+            (i for i in ids if "flash" in i and not any(
+                t in i for t in ("image", "tts", "thinking", "exp",
+                                 "robotics", "live", "computer"))
+             and i != self.model and i not in self._dead_models
+             and i not in preferidos),
+            key=_score, reverse=True)
+        for pick in preferidos + amplos:
+            if require_free and keysmod.pick_key(self.data, model=pick) is None:
+                continue  # também esgotado nas chaves — trocar não resolve
+            old = self.model
+            self.model = pick
+            self._model_ok = True
+            self.data["model"] = pick
+            self._persist()
+            msg = f"🔄 {motivo}: '{old}' -> '{pick}'"
+            print(f"bloom_agent: {msg}", flush=True)
+            if self.on_log:
+                try: self.on_log(msg)
+                except Exception: pass
+            return True
+        return False
 
     # --- chat ---------------------------------------------------------------
     def chat(self, parts: list | None = None, system: str = "", tools: list | None = None,
@@ -306,10 +326,18 @@ class Gemini:
             idx = keysmod.pick_key(self.data, model=self.model)
             if idx is None or idx in tried:
                 if last_err and str(last_err).startswith("quota:"):
-                    if self._switch_model("cota do modelo esgotou em todas as chaves"):
+                    if (self._quota_switches < 4 and self._switch_model(
+                            "cota do modelo esgotou em todas as chaves",
+                            require_free=True)):
+                        self._quota_switches += 1
                         tried.clear()
                         busy = 0
                         continue
+                    if self._quota_daily:
+                        raise LLMError(
+                            "cota DIÁRIA esgotada em todas as chaves. Ela reseta "
+                            "à meia-noite do horário do Pacífico (~04h–05h no "
+                            "Brasil). Adicione outra chave ou continue amanhã.")
                     wait = keysmod.earliest_recovery(self.data, self.model)
                     if (not self._quota_waited) and 0 < wait <= 150:
                         # free tier: cooldowns são curtos — espera 1x em vez de abortar
