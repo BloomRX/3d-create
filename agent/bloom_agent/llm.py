@@ -92,7 +92,8 @@ def parse_response(data: dict) -> dict:
     }
 
 
-def _http_post(url: str, body: dict, timeout: int) -> tuple[int, dict | str]:
+def _http_post(url: str, body: dict, timeout: int,
+              headers: dict | None = None) -> tuple[int, dict | str]:
     hdrs = {"Content-Type": "application/json"}
     if headers:
         hdrs.update(headers)
