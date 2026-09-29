@@ -70,7 +70,12 @@ def save(path: Path, data: dict) -> None:
 
 def _sanitize(key: str) -> str:
     """Remove aspas, vírgulas e espaços que costumam vir colados do navegador."""
-    return "".join(key.strip().strip('"').strip("'").strip().rstrip(",;").split())
+    key = "".join(key.split())          # espaços (inclusive internos)
+    while key and key[0] in "\"',;":
+        key = key[1:]
+    while key and key[-1] in "\"',;":
+        key = key[:-1]
+    return key
 
 
 def add_key(data: dict, key: str) -> int:
