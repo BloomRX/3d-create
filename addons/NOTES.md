@@ -51,3 +51,19 @@ hard-surface/UX, o agent não usa.
 - **MPFB / MakeHuman** — humano paramétrico open-source (se preciso, só os assets).
 - **Invisigal (DiSoDS)** — modelo 3D pronto → bom **caso de teste** p/ rig/anim/export.
 - **Sanctus Library — Procedural Shaders** — materiais procedurais → texturização M2.
+
+## Radar 25/09 — vídeo "Free Blender Animation Addons in 2026" (InspirationTuts)
+
+Avaliados a partir do vídeo (7KofvgrtesM). Todos grátis.
+
+| Addon | Veredito | Uso |
+|---|---|---|
+| **Kimodo Blender Bridge** | 🥇 ADOTAR (M5) | Text-to-motion NVIDIA Kimodo + retarget fuzzy (entende Mixamo/VRoid). Geração local pede NVIDIA -> rodar no Colab T4 via nossa ponte; retarget é CPU (PC do user ok). Bate o ponto fraco do vídeo original (animação rígida). github.com/lewdineer/Kimodo_Blender_Bridge |
+| **Quick Attach \| Transfer Weight** | 🥈 ADOTAR (M3) | Anexar roupa/cabelo + transferir pesos de skinning corpo->peça (automatizável) |
+| **Bouncy Animation** | 🥉 OPCIONAL (M5) | Reveal animations prontas p/ apresentação do personagem |
+| Animates Free | opcional (UX humana) | seleção/retimer no Graph Editor p/ edição manual |
+| Stop-Mo / Trail FXs | opcional (M5 polish) | efeito stop-motion / rastros de luta no vídeo final |
+| Auto Stop Free | descartar | playback parar no fim — 1 linha de python nativa |
+| Lazy Animation | descartar | mover ao longo de curva — nativo nas tools do agent |
+| Blenrig 6 | descartar (pipeline) | rig poderoso mas pouco automatizável; Rigify/ARP cobrem |
+| Festivity Flow | não avaliado | baixa prioridade |
