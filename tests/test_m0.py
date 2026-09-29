@@ -65,8 +65,8 @@ class KeysTests(unittest.TestCase):
 
     def test_advance_and_earliest_recovery(self):
         data = keysmod.load(self.path)
-        keysmod.add_key(data, "k1")
-        keysmod.add_key(data, "k2")
+        keysmod.add_key(data, "KEY_TESTE_AAAAAAAAAAAA_1")
+        keysmod.add_key(data, "KEY_TESTE_AAAAAAAAAAAA_2")
         data["_test_now"] = 1000.0
         keysmod.mark_cooldown(data, 1, seconds=300, now=1000.0)
         self.assertAlmostEqual(keysmod.earliest_recovery(data), 300.0)
@@ -76,18 +76,18 @@ class KeysTests(unittest.TestCase):
 
     def test_remove_key_resets_state(self):
         data = keysmod.load(self.path)
-        keysmod.add_key(data, "k1")
-        keysmod.add_key(data, "k2")
+        keysmod.add_key(data, "KEY_TESTE_AAAAAAAAAAAA_1")
+        keysmod.add_key(data, "KEY_TESTE_AAAAAAAAAAAA_2")
         keysmod.remove_key(data, 0)
-        self.assertEqual(data["gemini"], ["k2"])
+        self.assertEqual(data["gemini"], ["KEY_TESTE_AAAAAAAAAAAA_2"])
         self.assertEqual(data["last_key_index"], 0)
         self.assertEqual(data["cooldowns"], {})
 
     def test_save_load_roundtrip_atomic(self):
         data = keysmod.load(self.path)
-        keysmod.add_key(data, "kX")
+        keysmod.add_key(data, "KEY_TESTE_AAAAAAAAAAAA_X")
         keysmod.save(self.path, data)
-        self.assertEqual(keysmod.load(self.path)["gemini"], ["kX"])
+        self.assertEqual(keysmod.load(self.path)["gemini"], ["KEY_TESTE_AAAAAAAAAAAA_X"])
         self.assertFalse(self.path.with_suffix(".json.tmp").exists())
 
     def test_reject_placeholder(self):

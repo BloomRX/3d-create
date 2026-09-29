@@ -355,17 +355,24 @@ def _action_add_key(props):
     try:
         path = keysmod.keys_path(_State.root)
         data = keysmod.load(path)
-        added = 0
+        added, erros = 0, []
         for line in props.keys_text.splitlines():
             line = line.strip()
-            if line and not (line.startswith("SUBSTITUA") or line.startswith("cole_sua")):
+            if not line or line.startswith(("SUBSTITUA", "cole_sua")):
+                continue
+            try:
                 keysmod.add_key(data, line)
                 added += 1
+            except ValueError as e:
+                erros.append(f"· {e}")
         if added:
             keysmod.save(path, data)
         _State.gem = None
         st = _gemini().status()
-        _log(f"chaves: +{added}; total {len(st['keys'])}")
+        msg = f"chaves: +{added}; total {len(st['keys'])}"
+        if erros:
+            msg += f"; {len(erros)} recusada(s):\n" + "\n".join(erros[:4])
+        _log(msg)
         props.keys_text = ""
         _refresh_status(props)
     except Exception as e:

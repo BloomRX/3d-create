@@ -48,6 +48,8 @@ def load(path: Path) -> dict:
         pass
     if not isinstance(data.get("gemini"), list):
         data["gemini"] = []
+    # higieniza chaves antigas (espaços/aspas colados) e descarta vazias
+    data["gemini"] = [k for k in (_sanitize(str(x)) for x in data["gemini"]) if len(k) >= 20]
     if not isinstance(data.get("cooldowns"), dict):
         data["cooldowns"] = {}
     return data
@@ -66,10 +68,20 @@ def save(path: Path, data: dict) -> None:
     tmp.replace(path)
 
 
+def _sanitize(key: str) -> str:
+    """Remove aspas, vírgulas e espaços que costumam vir colados do navegador."""
+    return "".join(key.strip().strip('"').strip("'").strip().rstrip(",;").split())
+
+
 def add_key(data: dict, key: str) -> int:
-    key = key.strip()
+    key = _sanitize(key)
     if not key or key.startswith("SUBSTITUA") or key.startswith("cole_sua"):
         raise ValueError("Chave vazia ou ainda o placeholder do exemplo.")
+    if len(key) < 20 or " " in key:
+        raise ValueError(f"Chave muito curta/quebrada ({len(key)} caracteres). "
+                         "Copie inteira do AI Studio (começa com 'AIza').")
+    if key in data["gemini"]:
+        raise ValueError("Essa chave já está cadastrada.")
     data["gemini"].append(key)
     return len(data["gemini"]) - 1
 

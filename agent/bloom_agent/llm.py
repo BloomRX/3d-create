@@ -154,6 +154,7 @@ class Gemini:
         self._model_ok = False  # confirmado via ListModels?
         self._dead_models: set = set()  # aprendidos como mortos nesta sessão
         self._quota_waited = False  # já esperamos a cota liberar 1x?
+        self.on_log = None  # callback opcional p/ log da UI
 
     # --- chaves -----------------------------------------------------------
     def status(self) -> dict:
@@ -189,7 +190,12 @@ class Gemini:
             self._persist()
             raise LLMError(f"quota:{status}")  # sinal interno: tentar próxima chave
         if status != 200:
-            raise LLMError(_error_message(status, payload))
+            texto = _error_message(status, payload)
+            baixo = texto.lower()
+            if (status in (401, 403) or "api key not valid" in baixo
+                    or "invalid authentication credentials" in baixo):
+                raise LLMError(f"auth:{idx}")  # sinal interno: chave inválida
+            raise LLMError(texto)
         return status, payload
 
     # --- modelo -----------------------------------------------------------
@@ -328,6 +334,26 @@ class Gemini:
                 if msg.startswith("quota:"):
                     last_err = e  # tenta a próxima chave
                     continue
+                if msg.startswith("auth:"):
+                    try:
+                        ruim = int(msg.split(":", 1)[1])
+                    except ValueError:
+                        ruim = idx
+                    masked = self.last_key_masked or "?"
+                    try:
+                        keysmod.remove_key(self.data, ruim)
+                        self._persist()
+                    except IndexError:
+                        pass
+                    tried.clear()  # índices mudaram
+                    if self.on_log:
+                        try: self.on_log(f"🔑 chave {masked} removida (inválida)")
+                        except Exception: pass
+                    if not self.data["gemini"]:
+                        raise LLMError(
+                            "todas as chaves eram inválidas. Gere novas em "
+                            "aistudio.google.com/app/apikey (começam com 'AIza').")
+                    continue  # próxima chave
                 if _is_model_gone(msg):
                     self._dead_models.add(self.model)
                     tried.discard(idx)  # 404 não gasta cota
