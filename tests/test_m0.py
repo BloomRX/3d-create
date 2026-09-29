@@ -69,7 +69,14 @@ class KeysTests(unittest.TestCase):
         keysmod.add_key(data, "KEY_TESTE_AAAAAAAAAAAA_2")
         data["_test_now"] = 1000.0
         keysmod.mark_cooldown(data, 1, seconds=300, now=1000.0)
-        self.assertAlmostEqual(keysmod.earliest_recovery(data), 300.0)
+        # chave 0 livre -> "primeira liberação" é AGORA
+        self.assertAlmostEqual(keysmod.earliest_recovery(data), 0.0)
+        # todas em cooldown no modelo -> espera = a que libera primeiro
+        keysmod.mark_cooldown(data, 0, seconds=100, now=1000.0)
+        self.assertAlmostEqual(keysmod.earliest_recovery(data), 100.0)
+        # isolamento por modelo: outro modelo tem tudo livre
+        self.assertAlmostEqual(
+            keysmod.earliest_recovery(data, model="outro-modelo"), 0.0)
         data["last_key_index"] = 1
         keysmod.advance(data)
         self.assertEqual(data["last_key_index"], 0)
