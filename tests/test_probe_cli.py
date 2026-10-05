@@ -52,5 +52,16 @@ class TestProbeCli(unittest.TestCase):
             self.assertTrue((Path(tmp) / "model_probe.json").exists())
 
 
+class TestBat(unittest.TestCase):
+    def test_bat_ascii_sem_bom_com_steam(self):
+        p = Path(__file__).resolve().parents[1] / "util" / "probe_modelo.bat"
+        raw = p.read_bytes()
+        self.assertFalse(raw.startswith(b"\xef\xbb\xbf"), "BOM envenena o @echo off")
+        raw.decode("ascii")
+        self.assertTrue(raw.startswith(b"@echo off"))
+        self.assertIn(b"steamapps\\common\\Blender", raw, "deteccao Steam sumiu")
+        self.assertIn(b"\r\n", raw, "bat precisa de line endings CRLF")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

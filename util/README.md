@@ -10,7 +10,7 @@ receitas genéricas do agent.
 
 **Como usar:**
 1. Dê dois cliques em `util\probe_modelo.bat`.
-2. Ele acha o Blender sozinho e lista os .blend encontrados no banco
+2. Ele acha o Blender sozinho (Program Files, **Steam em qualquer disco** ou PATH; se nao achar, pergunta o caminho) e lista os .blend encontrados no banco
    `J:\3d-Create` e nas pastas de usuário (mais recente primeiro).
 3. **Digite o número** do personagem que quer escanear.
    - Prefere outro arquivo? **Enter** = colar caminho, ou **arraste o

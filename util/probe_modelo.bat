@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 setlocal EnableExtensions
 title Bloom Agent - Raio-X do modelo (.blend)
 
@@ -17,13 +17,32 @@ echo   === BLOOM AGENT - RAIO-X DO MODELO ===
 echo   (vale para qualquer .blend: Hsin/WuWa ou personagens de outros jogos)
 echo.
 
-rem ---- [1/4] achar o blender.exe ----
+rem ---- [1/4] achar o blender.exe (PATH, Program Files ou Steam) ----
 set "BLENDER="
 for %%V in (5.2 5.1 5.0 4.5 4.2) do if not defined BLENDER if exist "%ProgramFiles%\Blender Foundation\Blender %%V\blender.exe" set "BLENDER=%ProgramFiles%\Blender Foundation\Blender %%V\blender.exe"
+if not defined BLENDER for %%D in (C D E F G) do (
+    if not defined BLENDER if exist "%%D:\Steam\steamapps\common\Blender\blender.exe" set "BLENDER=%%D:\Steam\steamapps\common\Blender\blender.exe"
+    if not defined BLENDER if exist "%%D:\SteamLibrary\steamapps\common\Blender\blender.exe" set "BLENDER=%%D:\SteamLibrary\steamapps\common\Blender\blender.exe"
+)
+if not defined BLENDER if exist "%ProgramFiles(x86)%\Steam\steamapps\common\Blender\blender.exe" set "BLENDER=%ProgramFiles(x86)%\Steam\steamapps\common\Blender\blender.exe"
+if not defined BLENDER (
+    rem bibliotecas Steam em outros discos (libraryfolders.vdf)
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "$vf = Join-Path ${env:ProgramFiles(x86)} 'Steam\steamapps\libraryfolders.vdf'; if (Test-Path $vf) { Select-String -Path $vf -Pattern 'path' | ForEach-Object { $p = ($_.Line -split '\"')[1] -replace '\\\\', '\'; $c = Join-Path $p 'steamapps\common\Blender\blender.exe'; if (Test-Path $c) { Write-Output $c } } | Select-Object -First 1 }" > "%TEMP%\bloom_blender.txt" 2>nul
+    for /f "usebackq delims=" %%F in ("%TEMP%\bloom_blender.txt") do if not defined BLENDER set "BLENDER=%%F"
+)
 if not defined BLENDER for /f "delims=" %%F in ('where blender 2^>nul') do if not defined BLENDER set "BLENDER=%%F"
 if not defined BLENDER (
-    echo   [X] Blender nao encontrado em "C:\Program Files\Blender Foundation".
-    echo       Instale o Blender ou me diga o caminho na conversa com o agent.
+    echo   Nao achei o blender.exe nos lugares de sempre.
+    echo   Cole o caminho da PASTA do Blender e aperte Enter.
+    echo   Exemplo Steam: D:\Steam\steamapps\common\Blender
+    set "BLENDER="
+    set /p "BLENDER=   Caminho: "
+    if not defined BLENDER goto :fim_erro
+    set "BLENDER=%BLENDER:"=%"
+    if exist "%BLENDER%\blender.exe" set "BLENDER=%BLENDER%\blender.exe"
+)
+if not exist "%BLENDER%" (
+    echo   [X] Nao encontrei: %BLENDER%
     goto :fim_erro
 )
 echo   [1/4] Blender: %BLENDER%
