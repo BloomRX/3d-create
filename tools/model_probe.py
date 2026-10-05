@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Raio-X de um modelo .blend (ex.: personagem de estúdio tipo WuWa/Hsin).
+r"""Raio-X de um modelo .blend (ex.: personagem de estúdio tipo WuWa/Hsin).
 
 COMO USAR:
-1. Abra o .blend da personagem no Blender.
-2. Workspace "Scripting" > Open > este arquivo > botão ▶.
-3. Um arquivo model_probe.json será salvo na pasta temporária (o caminho
-   aparece no console e no editor). Cole o conteúdo na conversa com o agent.
+1. MODO FÁCIL — dê dois cliques em util\probe_modelo.bat (Windows).
+   Ele acha o Blender, acha o .blend, roda tudo e salva em util\model_probe.json.
+2. MODO MANUAL — Abra o .blend da personagem no Blender.
+   Workspace "Scripting" > Open > este arquivo > botão ▶.
+   O model_probe.json vai pra pasta temporária (o caminho aparece no console).
+3. MODO LINHA DE COMANDO —
+   blender --background modelo.blend --python tools/model_probe.py -- --out caminho/model_probe.json
 
 O que ele extrai: objetos, polígonos, modificadores, materiais (nós,
 texturas, blend), shape keys, ossos, custom normals, UVs, drivers,
@@ -19,6 +22,10 @@ import os
 import sys
 
 import bpy
+
+# ---- CLI: flags depois de "--" (modo linha de comando) ----
+_args = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+_SAIDA = _args[_args.index("--out") + 1] if "--out" in _args else None
 
 
 def limpa_lista(itens, n=400):
@@ -103,7 +110,11 @@ dados["render"] = {"engine": s.render.engine,
                    "fps": s.render.fps}
 
 out = json.dumps(dados, ensure_ascii=False, indent=1)
-caminho = os.path.join(bpy.app.tempdir, "model_probe.json")
+caminho = _SAIDA or os.path.join(bpy.app.tempdir, "model_probe.json")
+if _SAIDA:
+    _dir = os.path.dirname(os.path.abspath(caminho))
+    if _dir:
+        os.makedirs(_dir, exist_ok=True)
 with open(caminho, "w", encoding="utf-8") as f:
     f.write(out)
 
