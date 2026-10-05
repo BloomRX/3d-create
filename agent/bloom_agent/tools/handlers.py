@@ -344,15 +344,15 @@ def spawn_base_body(args: dict, ctx: dict) -> dict:
                "para um corpo de qualidade com shape keys.")
 
 
-_SHAPEKEY_MAP = {
-    "breast": ["Breast_Size", "Breast_Big"],
-    "head_size": ["Head_Size"],
-    "shoulder_w": ["Shoulder_Type", "Shoulder_wide", "Shoulder_narrow"],
-    "muscle": ["Arm_Size", "Leg_Size"],
-    "leg_len": ["Leg_Short"],
-    "waist": ["ACdeform_waist"],
-    "hips_w": ["ACdeform_hips"],
+# nomes REAIS do Bodiez modular_female_base (vistos no Blender do usuário):
+# Basis, Thin_old, Regular, Thin, Muscular, Fat, Hip_Wide, Breast_Small, Breast_Big
+_BODIEZ_PAIRS = {
+    "breast": {"Breast_Big": True, "Breast_Small": False},   # True = com +v, False = com -v
+    "hips_w": {"Hip_Wide": True},
+    "muscle": {"Muscular": True, "Fat": False},
 }
+# sem shape key no Bodiez (agent resolve por modelagem/escala depois):
+_SEM_KEY = ["head_size", "shoulder_w", "waist", "leg_len"]
 
 
 def apply_body_proportions(args: dict, ctx: dict) -> dict:
@@ -362,23 +362,22 @@ def apply_body_proportions(args: dict, ctx: dict) -> dict:
             and o.data.shape_keys is not None]
     if objs:
         aplicados = 0
-        for arg, keys in _SHAPEKEY_MAP.items():
+        for arg, pares in _BODIEZ_PAIRS.items():
             if arg not in args:
                 continue
             v = max(-1.0, min(1.0, float(args[arg])))
-            for kb_name in keys:
+            for kb_name, com_positivo in pares.items():
+                val = max(0.0, v) if com_positivo else max(0.0, -v)
                 for o in objs:
                     kb = o.data.shape_keys.key_blocks.get(kb_name)
-                    if kb is None:
-                        continue
-                    if kb_name.endswith("_Big") or kb_name.endswith("_Small"):
-                        kb.value = max(0.0, v) if kb_name.endswith("_Big") else max(0.0, -v)
-                    elif kb_name.endswith(("narrow", "wide")):
-                        kb.value = max(0.0, v) if kb_name.endswith("wide") else max(0.0, -v)
-                    else:
-                        kb.value = (v + 1.0) / 2.0
-                    aplicados += 1
-        lines.append(f"shape keys ajustadas: {aplicados}")
+                    if kb is not None:
+                        kb.value = val
+                        aplicados += 1
+        lines.append(f"shape keys Bodiez ajustadas: {aplicados}")
+        sem = [a for a in _SEM_KEY if a in args]
+        if sem:
+            lines.append("sem shape key no corpo (resolver por modelagem/escala): "
+                         + ", ".join(sem))
     else:
         lines.append("corpo sem shape keys (manequim) — pule esta etapa ou importe um corpo melhor")
     height = args.get("height_m")
