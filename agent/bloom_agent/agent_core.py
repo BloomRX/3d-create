@@ -48,6 +48,8 @@ FERRAMENTAS
 - rig_human: cria o rig canônico superset (com dedos, breast/glutes) e parenteia.
 - set_export_profile: cópia do rig com naming do host (metahuman|vrm2|mixamo|custom).
 - reference_backdrop: coloca a foto de referência como fundo da viewport.
+- apply_anime_shader: acabamento anime de estúdio (outlines + toon por região);
+  extraia as cores da referência e passe em 'cores'.
 - colab_job / colab_collect: geração 3D por IA no Google Colab (último recurso).
 
 ESTILO (não hardcode: INFIRA)

@@ -186,6 +186,22 @@ TOOLS = [
         "fn": "reference_backdrop",
     },
     {
+        "name": "apply_anime_shader",
+        "description": ("Aplica o acabamento estilo anime de estúdio (receita WuWa): "
+                        "outlines com espessura controlada + materiais toon por região. "
+                        "Cores opcionais vindas da referência {pele,cabelo,roupa,outline,olho}. "
+                        "Use DEPOIS do corpo aprovado."),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "espessura": {"type": "number", "description": "espessura do outline (m), ex 0.004"},
+                "cores": {"type": "object", "description": "{pele:[r,g,b], cabelo:[...], ...} 0..1"},
+            },
+            "required": [],
+        },
+        "fn": "apply_anime_shader",
+    },
+    {
         "name": "colab_collect",
         "description": "Lista resultados baixados de um job do Colab (job_id).",
         "parameters": {"type": "object", "properties": {"job_id": {"type": "string"}}, "required": ["job_id"]},

@@ -526,3 +526,115 @@ def reference_backdrop(args: dict, ctx: dict) -> dict:
     bpy.context.collection.objects.link(empty)
     return _ok(f"Referência '{img.name}' colocada como backdrop frontal "
                f"(altura {altura:.2f} m). Objeto: BLOOM_REF.")
+
+
+# ---------------------------------------------------------------------------
+# tool: shader anime (receitas WuWa — docs/ANIME_RECIPES.md)
+# ---------------------------------------------------------------------------
+
+_CORES_PADRAO = {"pele": (0.95, 0.82, 0.74, 1.0), "cabelo": (0.25, 0.2, 0.3, 1.0),
+                 "roupa": (0.6, 0.65, 0.75, 1.0), "outline": (0.05, 0.05, 0.07, 1.0)}
+
+
+def _region(nome: str, cores: dict) -> str:
+    n = nome.lower()
+    if any(t in n for t in ("pele", "skin", "face", "rosto", "head", "cabeca", "body", "corpo")):
+        return "pele"
+    if any(t in n for t in ("hair", "cabelo", "franja", "bang")):
+        return "cabelo"
+    if any(t in n for t in ("olho", "eye", "iris")):
+        return "olho"
+    return "roupa"
+
+
+def apply_anime_shader(args: dict, ctx: dict) -> dict:
+    """Receita WuWa: outlines (solidify invertido + material chapado +
+    backface culling) e materiais toon por região (pele/cabelo/roupa).
+    Zero dependência de LLM — determinístico."""
+    bpy = bl.bpy
+    esp = float(args.get("espessura", 0.004))
+    cores = {**_CORES_PADRAO, **(args.get("cores") or {})}
+    alvos = [o for o in bpy.data.objects if o.type == "MESH"
+             and not o.name.startswith(("BLOOM_REF", "MAN_ui", "WGT", "CS_UI"))]
+    if not alvos:
+        return _fail("nenhuma malha para aplicar shader (spawne o corpo antes)")
+
+    # materiais toon por região (rampa luz/sombra simples)
+    mats = {}
+    for regiao in ("pele", "cabelo", "roupa", "olho"):
+        m = bpy.data.materials.get(f"Bloom_{regiao}") or bpy.data.materials.new(
+            f"Bloom_{regiao}")
+        m.use_nodes = True
+        nt = m.node_tree
+        nt.nodes.clear()
+        saida = nt.nodes.new("ShaderNodeOutputMaterial")
+        diff = nt.nodes.new("ShaderNodeBsdfDiffuse")
+        rampa = nt.nodes.new("ShaderNodeValToRGB")
+        cor = nt.nodes.new("ShaderNodeRGB")
+        cor.outputs[0].default_value = cores.get(regiao, cores["roupa"])
+        rampa.color_ramp.elements[0].color = tuple(
+            c * 0.55 for c in cores.get(regiao, cores["roupa"])[:3]) + (1.0,)
+        rampa.color_ramp.elements[1].color = cores.get(regiao, cores["roupa"])
+        nt.links.new(cor.outputs[0], diff.inputs["Color"])
+        nt.links.new(diff.outputs[0], rampa.inputs["Fac"])
+        nt.links.new(rampa.outputs[0], saida.inputs["Surface"])
+        m.use_backface_culling = True
+        mats[regiao] = m
+    # outline: cor chapada, sem luz (emissão) + backface culling
+    mo = bpy.data.materials.get("Bloom_outline") or bpy.data.materials.new(
+        "Bloom_outline")
+    mo.use_nodes = True
+    nt = mo.node_tree
+    nt.nodes.clear()
+    saida = nt.nodes.new("ShaderNodeOutputMaterial")
+    emis = nt.nodes.new("ShaderNodeEmission")
+    emis.inputs[0].default_value = cores["outline"]
+    emis.inputs[1].default_value = 1.0
+    nt.links.new(emis.outputs[0], saida.inputs["Surface"])
+    mo.use_backface_culling = True
+    mats["outline"] = mo
+
+    feitos, outlines = 0, 0
+    for o in alvos:
+        # material por região conforme o nome do objeto
+        reg = _region(o.name, cores)
+        me = o.data
+        if len(me.materials) == 0 or (
+                len(me.materials) == 1 and me.materials[0] is None):
+            me.materials.append(mats[reg])
+        elif not any(m and m.name.startswith("Bloom_") for m in me.materials):
+            me.materials.append(mats[reg])
+        idx_out = None
+        for i, m in enumerate(me.materials):
+            if m is None:
+                continue
+            if m.name.startswith("Bloom_outline"):
+                idx_out = i
+            elif not m.name.startswith("Bloom_"):
+                pass  # preserva materiais existentes do usuário
+        if idx_out is None:
+            me.materials.append(mats["outline"])
+            idx_out = len(me.materials) - 1
+        # smooth shading
+        for poly in me.polygons:
+            poly.use_smooth = True
+        # outline via solidify invertido (receita WuWa)
+        mod = o.modifiers.get("Bloom_Outline")
+        if mod is None:
+            mod = o.modifiers.new("Bloom_Outline", "SOLIDIFY")
+        mod.thickness = esp
+        mod.offset = 1
+        mod.use_flip_normals = True
+        mod.material_offset_rim = idx_out
+        mod.use_rim = True
+        mod.show_render = True
+        mod.show_in_editmode = False
+        outlines += 1
+        feitos += 1
+    return _ok(f"shader anime aplicado em {feitos} malha(s); outlines: {outlines}; "
+               f"regiões: pele/cabelo/roupa/olho + outline (cores: "
+               f"{ {k: tuple(round(c, 2) for c in v[:3]) for k, v in cores.items()} }}). "
+               "Custom normals de rosto entram com o probe do modelo de estudo.")
+
+
+# reexport p/ registry
