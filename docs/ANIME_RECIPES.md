@@ -78,3 +78,29 @@ quiser espelhar detalhes.
   desvio A (imagem→3D local/Colab), checar método depois.
 - "I Studied How Guilty Gear Makes 3D Look Perfectly 2D" (Noggi) —
   técnicas toon complementares (bone-driven face posing).
+
+## PROBE — achados reais do modelo Hsin (texturas em assets/learn, out/2026)
+
+Analisadas com decodificador PNG (uso de estudo — métodos, não assets):
+
+1. **SDF facial** (`T_FemaleMFace_SDF.png`, 1024²): CONFIRMADA a estrutura de
+   **ilhas por região** (testa/nariz/bochechas/boca/queixo) em magenta puro
+   (#ff00ff) sobre branco, com gradientes de anti-alias entre elas. O shader
+   usa o ângulo do sol p/ amostrar a faixa certa. Nosso plano: v2 do
+   `apply_anime_shader` inclui gerador de SDF (máscaras pintadas → gradiente).
+   Magenta provavelmente marca zona "especial" (fluxo/ativação), branco = luz.
+2. **LUT global** (`LUT_WUWA.png`, 1024×32 RGBA): **alpha=0 em TODOS os
+   pixels** (textura de DADOS, não imagem). RGB = atlas de rampas com ~190
+   níveis — cada material amostra sua LINHA (sombras coloridas, não
+   preto→cor). Lição p/ nosso toon: **sombras com matiz deslocada**
+   (azuladas em pele clara, escuras saturadas em roupa) em vez de
+   multiplicação por 0.55 — ajustar os defaults do `apply_anime_shader`.
+3. Texturas por peça: Face/Eye/Hair(Bangs)/Up/Down/Cloth com sufixos
+   _D (difusa), _N (normal), _FTM/_HM/_HN (máscaras de lightmap/hair),
+   _RGID — confirma o pipeline de MÁSCARAS por canal, não só cor.
+4. MatCapAtlas, Face_Blush, EyesSecondHighlight — detalhes de acabamento
+   facial (bochecha/brilho de olho) — fase 2 do rosto.
+
+### Ação imediata incorporada
+- `apply_anime_shader`: sombras com hue-shift (2x parâmetro `matiz_sombra`);
+- backlog: gerador de SDF + atlas de rampas por material (M2 fase 2).
