@@ -631,9 +631,10 @@ def apply_anime_shader(args: dict, ctx: dict) -> dict:
         mod.show_in_editmode = False
         outlines += 1
         feitos += 1
+    resumo_cores = ", ".join(f"{k}={tuple(round(c, 2) for c in v[:3])}"
+                             for k, v in cores.items())
     return _ok(f"shader anime aplicado em {feitos} malha(s); outlines: {outlines}; "
-               f"regiões: pele/cabelo/roupa/olho + outline (cores: "
-               f"{ {k: tuple(round(c, 2) for c in v[:3]) for k, v in cores.items()} }}). "
+               f"regiões: pele/cabelo/roupa/olho + outline (cores: {resumo_cores}). "
                "Custom normals de rosto entram com o probe do modelo de estudo.")
 
 

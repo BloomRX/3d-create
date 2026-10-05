@@ -1,0 +1,24 @@
+{
+  "bank": "J:\\3d-Create\\assets",
+  "updated": "2026-09-29 00:32:11",
+  "assets": [
+    {
+      "id": "modular_female_base.blend",
+      "name": "modular_female_base",
+      "rel": "modular_female_base.blend",
+      "type": "blend",
+      "size": 5590403,
+      "tags": [],
+      "obs": ""
+    },
+    {
+      "id": "modular_male_base.blend",
+      "name": "modular_male_base",
+      "rel": "modular_male_base.blend",
+      "type": "blend",
+      "size": 5600241,
+      "tags": [],
+      "obs": ""
+    }
+  ]
+}
