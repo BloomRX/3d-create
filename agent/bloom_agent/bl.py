@@ -134,6 +134,8 @@ def _pick_engine(scn) -> str:
         return "BLENDER_EEVEE_NEXT"
     if "BLENDER_EEVEE" in engines:
         return "BLENDER_EEVEE"
+    if "CYCLES" in engines:
+        return "CYCLES"  # headless/servidor sem Eevee
     return scn.render.engine  # último caso: usa o que já estiver
 
 
