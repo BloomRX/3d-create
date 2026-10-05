@@ -187,6 +187,8 @@ def handle_message(session: AgentSession, gem: Gemini, text: str, ctx: dict,
         while calls < MAX_TOOL_CALLS:
             emit("llm_call")
             resp = gem.chat(contents=session.history, system=SYSTEM_PROMPT, tools=tools)
+            if resp.get("provider"):
+                emit("provider", {"provider": resp["provider"]})
             raw = resp.get("raw_content")
             if raw and raw.get("parts"):
                 session.history.append(raw)  # mantém thought_signature

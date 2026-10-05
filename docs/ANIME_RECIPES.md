@@ -104,3 +104,10 @@ Analisadas com decodificador PNG (uso de estudo — métodos, não assets):
 ### Ação imediata incorporada
 - `apply_anime_shader`: sombras com hue-shift (2x parâmetro `matiz_sombra`);
 - backlog: gerador de SDF + atlas de rampas por material (M2 fase 2).
+
+### Proveniência e liberação (out/2026)
+O SDF facial (`T_FemaleMFace_SDF.png`) e a LUT são **criações genéricas do
+youtuber** para simular o estilo do jogo (não são assets do Wuwa) — uso
+liberado pelo autor do repo como base/exemplo. Texturas mantidas em
+`assets/learn/Aplaybox_Hsin/textures` como referência do pipeline. Plugins
+movidos p/ `plugins_src/` (o agent pode modificá-los — uso privado).

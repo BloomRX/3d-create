@@ -32,7 +32,8 @@ def keys_path(root: Path) -> Path:
 
 
 def _blank() -> dict:
-    return {"gemini": [], "model": DEFAULT_MODEL, "last_key_index": 0, "cooldowns": {}}
+    return {"gemini": [], "groq": [], "model": DEFAULT_MODEL,
+            "last_key_index": 0, "cooldowns": {}}
 
 
 def load(path: Path) -> dict:
@@ -50,6 +51,9 @@ def load(path: Path) -> dict:
         data["gemini"] = []
     # higieniza chaves antigas (espaços/aspas colados) e descarta vazias
     data["gemini"] = [k for k in (_sanitize(str(x)) for x in data["gemini"]) if len(k) >= 20]
+    if not isinstance(data.get("groq"), list):
+        data["groq"] = []
+    data["groq"] = [k for k in (_sanitize(str(x)) for x in data["groq"]) if len(k) >= 20]
     if not isinstance(data.get("cooldowns"), dict):
         data["cooldowns"] = {}
     return data
@@ -89,6 +93,17 @@ def add_key(data: dict, key: str) -> int:
         raise ValueError("Essa chave já está cadastrada.")
     data["gemini"].append(key)
     return len(data["gemini"]) - 1
+
+
+def add_groq_key(data: dict, key: str) -> int:
+    """Chave Groq (começa com 'gsk_'). Validação espelha add_key."""
+    key = _sanitize(key)
+    if not key or not key.startswith("gsk_"):
+        raise ValueError("Chave Groq inválida (esperado começo 'gsk_').")
+    if key in data.get("groq", []):
+        raise ValueError("Essa chave Groq já está cadastrada.")
+    data.setdefault("groq", []).append(key)
+    return len(data["groq"]) - 1
 
 
 def remove_key(data: dict, index: int) -> None:

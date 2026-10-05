@@ -27,7 +27,7 @@ from . import bridge as bridge_mod
 from . import keys as keysmod
 from . import tools_registry
 from .agent_core import AgentSession, handle_message
-from .llm import Gemini, LLMError
+from .llm import Gemini, GroqClient, LLMError, Router
 
 REAL_RUN = tools_registry.run  # referência p/ o timer (imune a monkeypatch)
 BRIDGE_PORT = 8791
@@ -68,10 +68,22 @@ def _log(line: str):
         _State.log_lines = _State.log_lines[-300:]
 
 
-def _gemini() -> Gemini:
+def _gemini() -> "Router | Gemini":
+    """Retorna o ROUTER (Gemini visão + Groq texto, se houver chave gsk_)."""
     if _State.gem is None:
-        _State.gem = Gemini(keysmod.keys_path(_State.root))
-        _State.gem.on_log = _log  # esperas de cota / trocas de modelo no painel
+        caminho = keysmod.keys_path(_State.root)
+        gem = Gemini(caminho)
+        gem.on_log = _log  # esperas de cota / trocas de modelo no painel
+        groq = None
+        try:
+            if keysmod.load(caminho).get("groq"):
+                groq = GroqClient(caminho)
+                groq.on_log = _log
+                _log(f"orquestrador Groq ativo ({groq.model})")
+        except Exception:
+            groq = None
+        _State.gem = Router(gem, groq)
+        _State.gem.on_log = _log
     return _State.gem
 
 
@@ -239,7 +251,9 @@ def _run_agent(message: str):
                 mark = "✓" if payload.get("ok") else "✗"
                 _log(f"{mark} {str(payload.get('text', ''))[:200]}")
             elif event == "llm_call":
-                _log("… Gemini")
+                _log("… pensando")
+            elif event == "provider":
+                _log(f"🧠 {payload.get('provider', '?')}")
             elif event == "done":
                 _log(f"agent: {str(payload.get('reply', ''))[:600]}")
 
@@ -282,6 +296,9 @@ def _refresh_status(props: "BloomProperties"):
         st = _gemini().status()
         bits.append(st["model"])
         bits.append(f"{len(st['keys'])} chave(s)")
+        gq = st.get("groq")
+        if gq:
+            bits.append(f"groq:{gq['model'].split('-')[0]}x{len(gq['keys'])}")
         if st["cooldown_seconds"] > 0:
             bits.append(f"cooldown ~{st['cooldown_seconds']}s")
     except Exception:
@@ -355,21 +372,27 @@ def _action_add_key(props):
     try:
         path = keysmod.keys_path(_State.root)
         data = keysmod.load(path)
-        added, erros = 0, []
+        added, added_g, erros = 0, 0, []
         for line in props.keys_text.splitlines():
             line = line.strip()
             if not line or line.startswith(("SUBSTITUA", "cole_sua")):
                 continue
             try:
-                keysmod.add_key(data, line)
-                added += 1
+                if line.startswith("gsk_"):        # Groq (orquestrador texto)
+                    keysmod.add_groq_key(data, line)
+                    added_g += 1
+                else:                               # Gemini (visão)
+                    keysmod.add_key(data, line)
+                    added += 1
             except ValueError as e:
                 erros.append(f"· {e}")
         if added:
             keysmod.save(path, data)
         _State.gem = None
         st = _gemini().status()
-        msg = f"chaves: +{added}; total {len(st['keys'])}"
+        msg = f"chaves: +{added} gemini; total {len(st['keys'])}"
+        if added_g:
+            msg += f"; +{added_g} groq; total {len((st.get('groq') or {}).get('keys', []))}"
         if erros:
             msg += f"; {len(erros)} recusada(s):\n" + "\n".join(erros[:4])
         _log(msg)

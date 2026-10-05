@@ -536,6 +536,13 @@ _CORES_PADRAO = {"pele": (0.95, 0.82, 0.74, 1.0), "cabelo": (0.25, 0.2, 0.3, 1.0
                  "roupa": (0.6, 0.65, 0.75, 1.0), "outline": (0.05, 0.05, 0.07, 1.0)}
 
 
+def _sombra_hue(rgb) -> tuple:
+    """Sombra estilo anime de estúdio: desloca a matiz (padrão LUT WuWa:
+    sombra de pele puxa p/ roxo, sombra de roupa satura) — não é só 'escurecer'."""
+    r, g, b = (float(c) for c in rgb[:3])
+    return tuple(max(0.0, min(1.0, 0.62 * c + 0.38 * (1.0 - c))) for c in (r, g, b))
+
+
 def _region(nome: str, cores: dict) -> str:
     n = nome.lower()
     if any(t in n for t in ("pele", "skin", "face", "rosto", "head", "cabeca", "body", "corpo")):
@@ -572,8 +579,8 @@ def apply_anime_shader(args: dict, ctx: dict) -> dict:
         rampa = nt.nodes.new("ShaderNodeValToRGB")
         cor = nt.nodes.new("ShaderNodeRGB")
         cor.outputs[0].default_value = cores.get(regiao, cores["roupa"])
-        rampa.color_ramp.elements[0].color = tuple(
-            c * 0.55 for c in cores.get(regiao, cores["roupa"])[:3]) + (1.0,)
+        rampa.color_ramp.elements[0].color = _sombra_hue(
+            cores.get(regiao, cores["roupa"])[:3]) + (1.0,)
         rampa.color_ramp.elements[1].color = cores.get(regiao, cores["roupa"])
         nt.links.new(cor.outputs[0], diff.inputs["Color"])
         nt.links.new(diff.outputs[0], rampa.inputs["Fac"])

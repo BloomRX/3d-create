@@ -450,3 +450,188 @@ class Gemini:
         for c in calls or []:
             parts.append({"functionCall": {"name": c["name"], "args": c["args"]}})
         return {"role": "model", "parts": parts or [{"text": ""}]}
+
+
+# ===========================================================================
+# Groq (orquestrador texto) + Router multi-modelo
+# ===========================================================================
+
+class GroqClient:
+    """Cliente OpenAI-compatible do Groq (llama etc.) com a MESMA interface
+    do Gemini.chat — recebe o histórico no formato interno e converte.
+    SEM visão: imagens do histórico viram placeholders de texto."""
+
+    API = "https://api.groq.com/openai/v1/chat/completions"
+    MODEL_PADRAO = "llama-3.3-70b-versatile"
+
+    def __init__(self, keys_path: Path, model: str | None = None,
+                 timeout: int = DEFAULT_TIMEOUT):
+        self.keys_path = Path(keys_path)
+        self.data = keysmod.load(self.keys_path)
+        self.model = model or self.data.get("groq_model") or self.MODEL_PADRAO
+        self.timeout = timeout
+        self.on_log = None
+        self.last_key_masked: str | None = None
+
+    # --- chaves (cooldown próprio: g<i>|modelo) ---------------------------
+    def _pick(self) -> int | None:
+        ks = self.data.get("groq") or []
+        now = time.time()
+        for i in range(len(ks)):
+            until = float(self.data["cooldowns"].get(f"g{i}|{self.model}", 0) or 0)
+            if now >= until:
+                return i
+        return None
+
+    def _persist(self) -> None:
+        try:
+            keysmod.save(self.keys_path, self.data)
+        except OSError:
+            pass
+
+    def status(self) -> dict:
+        return {"keys": [keysmod.mask(k) for k in (self.data.get("groq") or [])],
+                "model": self.model}
+
+    # --- conversão interno -> OpenAI ---------------------------------------
+    def _convert(self, system: str, contents: list, tools: list) -> dict:
+        msgs = [{"role": "system", "content": system or "Você é o Bloom Agent."}]
+        pendentes: list[str] = []  # ids das tool_calls à espera de resposta
+        for c in contents:
+            parts = c.get("parts") or []
+            texto = "".join(p.get("text", "") for p in parts
+                            if isinstance(p, dict) and "text" in p)
+            fcs = [p["functionCall"] for p in parts
+                   if isinstance(p, dict) and "functionCall" in p]
+            frs = [p["functionResponse"] for p in parts
+                   if isinstance(p, dict) and "functionResponse" in p]
+            tem_img = any(isinstance(p, dict) and "inline_data" in p for p in parts)
+            if tem_img:
+                texto = (texto + " [imagem não enviada a este modelo-texto]").strip()
+            if fcs:
+                tcs = []
+                for j, fc in enumerate(fcs):
+                    cid = f"c{len(msgs)}_{j}"
+                    tcs.append({"id": cid, "type": "function",
+                                "function": {"name": fc.get("name", ""),
+                                             "arguments": json.dumps(
+                                                 fc.get("args") or {},
+                                                 ensure_ascii=False)}})
+                    pendentes.append(cid)
+                msgs.append({"role": "assistant", "content": texto or None,
+                             "tool_calls": tcs})
+            elif frs:
+                for fr in frs:
+                    cid = pendentes.pop(0) if pendentes else "c_resp"
+                    msgs.append({"role": "tool", "tool_call_id": cid,
+                                 "name": fr.get("name", ""),
+                                 "content": json.dumps(
+                                     fr.get("response") or {},
+                                     ensure_ascii=False)[:8000]})
+            else:
+                role = "assistant" if c.get("role") == "model" else "user"
+                msgs.append({"role": role, "content": texto or "(vazio)"})
+        body = {"model": self.model, "messages": msgs, "temperature": 0.4}
+        if tools:
+            body["tools"] = [{"type": "function",
+                              "function": {"name": t["name"],
+                                           "description": t["description"],
+                                           "parameters": t["parameters"]}}
+                             for t in tools]
+        return body
+
+    # --- chat (mesma assinatura do Gemini) ---------------------------------
+    def chat(self, parts: list | None = None, system: str = "",
+             tools: list | None = None, contents: list | None = None) -> dict:
+        if contents is None:
+            if not parts:
+                raise ValueError("chat(): informe `parts` ou `contents`")
+            contents = [{"role": "user", "parts": parts_to_wire(parts)}]
+        body = self._convert(system, contents, tools or [])
+        ks = self.data.get("groq") or []
+        if not ks:
+            raise LLMError("groq: nenhuma chave cadastrada (começam com 'gsk_').")
+        tried: set = set()
+        while True:
+            i = self._pick()
+            if i is None or i in tried:
+                raise LLMError(f"groq: sem chave livre agora ({len(ks)} cadastrada(s)).")
+            tried.add(i)
+            key = ks[i]
+            self.last_key_masked = keysmod.mask(key)
+            status, payload = _http_post(self.API, body, self.timeout,
+                                         headers={"Authorization": f"Bearer {key}"})
+            if status == 429:
+                self.data["cooldowns"][f"g{i}|{self.model}"] = time.time() + 60
+                self._persist()
+                continue
+            if status != 200:
+                msg = _error_message(status, payload)
+                baixo = msg.lower()
+                if status in (401, 403) or "invalid" in baixo and "key" in baixo:
+                    self.data["groq"].pop(i)
+                    self._persist()
+                    tried.clear()
+                    if self.on_log:
+                        try: self.on_log(f"🔑 groq {self.last_key_masked} removida (inválida)")
+                        except Exception: pass
+                    if not self.data["groq"]:
+                        raise LLMError("groq: todas as chaves eram inválidas.")
+                    continue
+                raise LLMError(f"groq: {msg}")
+            msg = (payload.get("choices") or [{}])[0].get("message") or {}
+            tcs = []
+            for tc in msg.get("tool_calls") or []:
+                try:
+                    args = json.loads(tc["function"].get("arguments") or "{}")
+                except ValueError:
+                    args = {}
+                tcs.append({"name": tc["function"].get("name", ""), "args": args})
+            return {"text": msg.get("content") or "", "tool_calls": tcs,
+                    "finish_reason": (payload.get("choices") or [{}])[0].get("finish_reason", ""),
+                    "raw_content": None, "model": f"groq:{self.model}",
+                    "key_masked": self.last_key_masked}
+
+
+class Router:
+    """Orquestrador multi-modelo: chamadas COM imagem vão p/ o subagente de
+    visão (Gemini); texto puro vai pro orquestrador rápido (Groq) — roteamento
+    pelo payload, sem gastar chamada de classificação. Groq falhou? Gemini."""
+
+    def __init__(self, gem: Gemini, groq: "GroqClient | None" = None):
+        self.gem = gem
+        self.groq = groq
+        self.on_log = None
+
+    def _tem_imagem(self, contents) -> bool:
+        for c in contents or []:
+            for p in c.get("parts") or []:
+                if isinstance(p, dict) and ("inline_data" in p or "image_b64" in p):
+                    return True
+        return False
+
+    def chat(self, parts=None, system="", tools=None, contents=None) -> dict:
+        alvo_contents = contents
+        if alvo_contents is None and parts is not None:
+            alvo_contents = [{"role": "user", "parts": parts_to_wire(parts)}]
+        if self.groq is not None and not self._tem_imagem(alvo_contents):
+            try:
+                r = self.groq.chat(parts=parts, system=system, tools=tools,
+                                   contents=contents)
+                r["provider"] = "groq"
+                return r
+            except LLMError as e:
+                if self.on_log:
+                    try: self.on_log(f"🔁 groq indisponível ({e}); usando Gemini")
+                    except Exception: pass
+        r = self.gem.chat(parts=parts, system=system, tools=tools, contents=contents)
+        r["provider"] = "gemini"
+        return r
+
+    def status(self) -> dict:
+        st = self.gem.status()
+        try:
+            st["groq"] = self.groq.status() if self.groq else None
+        except Exception:
+            st["groq"] = None
+        return st
