@@ -3,17 +3,18 @@ setlocal EnableExtensions
 title Bloom Agent - Raio-X do modelo (.blend)
 
 rem ====================================================================
-rem  PROBE_MODELO.BAT - raio-X do .blend sem abrir o Blender
-rem  Uso: dois cliques aqui. Ou arraste um .blend em cima deste arquivo.
-rem  Salva util\model_probe.json e pergunta se ja envia (commit+push).
+rem  PROBE_MODELO.BAT - raio-X de QUALQUER .blend, sem abrir o Blender
+rem  Dois cliques; escolha o personagem no menu (ou arraste o arquivo).
+rem  Cada modelo gera util\model_probe_<nome>.json e ele pergunta se ja
+rem  envia pro repo (commit+push) - pode rodar varias vezes.
 rem ====================================================================
 
 set "REPO=%~dp0.."
 for %%I in ("%REPO%") do set "REPO=%%~fI"
-set "PROBE_JSON=%REPO%\util\model_probe.json"
 
 echo.
 echo   === BLOOM AGENT - RAIO-X DO MODELO ===
+echo   (vale para qualquer .blend: Hsin/WuWa ou personagens de outros jogos)
 echo.
 
 rem ---- [1/4] achar o blender.exe ----
@@ -27,46 +28,68 @@ if not defined BLENDER (
 )
 echo   [1/4] Blender: %BLENDER%
 
-rem ---- [2/4] achar o .blend ----
-set "BLEND=%~1"
-if defined BLEND goto :tem_blend
-echo   [2/4] Procurando .blend (banco J:\3d-Create, Desktop, Downloads, Documentos)...
+rem ---- [2/4] listar os .blend disponiveis ----
+echo   [2/4] Procurando .blend no banco J:\3d-Create e nas pastas de usuario...
 set "TMP_LIST=%TEMP%\bloom_probe_blend.txt"
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$raizes=@(); if (Test-Path 'J:\3d-Create') { $raizes += 'J:\3d-Create' }; foreach ($p in @('Desktop','Downloads','Documents')) { $q = Join-Path $env:USERPROFILE $p; if (Test-Path $q) { $raizes += $q } }; Get-ChildItem -Path $raizes -Recurse -Filter *.blend -File -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 8 -ExpandProperty FullName" > "%TMP_LIST%" 2>nul
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$raizes=@(); if (Test-Path 'J:\3d-Create') { $raizes += 'J:\3d-Create' }; foreach ($p in @('Desktop','Downloads','Documents')) { $q = Join-Path $env:USERPROFILE $p; if (Test-Path $q) { $raizes += $q } }; Get-ChildItem -Path $raizes -Recurse -Filter *.blend -File -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 15 -ExpandProperty FullName" > "%TMP_LIST%" 2>nul
 set /a N=0
 for /f "usebackq delims=" %%F in ("%TMP_LIST%") do set /a N+=1
 if "%N%"=="0" (
     echo   Nenhum .blend encontrado nos lugares de sempre.
     goto :perguntar_caminho
 )
-if "%N%"=="1" (
-    for /f "usebackq delims=" %%F in ("%TMP_LIST%") do set "BLEND=%%F"
-    goto :tem_blend
-)
-echo   Achei %N% .blend (do mais recente pro mais antigo^):
+
+rem ---- menu de escolha ----
+setlocal EnableDelayedExpansion
+echo.
+echo   Achei %N% .blend (mais recente primeiro^). Qual personagem vai ser o raio-X?
+echo.
 set /a I=0
 for /f "usebackq delims=" %%F in ("%TMP_LIST%") do (
     set /a I+=1
-    call echo     %%I%%. %%F
+    set "CAND_!I!=%%F"
+    set "SZ=%%~zF"
+    set /a MB=SZ/1048576
+    echo     !I!.  [%%~tF]  !MB! MB   %%F
 )
-echo   Se algum desses e o modelo, copie o caminho dele aqui embaixo.
-echo   (Ou simplesmente ARRASTE o .blend pra dentro desta janela.^)
+echo.
+set "ESCOLHA="
+set /p "ESCOLHA=   Numero do arquivo (1-%N%; Enter = colar caminho; 0 = sair): "
+if "%ESCOLHA%"=="0" exit /b 0
+set "BLEND=!CAND_%ESCOLHA%!"
+endlocal & set "BLEND=%BLEND%"
+if not defined BLEND (
+    echo   Opcao invalida.
+    goto :perguntar_caminho
+)
+goto :tem_blend
 
 :perguntar_caminho
+echo   Cole o caminho completo do .blend (ou ARRASTE o arquivo pra ca dentro^):
 set "BLEND="
-set /p "BLEND=   Caminho do .blend: "
+set /p "BLEND=   Caminho: "
 if not defined BLEND (
     echo   [X] Nenhum caminho informado.
     goto :fim_erro
 )
-set "BLEND=%BLEND:"=%"
 
 :tem_blend
+set "BLEND=%BLEND:"=%"
 if not exist "%BLEND%" (
     echo   [X] Arquivo nao existe: %BLEND%
     goto :fim_erro
 )
+for %%N in ("%BLEND%") do set "NOME=%%~nN"
+set "NOME=%NOME: =_%"
+set "NOME=%NOME:(=%"
+set "NOME=%NOME:)=%"
+set "NOME=%NOME:,=%"
+set "NOME=%NOME:&=e%"
+set "NOME=%NOME:'=%"
+if not defined NOME set "NOME=modelo"
+set "PROBE_JSON=%REPO%\util\model_probe_%NOME%.json"
 echo         Modelo: %BLEND%
+echo         Relatorio: %PROBE_JSON%
 
 rem ---- [3/4] rodar o raio-X ----
 echo   [3/4] Rodando o raio-X (sem abrir o Blender; pode levar ~1 min^)...
@@ -78,7 +101,7 @@ if not exist "%PROBE_JSON%" (
     goto :fim_erro
 )
 echo         Salvo em: %PROBE_JSON%
-echo         (o resumo apareceu acima em "=== MODEL PROBE ===")
+echo         (o resumo apareceu acima em "=== MODEL PROBE ==="^)
 
 rem ---- [4/4] commit + push ----
 echo   [4/4] Quer ja enviar o resultado pro repo? (o agent le na proxima rodada^)
@@ -86,12 +109,13 @@ set "SYNC=S"
 set /p "SYNC=   Enter = SIM / N = nao: "
 if /i "%SYNC%"=="N" goto :fim_ok
 cd /d "%REPO%"
+set "MSG=probe: model_probe_%NOME%.json (raio-X para o agent)"
 where python >nul 2>nul
 if not errorlevel 1 (
-    python tools\project_cli.py sync -m "probe: model_probe.json do .blend (raio-X para o agent)"
+    python tools\project_cli.py sync -m "%MSG%"
     goto :sync_feito
 )
-py -3 tools\project_cli.py sync -m "probe: model_probe.json do .blend (raio-X para o agent)"
+py -3 tools\project_cli.py sync -m "%MSG%"
 
 :sync_feito
 if errorlevel 1 (
@@ -99,7 +123,8 @@ if errorlevel 1 (
     echo       Depois rode o DevKit.bat pra sincronizar.
     goto :fim_ok
 )
-echo   Pronto! Avisou la na conversa: "probe enviado".
+echo   Pronto! Volte na conversa e diga: "probe enviado: %NOME%".
+echo   Para outro personagem, rode este .bat de novo - cada um gera o seu JSON.
 goto :fim_ok
 
 :fim_ok
