@@ -1,0 +1,3737 @@
+{
+ "blender": "5.2.2 LTS",
+ "objetos": [
+  {
+   "nome": "Back Light",
+   "tipo": "LIGHT",
+   "oculto_render": false
+  },
+  {
+   "nome": "Camera",
+   "tipo": "CAMERA",
+   "oculto_render": false
+  },
+  {
+   "nome": "Camera.001",
+   "tipo": "CAMERA",
+   "oculto_render": false
+  },
+  {
+   "nome": "Hsin Faceramp",
+   "tipo": "EMPTY",
+   "oculto_render": true
+  },
+  {
+   "nome": "Hsin Fx",
+   "tipo": "EMPTY",
+   "oculto_render": true
+  },
+  {
+   "nome": "Hsin Fy",
+   "tipo": "EMPTY",
+   "oculto_render": true
+  },
+  {
+   "nome": "LSCherry",
+   "tipo": "MESH",
+   "tris": 512,
+   "verts": 482,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "lscherry.LSCherry",
+    "Outline",
+    "lscherry.combiner.Combiner",
+    "lscherry.core.ToonDiffuse",
+    "lscherry.core.ToonDot",
+    "lscherry.core.EmissionMask",
+    "lscherry.core.Toon3S",
+    "lscherry.core.ReflectiveToon",
+    "lscherry.core.ToonRay",
+    "lscherry.external.michos.honkai-impact-3.Honkai_Impact_3"
+   ],
+   "mods": [
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subdivision",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "Core.LSCherryProvider",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "Core.PrincipleProvider",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "Outline By Distance",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "Outline",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "Outline And Rim",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "Outline And ShrinkWarp",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "Get Object Info",
+     "detalhe": ""
+    },
+    {
+     "tipo": "DATA_TRANSFER",
+     "nome": "Custom Normal",
+     "detalhe": "objeto=None"
+    },
+    {
+     "tipo": "NODES",
+     "nome": "Scene Time Importer",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": true
+  },
+  {
+   "nome": "Main Light",
+   "tipo": "LIGHT",
+   "oculto_render": false
+  },
+  {
+   "nome": "MLight",
+   "tipo": "LIGHT",
+   "oculto_render": false
+  },
+  {
+   "nome": "R2T1XinMd10011_LOD0",
+   "tipo": "MESH",
+   "tris": 115563,
+   "verts": 85672,
+   "uvs": [
+    "UV0",
+    "UV1",
+    "UV2",
+    "UV3"
+   ],
+   "cores": [
+    "COL0"
+   ],
+   "custom_normals": true,
+   "materiais": [
+    "Gathering Wives - Bangs Xin",
+    "Gathering Wives - Hair Xin",
+    "Gathering Wives - Face Xin",
+    "Gathering Wives - Up Xin",
+    "Gathering Wives - Down Xin",
+    "Gathering Wives - Cloth Xin",
+    "Gathering Wives - Tail Xin",
+    "Wuwa - Eye Xin",
+    "Wuwa - Outline"
+   ],
+   "mods": [
+    {
+     "tipo": "NODES",
+     "nome": "Provider",
+     "detalhe": ""
+    },
+    {
+     "tipo": "ARMATURE",
+     "nome": "R2T1XinMd10011_LOD0_Skeleton",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "FurImprove",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "Outline",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 471,
+   "oculto_render": false
+  },
+  {
+   "nome": "R2T1XinMd10011_LOD0.001",
+   "tipo": "MESH",
+   "tris": 1166,
+   "verts": 642,
+   "uvs": [
+    "UV0",
+    "UV1",
+    "UV2",
+    "UV3"
+   ],
+   "cores": [
+    "COL0"
+   ],
+   "custom_normals": true,
+   "materiais": [
+    "Gathering Wives - Bangs Xin",
+    "Gathering Wives - Hair Xin",
+    "Gathering Wives - Face Xin",
+    "Gathering Wives - Up Xin",
+    "Gathering Wives - Down Xin",
+    "Gathering Wives - Cloth Xin",
+    "Gathering Wives - Tail Xin",
+    "Wuwa - Eye Xin",
+    "Wuwa - Outline"
+   ],
+   "mods": [
+    {
+     "tipo": "NODES",
+     "nome": "Provider",
+     "detalhe": ""
+    },
+    {
+     "tipo": "ARMATURE",
+     "nome": "R2T1XinMd10011_LOD0_Skeleton",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 471,
+   "oculto_render": false
+  },
+  {
+   "nome": "R2T1XinMd10011_LOD0_Skeleton",
+   "tipo": "ARMATURE",
+   "ossos_n": 498,
+   "ossos": [
+    "Root",
+    "Bip001",
+    "Bip001Pelvis",
+    "Bip001Spine",
+    "Bip001Spine1",
+    "Bip001Spine2",
+    "Bip001Neck",
+    "Bip001Head",
+    "Bone_Hair001_M",
+    "Bone_Hair002_M",
+    "Bone_Hair003_M",
+    "Bone_Hair011_L",
+    "Bone_Hair012_L",
+    "Bone_Hair011_R",
+    "Bone_Hair012_R",
+    "Bone_Hair013_R",
+    "Bone_Hair044_R",
+    "Bone_Hair045_R",
+    "Bone_Hair021_L",
+    "Bone_Hair022_L",
+    "Bone_Hair021_R",
+    "Bone_Hair022_R",
+    "Bone_Hair023_R",
+    "Bone_Hair041_L",
+    "Bone_Hair042_L",
+    "Bone_Hair043_L",
+    "Bone_Hair044_L",
+    "Bone_Hair051_L",
+    "Bone_Hair052_L",
+    "Bone_Hair053_L",
+    "Bone_Hair054_L",
+    "Bone_Hair051_R",
+    "Bone_Hair052_R",
+    "Bone_Hair053_R",
+    "Bone_Hair054_R",
+    "Bone_Hair055_R",
+    "Bone_Hair061_L",
+    "Bone_Hair062_L",
+    "Bone_Hair063_L",
+    "Bone_Hair064_L",
+    "Bone_Hair065_L",
+    "Bone_Hair061_R",
+    "Bone_Hair062_R",
+    "Bone_Hair063_R",
+    "Bone_Hair064_R",
+    "Bone_Hair065_R",
+    "Bone_Hair071_L",
+    "Bone_Hair072_L",
+    "Bone_Hair073_L",
+    "Bone_Hair074_L",
+    "Bone_Hair075_L",
+    "Bone_Hair076_L",
+    "Bone_Hair071_R",
+    "Bone_Hair072_R",
+    "Bone_Hair073_R",
+    "Bone_Hair074_R",
+    "Bone_Hair075_R",
+    "Bone_Hair076_R",
+    "Bone_Hair081_R",
+    "Bone_Hair091_R",
+    "Bone_Hair092_R",
+    "Bone_Hair093_R",
+    "Bone_Hair094_R",
+    "Bone_Hair095_R",
+    "Bone_Hair091_L",
+    "Bone_Hair092_L",
+    "Bone_Hair093_L",
+    "Bone_Hair094_L",
+    "Bone_Hair101_L",
+    "Bone_Hair102_L",
+    "Bone_Hair103_L",
+    "Bone_Hair104_L",
+    "Bone_Hair101_R",
+    "Bone_Hair102_R",
+    "Bone_Hair103_R",
+    "Bone_Hair104_R",
+    "Bone_Hair111_L",
+    "Bone_Hair112_L",
+    "Bone_Hair111_R",
+    "Bone_Hair112_R",
+    "Bone_Hair121_L",
+    "Bone_Hair121_M",
+    "Bone_Hair122_M",
+    "Bone_Hair121_R",
+    "Bone_Hair131_R",
+    "Bone_Hair132_R",
+    "Bone_Hair133_R",
+    "Bone_Hair134_R",
+    "Bone_Hair135_R",
+    "Bone_Hair136_R",
+    "Bone_Hair141_L",
+    "Bone_Piao001_M",
+    "Bone_Piao001_L",
+    "Bone_Piao002_L",
+    "Bone_Piao003_L",
+    "Bone_Piao004_L",
+    "Bone_Hair151_R",
+    "Bone_Piao011_R",
+    "Bone_Piao017_R",
+    "Bone_Piao018_R",
+    "Bone_Piao019_R",
+    "Bone_Piao022_R",
+    "Bone_Piao023_R",
+    "Bone_Piao014_R",
+    "Bone_Piao015_R",
+    "Bone_Piao001_R",
+    "Bone_Piao002_R",
+    "Bone_Piao003_R",
+    "Bone_Piao004_R",
+    "Facial_CheekLine_A_01_L",
+    "Facial_CheekLine_A_01_R",
+    "Facial_EyebrowLine_A_01_L",
+    "Facial_EyebrowLine_A_01_R",
+    "Facial_EyebrowLine_B_01_L",
+    "Facial_EyebrowLine_B_01_R",
+    "Facial_EyebrowLine_C_01_L",
+    "Facial_EyebrowLine_C_01_R",
+    "Facial_EyeLine_A_01_L",
+    "Facial_EyeLine_A_01_R",
+    "Facial_EyeLine_B_01_L",
+    "Facial_EyeLine_B_01_R",
+    "Facial_EyeLine_C_01_L",
+    "Facial_EyeLine_C_01_R",
+    "Facial_EyeLine_D_01_L",
+    "Facial_EyeLine_D_01_R",
+    "Facial_FaceLine_A_01_L",
+    "Facial_FaceLine_A_01_M",
+    "Facial_FaceLine_A_01_R",
+    "Facial_FaceLine_B_01_L",
+    "Facial_FaceLine_B_01_R",
+    "Facial_FaceLine_C_01_L",
+    "Facial_FaceLine_C_01_R",
+    "Facial_FaceLine_D_01_L",
+    "Facial_FaceLine_D_01_R",
+    "Facial_MouthLine_A_01_L",
+    "Facial_MouthLine_A_01_M",
+    "Facial_MouthLine_A_01_R",
+    "Facial_MouthLine_B_01_M",
+    "MarkCase",
+    "Bone_Piao162_M",
+    "Bip001Clavicle.L",
+    "Bip001UpperArm.L",
+    "Bip001Forearm.L",
+    "Bip001Hand.L",
+    "Bip001Finger0.L",
+    "Bip001Finger01.L",
+    "Bip001Finger02.L",
+    "Bip001Finger1.L",
+    "Bip001Finger11.L",
+    "Bip001Finger12.L",
+    "Bip001Finger2.L",
+    "Bip001Finger21.L",
+    "Bip001Finger22.L",
+    "Bip001Finger3.L",
+    "Bip001Finger31.L",
+    "Bip001Finger32.L",
+    "Bip001Finger4.L",
+    "Bip001Finger41.L",
+    "Bip001Finger42.L",
+    "WeaponProp01",
+    "Bip001ForeTwist.L",
+    "Bip001ForeTwist1.L",
+    "Bone_HandTwist_L",
+    "Bone_Piao171_L",
+    "Bone_Other001_L",
+    "Bone_Other002_L",
+    "Bip001_L_Elbow_F",
+    "Bip001_L_Elbow_B",
+    "Bip001UpArmTwist.L",
+    "Bip001UpArmTwist1.L",
+    "Bip001UpArmTwist2.L",
+    "Bone_Other003_L",
+    "Bone_Piao031_L",
+    "Bone_Piao032_L",
+    "Bone_Piao033_L",
+    "Bone_Piao034_L",
+    "Bone_Piao133_L",
+    "Bone_Piao135_L",
+    "Bone_Piao127_L",
+    "Bone_Piao128_L",
+    "Bone_Piao130_L",
+    "Bone_Piao131_L",
+    "Bone_Piao041_L",
+    "Bone_Piao042_L",
+    "Bone_Piao044_L",
+    "Bone_Piao045_L",
+    "Bone_Piao046_L",
+    "Bone_Piao047_L",
+    "Bone_Piao121_L",
+    "Bone_Piao122_L",
+    "Bone_Piao124_L",
+    "Bone_Piao125_L",
+    "Bone_Piao141_L",
+    "Bone_Piao142_L",
+    "Bone_Piao143_L",
+    "Bone_Piao144_L",
+    "Bone_Piao145_L",
+    "Bone_Piao151_L",
+    "Bone_Piao146_L",
+    "Bone_Piao147_L",
+    "Bip001_Shoulder_L_M",
+    "Bip001_Shoulder_L_F",
+    "Bip001_Shoulder_L_B",
+    "Bip001Clavicle.R",
+    "Bip001UpperArm.R",
+    "Bip001Forearm.R",
+    "Bip001Hand.R",
+    "Bip001Finger0.R",
+    "Bip001Finger01.R",
+    "Bip001Finger02.R",
+    "Bip001Finger1.R",
+    "Bip001Finger11.R",
+    "Bip001Finger12.R",
+    "Bip001Finger2.R",
+    "Bip001Finger21.R",
+    "Bip001Finger22.R",
+    "Bip001Finger3.R",
+    "Bip001Finger31.R",
+    "Bip001Finger32.R",
+    "Bip001Finger4.R",
+    "Bip001Finger41.R",
+    "Bip001Finger42.R",
+    "WeaponProp02",
+    "Bip001ForeTwist.R",
+    "Bip001ForeTwist1.R",
+    "Bone_HandTwist_R",
+    "Bone_Other001_R",
+    "Bone_Other002_R",
+    "Bip001_R_Elbow_F",
+    "Bip001_R_Elbow_B",
+    "Bip001UpArmTwist.R",
+    "Bip001UpArmTwist1.R",
+    "Bip001UpArmTwist2.R",
+    "Bone_Other003_R",
+    "Bone_Piao031_R",
+    "Bone_Piao032_R",
+    "Bone_Piao033_R",
+    "Bone_Piao034_R",
+    "Bone_Piao133_R",
+    "Bone_Piao135_R",
+    "Bone_Piao127_R",
+    "Bone_Piao128_R",
+    "Bone_Piao130_R",
+    "Bone_Piao131_R",
+    "Bone_Piao041_R",
+    "Bone_Piao042_R",
+    "Bone_Piao044_R",
+    "Bone_Piao045_R",
+    "Bone_Piao046_R",
+    "Bone_Piao047_R",
+    "Bone_Piao121_R",
+    "Bone_Piao122_R",
+    "Bone_Piao124_R",
+    "Bone_Piao125_R",
+    "Bone_Piao141_R",
+    "Bone_Piao142_R",
+    "Bone_Piao143_R",
+    "Bone_Piao144_R",
+    "Bone_Piao145_R",
+    "Bone_Piao151_R",
+    "Bone_Piao146_R",
+    "Bone_Piao147_R",
+    "Bip001_Shoulder_R_M",
+    "Bip001_Shoulder_R_F",
+    "Bip001_Shoulder_R_B",
+    "Bone_Piao051_M",
+    "Bone_Piao061_M",
+    "Bone_Piao062_M",
+    "Bone_Piao063_M",
+    "Bone_Piao064_M",
+    "Bone_Piao065_M",
+    "Bone_Piao066_M",
+    "Bone_Piao061_L",
+    "Bone_Piao062_L",
+    "Bone_Piao061_R",
+    "Bone_Piao062_R",
+    "Bone_Piao051_L",
+    "Bone_Piao052_L",
+    "Bone_Piao051_R",
+    "Bone_Piao052_R",
+    "Bone_Piao081_L",
+    "Bone_Piao082_L",
+    "Bone_Piao083_L",
+    "Bone_Piao084_L",
+    "Bone_Piao085_L",
+    "Bone_Piao086_L",
+    "Bone_Piao087_L",
+    "Bone_Piao088_L",
+    "Bone_Piao089_L",
+    "Bone_Piao091_L",
+    "Bone_Piao092_L",
+    "Bone_Piao093_L",
+    "Bone_Piao094_L",
+    "Bone_Piao071_L",
+    "Bone_Piao072_L",
+    "Bone_Piao073_L",
+    "Bone_Piao081_R",
+    "Bone_Piao082_R",
+    "Bone_Piao083_R",
+    "Bone_Piao084_R",
+    "Bone_Piao085_R",
+    "Bone_Piao086_R",
+    "Bone_Piao087_R",
+    "Bone_Piao088_R",
+    "Bone_Piao089_R",
+    "Bone_Piao091_R",
+    "Bone_Piao092_R",
+    "Bone_Piao093_R",
+    "Bone_Piao094_R",
+    "Bone_Piao071_R",
+    "Bone_Piao072_R",
+    "Bone_Piao073_R",
+    "Bone_Bake01_L",
+    "Bone_Bake01_R",
+    "Bone_Clavicle01_L",
+    "Bone_Clavicle01_R",
+    "Bone_Omuscle01_L",
+    "Bone_Omuscle01_R",
+    "ZSpring_Spine_O01_L",
+    "ZSpring_Spine_F01_R",
+    "ZSpring_Spine_F02_L",
+    "ZSpring_Spine_F02_R",
+    "ZSpring_Spine_I01_L",
+    "ZSpring_Spine_F03_R",
+    "ZSpring_Spine_F01_L",
+    "ZSpring_Spine_I01_R",
+    "ZSpring_Spine_F03_L",
+    "ZSpring_Spine_O01_R",
+    "HitCase",
+    "WingCase",
+    "HuluProp01",
+    "Bone_Piao101_L",
+    "Bone_Piao102_L",
+    "Bone_Piao103_L",
+    "Bone_Piao101_R",
+    "Bone_Piao102_R",
+    "Bone_Piao103_R",
+    "Bone_Skirt011_L",
+    "Bone_Skirt012_L",
+    "Bone_Skirt013_L",
+    "Bone_Skirt014_L",
+    "Bone_Skirt015_L",
+    "Bone_Skirt017_L",
+    "Bone_Skirt018_L",
+    "Bone_Skirt021_L",
+    "Bone_Skirt022_L",
+    "Bone_Skirt023_L",
+    "Bone_Skirt031_L",
+    "Bone_Skirt032_L",
+    "Bone_Skirt041_L",
+    "Bone_Skirt042_L",
+    "Bone_Skirt043_L",
+    "Bone_Skirt063_L",
+    "Bone_Skirt061_L",
+    "Bone_Skirt001_R",
+    "Bone_Skirt002_R",
+    "Bone_Skirt003_R",
+    "Bone_Skirt004_R",
+    "Bone_Skirt005_R",
+    "Bone_Skirt006_R",
+    "Bone_Skirt007_R",
+    "Bone_Skirt011_R",
+    "Bone_Skirt012_R",
+    "Bone_Skirt013_R",
+    "Bone_Skirt014_R",
+    "Bone_Skirt015_R",
+    "Bone_Skirt017_R",
+    "Bone_Skirt018_R",
+    "Bone_Skirt021_R",
+    "Bone_Skirt022_R",
+    "Bone_Skirt023_R",
+    "Bone_Skirt031_R",
+    "Bone_Skirt032_R",
+    "Bone_Skirt041_R",
+    "Bone_Skirt042_R",
+    "Bone_Skirt043_R",
+    "Bone_Skirt063_R",
+    "Bone_Skirt061_R",
+    "Bone_Skirt051_L",
+    "Bone_Skirt052_L",
+    "Bone_Skirt053_L",
+    "Bone_Skirt054_L",
+    "Bone_Skirt055_L",
+    "Bone_Skirt056_L",
+    "Bone_Skirt051_R",
+    "Bone_Skirt052_R",
+    "Bone_Skirt053_R",
+    "Bone_Skirt054_R",
+    "Bone_Skirt055_R",
+    "Bone_Skirt056_R",
+    "Bone_Tail001_M",
+    "Bone_Tail002_M",
+    "Bone_Tail003_M",
+    "Bone_Tail004_M",
+    "Bone_Tail005_M",
+    "Bone_Tail006_M",
+    "Bone_Tail007_M",
+    "Bone_Tail008_M",
+    "Bone_Tail009_M",
+    "Bone_Tail010_M"
+   ],
+   "twist_bones": 18,
+   "oculto_render": false
+  },
+  {
+   "nome": "RIG-R2T1XinMd10011_LOD0_Skeleton",
+   "tipo": "ARMATURE",
+   "ossos_n": 823,
+   "ossos": [
+    "root",
+    "ORG-Root",
+    "ORG-Bip001",
+    "ORG-WeaponProp03",
+    "ORG-WeaponProp04",
+    "DEF-Bip001Pelvis",
+    "DEF-Bip001Spine",
+    "DEF-Bip001Spine1",
+    "DEF-Bip001Spine2",
+    "ORG-WeaponProp05",
+    "ORG-WeaponProp06",
+    "ORG-WeaponProp07",
+    "ORG-WeaponProp010",
+    "ORG-WeaponProp011",
+    "ORG-WeaponProp012",
+    "ORG-WeaponProp013",
+    "ORG-WeaponProp014",
+    "ORG-WeaponProp015",
+    "ORG-WeaponProp016",
+    "ORG-WeaponProp017",
+    "ORG-CameraPosition",
+    "ORG-MiddleCase",
+    "ORG-LeftSuspensionCase",
+    "ORG-RightSuspensionCase",
+    "VIS_Bip001UpperArm_ik_pole.L",
+    "VIS_Bip001UpperArm_ik_pole.R",
+    "VIS_Bip001Thigh_ik_pole.L",
+    "VIS_Bip001Thigh_ik_pole.R",
+    "MCH-torso.parent",
+    "torso",
+    "hips",
+    "chest",
+    "MCH-Bip001Spine",
+    "Bip001Spine_fk",
+    "MCH-Bip001Pelvis",
+    "Bip001Pelvis_fk",
+    "tweak_Bip001Pelvis",
+    "ORG-Bip001Pelvis",
+    "ORG-Bip001Thigh.L",
+    "ORG-Bip001Calf.L",
+    "ORG-Bip001Foot.L",
+    "ORG-Bip001Toe0.L",
+    "ORG-Bone_Toe11_L",
+    "ORG-Bone_Toe12_L",
+    "ORG-Bone_Toe21_L",
+    "ORG-Bone_Toe22_L",
+    "ORG-Bone_Toe23_L",
+    "ORG-Bone_Toe31_L",
+    "ORG-Bone_Toe32_L",
+    "ORG-Bone_Toe33_L",
+    "ORG-Bone_Toe41_L",
+    "ORG-Bone_Toe42_L",
+    "ORG-Bone_Toe43_L",
+    "ORG-Bone_Toe51_L",
+    "ORG-Bone_Toe52_L",
+    "ORG-Bone_Toe53_L",
+    "ORG-Bip001Heel0.L",
+    "MCH-Bip001Toe0.L",
+    "Bip001Toe0.L",
+    "MCH-Bip001Foot_tweak.L",
+    "Bip001Foot_tweak.L",
+    "ORG-Bip001_L_Knee_F",
+    "ORG-Bip001_L_Knee_B",
+    "ORG-Bip001_L_Calf",
+    "ORG-Bip001_L_CalfTwist",
+    "ORG-ZSpring_Calf_B01_L",
+    "MCH-Bip001Calf_tweak.L",
+    "Bip001Calf_tweak.L",
+    "MCH-Bip001Calf_tweak.L.001",
+    "Bip001Calf_tweak.L.001",
+    "ORG-Bip001ThighTwist.L",
+    "ORG-Bip001ThighTwist1.L",
+    "ORG-Bone_Other004_L",
+    "ORG-ZSpring_Thigh_F03_L",
+    "ORG-ZSpring_Thigh_B03_L",
+    "ORG-ZSpring_Thigh_F02_L",
+    "ORG-ZSpring_Thigh_B02_L",
+    "ORG-ZSpring_Thigh_F01_L",
+    "ORG-ZSpring_Thigh_B01_L",
+    "MCH-Bip001Thigh_parent_widget.L",
+    "MCH-Bip001Thigh_tweak.L.001",
+    "Bip001Thigh_tweak.L.001",
+    "ORG-Bip001_Leg_L_M",
+    "ORG-Bip001_Leg_L_F",
+    "ORG-Bip001_Leg_L_B",
+    "ORG-ZSpring_Leg_B_L",
+    "ORG-Bip001Thigh.R",
+    "ORG-Bip001Calf.R",
+    "ORG-Bip001Foot.R",
+    "ORG-Bip001Toe0.R",
+    "ORG-Bone_Toe11_R",
+    "ORG-Bone_Toe12_R",
+    "ORG-Bone_Toe21_R",
+    "ORG-Bone_Toe22_R",
+    "ORG-Bone_Toe23_R",
+    "ORG-Bone_Toe31_R",
+    "ORG-Bone_Toe32_R",
+    "ORG-Bone_Toe33_R",
+    "ORG-Bone_Toe41_R",
+    "ORG-Bone_Toe42_R",
+    "ORG-Bone_Toe43_R",
+    "ORG-Bone_Toe51_R",
+    "ORG-Bone_Toe52_R",
+    "ORG-Bone_Toe53_R",
+    "ORG-Bip001Heel0.R",
+    "MCH-Bip001Toe0.R",
+    "Bip001Toe0.R",
+    "MCH-Bip001Foot_tweak.R",
+    "Bip001Foot_tweak.R",
+    "ORG-Bip001_R_Knee_F",
+    "ORG-Bip001_R_Knee_B",
+    "ORG-Bip001_R_Calf",
+    "ORG-Bip001_R_CalfTwist",
+    "ORG-ZSpring_Calf_B01_R",
+    "MCH-Bip001Calf_tweak.R",
+    "Bip001Calf_tweak.R",
+    "MCH-Bip001Calf_tweak.R.001",
+    "Bip001Calf_tweak.R.001",
+    "ORG-Bip001ThighTwist.R",
+    "ORG-Bip001ThighTwist1.R",
+    "ORG-Bone_Other004_R",
+    "ORG-ZSpring_Thigh_F03_R",
+    "ORG-ZSpring_Thigh_B03_R",
+    "ORG-ZSpring_Thigh_F02_R",
+    "ORG-ZSpring_Thigh_B02_R",
+    "ORG-ZSpring_Thigh_F01_R",
+    "ORG-ZSpring_Thigh_B01_R",
+    "MCH-Bip001Thigh_parent_widget.R",
+    "MCH-Bip001Thigh_tweak.R.001",
+    "Bip001Thigh_tweak.R.001",
+    "ORG-Bip001_Leg_R_M",
+    "ORG-Bip001_Leg_R_F",
+    "ORG-Bip001_Leg_R_B",
+    "ORG-ZSpring_Leg_B_R",
+    "Bip001Thigh_parent.L",
+    "MCH-Bip001Thigh_parent.L",
+    "Bip001Thigh_fk.L",
+    "Bip001Calf_fk.L",
+    "MCH-Bip001Foot_fk.L",
+    "Bip001Foot_fk.L",
+    "MCH-Bip001Thigh_ik_swing.L",
+    "Bip001Thigh_ik.L",
+    "MCH-Bip001Calf_ik.L",
+    "MCH-Bip001Thigh_tweak.L",
+    "Bip001Thigh_tweak.L",
+    "DEF-Bip001Thigh.L",
+    "DEF-Bip001Thigh.L.001",
+    "DEF-Bip001Calf.L",
+    "DEF-Bip001Calf.L.001",
+    "DEF-Bip001Foot.L",
+    "DEF-Bip001Toe0.L",
+    "Bip001Thigh_parent.R",
+    "MCH-Bip001Thigh_parent.R",
+    "Bip001Thigh_fk.R",
+    "Bip001Calf_fk.R",
+    "MCH-Bip001Foot_fk.R",
+    "Bip001Foot_fk.R",
+    "MCH-Bip001Thigh_ik_swing.R",
+    "Bip001Thigh_ik.R",
+    "MCH-Bip001Calf_ik.R",
+    "MCH-Bip001Thigh_tweak.R",
+    "Bip001Thigh_tweak.R",
+    "DEF-Bip001Thigh.R",
+    "DEF-Bip001Thigh.R.001",
+    "DEF-Bip001Calf.R",
+    "DEF-Bip001Calf.R.001",
+    "DEF-Bip001Foot.R",
+    "DEF-Bip001Toe0.R",
+    "tweak_Bip001Spine",
+    "ORG-Bip001Spine",
+    "ORG-HuluProp01",
+    "ORG-Bone_Piao101_L",
+    "ORG-Bone_Piao102_L",
+    "ORG-Bone_Piao103_L",
+    "ORG-Bone_Piao101_R",
+    "ORG-Bone_Piao102_R",
+    "ORG-Bone_Piao103_R",
+    "ORG-Bone_Skirt011_L",
+    "ORG-Bone_Skirt012_L",
+    "ORG-Bone_Skirt013_L",
+    "ORG-Bone_Skirt014_L",
+    "ORG-Bone_Skirt015_L",
+    "ORG-Bone_Skirt017_L",
+    "ORG-Bone_Skirt018_L",
+    "ORG-Bone_Skirt021_L",
+    "ORG-Bone_Skirt022_L",
+    "ORG-Bone_Skirt023_L",
+    "ORG-Bone_Skirt031_L",
+    "ORG-Bone_Skirt032_L",
+    "ORG-Bone_Skirt041_L",
+    "ORG-Bone_Skirt042_L",
+    "ORG-Bone_Skirt043_L",
+    "ORG-Bone_Skirt063_L",
+    "ORG-Bone_Skirt061_L",
+    "ORG-Bone_Skirt001_R",
+    "ORG-Bone_Skirt002_R",
+    "ORG-Bone_Skirt003_R",
+    "ORG-Bone_Skirt004_R",
+    "ORG-Bone_Skirt005_R",
+    "ORG-Bone_Skirt006_R",
+    "ORG-Bone_Skirt007_R",
+    "ORG-Bone_Skirt011_R",
+    "ORG-Bone_Skirt012_R",
+    "ORG-Bone_Skirt013_R",
+    "ORG-Bone_Skirt014_R",
+    "ORG-Bone_Skirt015_R",
+    "ORG-Bone_Skirt017_R",
+    "ORG-Bone_Skirt018_R",
+    "ORG-Bone_Skirt021_R",
+    "ORG-Bone_Skirt022_R",
+    "ORG-Bone_Skirt023_R",
+    "ORG-Bone_Skirt031_R",
+    "ORG-Bone_Skirt032_R",
+    "ORG-Bone_Skirt041_R",
+    "ORG-Bone_Skirt042_R",
+    "ORG-Bone_Skirt043_R",
+    "ORG-Bone_Skirt063_R",
+    "ORG-Bone_Skirt061_R",
+    "ORG-Bone_Skirt051_L",
+    "ORG-Bone_Skirt052_L",
+    "ORG-Bone_Skirt053_L",
+    "ORG-Bone_Skirt054_L",
+    "ORG-Bone_Skirt055_L",
+    "ORG-Bone_Skirt056_L",
+    "ORG-Bone_Skirt051_R",
+    "ORG-Bone_Skirt052_R",
+    "ORG-Bone_Skirt053_R",
+    "ORG-Bone_Skirt054_R",
+    "ORG-Bone_Skirt055_R",
+    "ORG-Bone_Skirt056_R",
+    "ORG-Bone_Tail001_M",
+    "ORG-Bone_Tail002_M",
+    "ORG-Bone_Tail003_M",
+    "ORG-Bone_Tail004_M",
+    "ORG-Bone_Tail005_M",
+    "ORG-Bone_Tail006_M",
+    "ORG-Bone_Tail007_M",
+    "ORG-Bone_Tail008_M",
+    "ORG-Bone_Tail009_M",
+    "ORG-Bone_Tail010_M",
+    "ORG-Bone_Skirt001_L",
+    "ORG-Bone_Skirt002_L",
+    "ORG-Bone_Skirt003_L",
+    "ORG-Bone_Skirt004_L",
+    "ORG-Bone_Skirt005_L",
+    "ORG-Bone_Skirt006_L",
+    "ORG-Bone_Skirt007_L",
+    "MCH-WGT-hips",
+    "MCH-Bip001Spine1",
+    "Bip001Spine1_fk",
+    "MCH-pivot",
+    "tweak_Bip001Spine1",
+    "ORG-Bip001Spine1",
+    "MCH-Bip001Spine2",
+    "Bip001Spine2_fk",
+    "tweak_Bip001Spine2",
+    "ORG-Bip001Spine2",
+    "ORG-Bip001Neck",
+    "ORG-Bip001Head",
+    "ORG-Bone_Hair001_M",
+    "ORG-Bone_Hair002_M",
+    "ORG-Bone_Hair003_M",
+    "ORG-Bone_Hair011_L",
+    "ORG-Bone_Hair012_L",
+    "ORG-Bone_Hair011_R",
+    "ORG-Bone_Hair012_R",
+    "ORG-Bone_Hair013_R",
+    "ORG-Bone_Hair044_R",
+    "ORG-Bone_Hair045_R",
+    "ORG-Bone_Hair021_L",
+    "ORG-Bone_Hair022_L",
+    "ORG-Bone_Hair021_R",
+    "ORG-Bone_Hair022_R",
+    "ORG-Bone_Hair023_R",
+    "ORG-Bone_Hair041_L",
+    "ORG-Bone_Hair042_L",
+    "ORG-Bone_Hair043_L",
+    "ORG-Bone_Hair044_L",
+    "ORG-Bone_Hair051_L",
+    "ORG-Bone_Hair052_L",
+    "ORG-Bone_Hair053_L",
+    "ORG-Bone_Hair054_L",
+    "ORG-Bone_Hair051_R",
+    "ORG-Bone_Hair052_R",
+    "ORG-Bone_Hair053_R",
+    "ORG-Bone_Hair054_R",
+    "ORG-Bone_Hair055_R",
+    "ORG-Bone_Hair061_L",
+    "ORG-Bone_Hair062_L",
+    "ORG-Bone_Hair063_L",
+    "ORG-Bone_Hair064_L",
+    "ORG-Bone_Hair065_L",
+    "ORG-Bone_Hair061_R",
+    "ORG-Bone_Hair062_R",
+    "ORG-Bone_Hair063_R",
+    "ORG-Bone_Hair064_R",
+    "ORG-Bone_Hair065_R",
+    "ORG-Bone_Hair071_L",
+    "ORG-Bone_Hair072_L",
+    "ORG-Bone_Hair073_L",
+    "ORG-Bone_Hair074_L",
+    "ORG-Bone_Hair075_L",
+    "ORG-Bone_Hair076_L",
+    "ORG-Bone_Hair071_R",
+    "ORG-Bone_Hair072_R",
+    "ORG-Bone_Hair073_R",
+    "ORG-Bone_Hair074_R",
+    "ORG-Bone_Hair075_R",
+    "ORG-Bone_Hair076_R",
+    "ORG-Bone_Hair081_R",
+    "ORG-Bone_Hair091_R",
+    "ORG-Bone_Hair092_R",
+    "ORG-Bone_Hair093_R",
+    "ORG-Bone_Hair094_R",
+    "ORG-Bone_Hair095_R",
+    "ORG-Bone_Hair091_L",
+    "ORG-Bone_Hair092_L",
+    "ORG-Bone_Hair093_L",
+    "ORG-Bone_Hair094_L",
+    "ORG-Bone_Hair101_L",
+    "ORG-Bone_Hair102_L",
+    "ORG-Bone_Hair103_L",
+    "ORG-Bone_Hair104_L",
+    "ORG-Bone_Hair101_R",
+    "ORG-Bone_Hair102_R",
+    "ORG-Bone_Hair103_R",
+    "ORG-Bone_Hair104_R",
+    "ORG-Bone_Hair111_L",
+    "ORG-Bone_Hair112_L",
+    "ORG-Bone_Hair111_R",
+    "ORG-Bone_Hair112_R",
+    "ORG-Bone_Hair121_L",
+    "ORG-Bone_Hair121_M",
+    "ORG-Bone_Hair122_M",
+    "ORG-Bone_Hair121_R",
+    "ORG-Bone_Hair131_R",
+    "ORG-Bone_Hair132_R",
+    "ORG-Bone_Hair133_R",
+    "ORG-Bone_Hair134_R",
+    "ORG-Bone_Hair135_R",
+    "ORG-Bone_Hair136_R",
+    "ORG-Bone_Hair141_L",
+    "ORG-Bone_Piao001_M",
+    "ORG-Bone_Piao001_L",
+    "ORG-Bone_Piao002_L",
+    "ORG-Bone_Piao003_L",
+    "ORG-Bone_Piao004_L",
+    "ORG-Bone_Hair151_R",
+    "ORG-Bone_Piao011_R",
+    "ORG-Bone_Piao017_R",
+    "ORG-Bone_Piao018_R",
+    "ORG-Bone_Piao019_R",
+    "ORG-Bone_Piao022_R",
+    "ORG-Bone_Piao023_R",
+    "ORG-Bone_Piao014_R",
+    "ORG-Bone_Piao015_R",
+    "ORG-Bone_Piao001_R",
+    "ORG-Bone_Piao002_R",
+    "ORG-Bone_Piao003_R",
+    "ORG-Bone_Piao004_R",
+    "ORG-Facial_CheekLine_A_01_L",
+    "ORG-Facial_CheekLine_A_01_R",
+    "ORG-Facial_EyebrowLine_A_01_L",
+    "ORG-Facial_EyebrowLine_A_01_R",
+    "ORG-Facial_EyebrowLine_B_01_L",
+    "ORG-Facial_EyebrowLine_B_01_R",
+    "ORG-Facial_EyebrowLine_C_01_L",
+    "ORG-Facial_EyebrowLine_C_01_R",
+    "ORG-Facial_EyeLine_A_01_L",
+    "ORG-Facial_EyeLine_A_01_R",
+    "ORG-Facial_EyeLine_B_01_L",
+    "ORG-Facial_EyeLine_B_01_R",
+    "ORG-Facial_EyeLine_C_01_L",
+    "ORG-Facial_EyeLine_C_01_R",
+    "ORG-Facial_EyeLine_D_01_L",
+    "ORG-Facial_EyeLine_D_01_R",
+    "ORG-Facial_FaceLine_A_01_L",
+    "ORG-Facial_FaceLine_A_01_M",
+    "ORG-Facial_FaceLine_A_01_R",
+    "ORG-Facial_FaceLine_B_01_L",
+    "ORG-Facial_FaceLine_B_01_R",
+    "ORG-Facial_FaceLine_C_01_L",
+    "ORG-Facial_FaceLine_C_01_R",
+    "ORG-Facial_FaceLine_D_01_L",
+    "ORG-Facial_FaceLine_D_01_R",
+    "ORG-Facial_MouthLine_A_01_L",
+    "ORG-Facial_MouthLine_A_01_M",
+    "ORG-Facial_MouthLine_A_01_R",
+    "ORG-Facial_MouthLine_B_01_M",
+    "ORG-MarkCase",
+    "ORG-Bone_Piao162_M",
+    "ORG-Bip001Clavicle.L",
+    "ORG-Bip001UpperArm.L",
+    "ORG-Bip001Forearm.L",
+    "ORG-Bip001Hand.L",
+    "ORG-Bip001Finger0.L",
+    "ORG-Bip001Finger01.L",
+    "ORG-Bip001Finger02.L",
+    "ORG-Bip001Finger1.L",
+    "ORG-Bip001Finger11.L"
+   ],
+   "twist_bones": 18,
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Calf_fk.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 34,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Calf_fk.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 34,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Calf_tweak.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Calf_tweak.L.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Calf_tweak.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Calf_tweak.R.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Clavicle.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 34,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Clavicle.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 34,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger0.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger0.L.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger0.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger0.R.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger01.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger01.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger02.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger02.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger0_master.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 6,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger0_master.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 6,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger1.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger1.L.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger1.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger1.R.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger11.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger11.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger12.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger12.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger1_master.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 6,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger1_master.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 6,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger2.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger2.L.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger2.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger2.R.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger21.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger21.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger22.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger22.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger2_master.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 6,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger2_master.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 6,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger3.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger3.L.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger3.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger3.R.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger31.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger31.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger32.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger32.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger3_master.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 6,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger3_master.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 6,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger4.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger4.L.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger4.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger4.R.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger41.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger41.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger42.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger42.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger4_master.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 6,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Finger4_master.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 6,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Foot_fk.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Foot_fk.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Foot_heel_ik.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 52,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Foot_heel_ik.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 52,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Foot_ik.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 8,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [
+    {
+     "tipo": "SUBSURF",
+     "nome": "subsurf",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Foot_ik.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 8,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [
+    {
+     "tipo": "SUBSURF",
+     "nome": "subsurf",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Foot_spin_ik.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 52,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Foot_spin_ik.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 52,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Foot_tweak.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Foot_tweak.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Forearm_fk.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 34,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Forearm_fk.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 34,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Forearm_tweak.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Forearm_tweak.L.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Forearm_tweak.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Forearm_tweak.R.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Hand_fk.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Hand_fk.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Hand_ik.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 8,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [
+    {
+     "tipo": "SUBSURF",
+     "nome": "subsurf",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Hand_ik.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 8,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [
+    {
+     "tipo": "SUBSURF",
+     "nome": "subsurf",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Hand_tweak.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Hand_tweak.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Pelvis_fk",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Spine1_fk",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Spine2_fk",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Spine_fk",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Thigh_fk.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 34,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Thigh_fk.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 34,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Thigh_ik.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 14,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Thigh_ik.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 14,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Thigh_ik_target.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Thigh_ik_target.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Thigh_parent.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Thigh_parent.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Thigh_tweak.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Thigh_tweak.L.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Thigh_tweak.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Thigh_tweak.R.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Toe0.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001Toe0.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001UpperArm_fk.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 34,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001UpperArm_fk.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 34,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001UpperArm_ik.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 14,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001UpperArm_ik.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 14,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001UpperArm_ik_target.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001UpperArm_ik_target.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001UpperArm_parent.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001UpperArm_parent.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001UpperArm_tweak.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001UpperArm_tweak.L.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001UpperArm_tweak.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_Bip001UpperArm_tweak.R.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_chest",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_head",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_hips",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_neck",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_QuickConfig",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 120,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_root",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_torso",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 8,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_tweak_Bip001Neck",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_tweak_Bip001Pelvis",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_tweak_Bip001Spine",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_tweak_Bip001Spine1",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_tweak_Bip001Spine2",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_tweak_Bip001Spine2.001",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 48,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_VIS_Bip001Thigh_ik_pole.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 2,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_VIS_Bip001Thigh_ik_pole.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 2,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_VIS_Bip001UpperArm_ik_",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 2,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-RIG-R2T1XinMd10011_LOD0_Skeleton_VIS_Bip001UpperArm_ik_pole",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 2,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-rig_eye.L",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-rig_eye.R",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "WGT-rig_eyes",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 68,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  }
+ ],
+ "materiais": [
+  {
+   "nome": "Dots Stroke",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 5,
+   "nos_tipos": {
+    "FRAME": 1,
+    "OUTPUT_MATERIAL": 2,
+    "BSDF_PRINCIPLED": 1,
+    "BSDF_DIFFUSE": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Gathering Wives - Bangs",
+   "blend": "HASHED",
+   "backface": "True",
+   "nos_n": 12,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 5,
+    "GROUP": 1,
+    "FRAME": 5
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Gathering Wives - Bangs Xin",
+   "blend": "BLEND",
+   "backface": "False",
+   "nos_n": 19,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 4,
+    "FRAME": 4,
+    "GROUP": 7,
+    "SEPARATE_COLOR": 1,
+    "ATTRIBUTE": 1,
+    "MAP_RANGE": 1
+   },
+   "texturas": [
+    {
+     "img": "T_R2T1XinMd10011Bangs_D.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Bangs_FTM.png",
+     "tam": [
+      512,
+      512
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Bangs_HM.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Bangs_HN.png",
+     "tam": [
+      256,
+      256
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Gathering Wives - Body",
+   "blend": "HASHED",
+   "backface": "True",
+   "nos_n": 14,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 6,
+    "GROUP": 1,
+    "FRAME": 6
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Gathering Wives - Cloth Xin",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 21,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 4,
+    "FRAME": 4,
+    "GROUP": 7,
+    "SEPARATE_COLOR": 1,
+    "MAP_RANGE": 1,
+    "REROUTE": 3
+   },
+   "texturas": [
+    {
+     "img": "T_R2T1XinMd10011Cloth_D.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Cloth_RGID.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Cloth_FTM.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Cloth_N.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Gathering Wives - Down Xin",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 32,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 4,
+    "FRAME": 4,
+    "GROUP": 11,
+    "SEPARATE_COLOR": 1,
+    "MAP_RANGE": 1,
+    "REROUTE": 7,
+    "MATH": 3
+   },
+   "texturas": [
+    {
+     "img": "T_R2T1XinMd10011Down_D.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Down_RGID.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Down_FTM.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Down_N.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Gathering Wives - Eye",
+   "blend": "HASHED",
+   "backface": "True",
+   "nos_n": 9,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 3,
+    "UVMAP": 1,
+    "GROUP": 1,
+    "FRAME": 3
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Gathering Wives - Face",
+   "blend": "HASHED",
+   "backface": "True",
+   "nos_n": 10,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 4,
+    "GROUP": 1,
+    "FRAME": 4
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Gathering Wives - Face Xin",
+   "blend": "HASHED",
+   "backface": "True",
+   "nos_n": 20,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 4,
+    "FRAME": 2,
+    "GROUP": 8,
+    "ATTRIBUTE": 1,
+    "MAP_RANGE": 1,
+    "MIX": 1,
+    "MATH": 1,
+    "VALUE": 1
+   },
+   "texturas": [
+    {
+     "img": "T_R2T1XinMd10011Face_D.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Face_HET.png",
+     "tam": [
+      256,
+      256
+     ]
+    },
+    {
+     "img": "T_FemaleMFace_SDF.png",
+     "tam": [
+      1024,
+      1024
+     ]
+    },
+    {
+     "img": "Face_Blush.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Gathering Wives - Hair",
+   "blend": "HASHED",
+   "backface": "True",
+   "nos_n": 12,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 5,
+    "GROUP": 1,
+    "FRAME": 5
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Gathering Wives - Hair Xin",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 20,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 4,
+    "FRAME": 4,
+    "GROUP": 7,
+    "SEPARATE_COLOR": 1,
+    "ATTRIBUTE": 2,
+    "MAP_RANGE": 1
+   },
+   "texturas": [
+    {
+     "img": "T_R2T1XinMd10011Hair_D.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Hair_FTM.png",
+     "tam": [
+      512,
+      512
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Hair_HM.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Hair_HN.png",
+     "tam": [
+      256,
+      256
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Gathering Wives - Tail Xin",
+   "blend": "HASHED",
+   "backface": "True",
+   "nos_n": 17,
+   "nos_tipos": {
+    "TEX_IMAGE": 5,
+    "FRAME": 4,
+    "OUTPUT_MATERIAL": 1,
+    "UVMAP": 1,
+    "GROUP": 3,
+    "ATTRIBUTE": 1,
+    "MATH": 1,
+    "NEW_GEOMETRY": 1
+   },
+   "texturas": [
+    {
+     "img": "T_R2T1XinMd10011Tail_D.png",
+     "tam": [
+      1024,
+      1024
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Tail_ID.png",
+     "tam": [
+      512,
+      512
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Tail_RGID.png",
+     "tam": [
+      1024,
+      1024
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Tail_N.png",
+     "tam": [
+      1024,
+      1024
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011_M.png.001",
+     "tam": [
+      2048,
+      2048
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Gathering Wives - Up Xin",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 35,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 4,
+    "FRAME": 4,
+    "GROUP": 11,
+    "SEPARATE_COLOR": 1,
+    "MAP_RANGE": 2,
+    "REROUTE": 7,
+    "MATH": 3,
+    "MIX": 1,
+    "RGBTOBW": 1
+   },
+   "texturas": [
+    {
+     "img": "T_R2T1XinMd10011Up_D.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Up_RGID.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Up_FTM.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Up_N.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "lscherry.combiner.Combiner",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 6,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 5
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.core.EmissionMask",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.core.Outline",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 3,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 2
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.core.ReflectiveToon",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.core.SpecularDiffuse",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.core.SpecularDot",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.core.Toon3S",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.core.ToonDiffuse",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 3,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 2
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.core.ToonDot",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 5,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 4
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.core.ToonRay",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 5,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 4
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.dev.Unstable",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 3,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 2
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.external.AVR.<Tail>",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.external.festivities.Gi_Enviroment.<Tail>",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 4,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 3
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.external.GloTAni.<Tail>",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.external.MICA.GF2.<Tail>",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.external.michos.genshin-impact.Genshin_Impact",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 14,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 13
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.external.michos.honkai-impact-3.Honkai_Impact_3",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 12,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 11
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.external.michos.honkai-star-rail.Honkai_Star_Rail",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 13,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 12
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.external.MMD.<Tail>",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.external.XTR.<Tail>",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 3,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 2
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.general.WorldColor",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.LSCherry",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 16,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 13,
+    "BSDF_PRINCIPLED": 1,
+    "ATTRIBUTE": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.post_production.ColorFilter",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 3,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 2
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.post_production.PostProduction",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 15,
+   "nos_tipos": {
+    "GROUP": 14,
+    "OUTPUT_MATERIAL": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.starters.wuthering_waves.Wuthering_Waves",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 13,
+   "nos_tipos": {
+    "GROUP": 13
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.utils.bnodes.BackgroundColor",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.utils.bnodes.BlendIt",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 4,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 3
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.utils.bnodes.Limiter",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.utils.bnodes.Logic",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 17,
+   "nos_tipos": {
+    "GROUP": 16,
+    "OUTPUT_MATERIAL": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.utils.bnodes.Scene",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.utils.composition.Overlay",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.utils.normal.NormalPicker",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.utils.procedural.CustomRamp",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 11,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 10
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.utils.procedural.Procedural",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 17,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 15,
+    "FRAME": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.utils.procedural.StylizedFresnel",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.utils.ramp-style.ToonStyle",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 6,
+   "nos_tipos": {
+    "GROUP": 5,
+    "OUTPUT_MATERIAL": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.utils.separator.Convertor",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 8,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 7
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.utils.separator.NumberHolder",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 4,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 3
+   },
+   "texturas": []
+  },
+  {
+   "nome": "lscherry.utils.separator.Selector",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Outline",
+   "blend": "BLEND",
+   "backface": "True",
+   "nos_n": 5,
+   "nos_tipos": {
+    "EMISSION": 1,
+    "NEW_GEOMETRY": 1,
+    "MIX_SHADER": 1,
+    "OUTPUT_MATERIAL": 1,
+    "BSDF_TRANSPARENT": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Outlines",
+   "blend": "HASHED",
+   "backface": "True",
+   "nos_n": 2,
+   "nos_tipos": {
+    "RGB": 1,
+    "OUTPUT_MATERIAL": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Outlines_Alpha",
+   "blend": "BLEND",
+   "backface": "True",
+   "nos_n": 2,
+   "nos_tipos": {
+    "BSDF_TRANSPARENT": 1,
+    "OUTPUT_MATERIAL": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Planet",
+   "blend": "BLEND",
+   "backface": "False",
+   "nos_n": 7,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "BSDF_DIFFUSE": 2,
+    "SHADERTORGB": 1,
+    "VALTORGB": 1,
+    "MIX_SHADER": 1,
+    "BSDF_TRANSPARENT": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Tacet Mark",
+   "blend": "BLEND",
+   "backface": "True",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Wuwa - Eye Xin",
+   "blend": "HASHED",
+   "backface": "True",
+   "nos_n": 7,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 2,
+    "FRAME": 2,
+    "GROUP": 2
+   },
+   "texturas": [
+    {
+     "img": "T_R2T1XinMd10011Eye_D.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "T_R2T1XinMd10011Eye_HET.png",
+     "tam": [
+      256,
+      256
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Wuwa - Outline",
+   "blend": "BLEND",
+   "backface": "True",
+   "nos_n": 2,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 1
+   },
+   "texturas": []
+  }
+ ],
+ "shape_keys_global": [
+  {
+   "R2T1XinMd10011_LOD0": [
+    "Default",
+    "L_P",
+    "L_F",
+    "L_B",
+    "L_F_U",
+    "L_B_U",
+    "L_Up",
+    "L_Up_U",
+    "R_P",
+    "R_F",
+    "R_B",
+    "R_F_U",
+    "R_B_U",
+    "R_Up",
+    "R_Up_U",
+    "Pupil_Up_R",
+    "Pupil_Up_L",
+    "Pupil_In_R",
+    "Pupil_In_L",
+    "Pupil_Down_R",
+    "Pupil_Down_L",
+    "Pupil_Out_R",
+    "Pupil_Out_L",
+    "Pupil_Scale",
+    "E_Stare_R",
+    "E_Stare_L",
+    "Pupil_Up",
+    "Pupil_Down",
+    "Pupil_R",
+    "Pupil_L",
+    "E_Stare",
+    "B_Anger_R",
+    "B_Anger_L",
+    "B_Happy_R",
+    "B_Happy_L",
+    "B_Cheerful_R",
+    "B_Cheerful_L",
+    "B_Puzzled_R",
+    "B_Puzzled_L",
+    "B_Sad_R",
+    "B_Sad_L",
+    "B_Flat_R",
+    "B_Flat_L",
+    "B_Up_Add_R",
+    "B_Up_Add_L",
+    "B_Down_Add_R",
+    "B_Down_Add_L",
+    "E_Close_R",
+    "E_Close_L",
+    "E_Smile_R",
+    "E_Smile_L",
+    "E_Squint_R",
+    "E_Squint_L",
+    "E_Anger_R",
+    "E_Anger_L",
+    "E_Sad_R",
+    "E_Sad_L",
+    "E_Focus",
+    "E_Insipid",
+    "Aa",
+    "A",
+    "E",
+    "I",
+    "O",
+    "U",
+    "UTooth",
+    "M_Smile_R",
+    "M_Smile_L",
+    "M_Ennui_R",
+    "M_Ennui_L",
+    "M_Squint_R",
+    "M_Squint_L",
+    "M_OpenSmall",
+    "M_Laugh",
+    "M_Scared",
+    "M_ScaredTooth",
+    "M_Anger",
+    "M_Puff",
+    "M_Trapezoid",
+    "M_O"
+   ]
+  },
+  {
+   "R2T1XinMd10011_LOD0.001": [
+    "Default",
+    "L_P",
+    "L_F",
+    "L_B",
+    "L_F_U",
+    "L_B_U",
+    "L_Up",
+    "L_Up_U",
+    "R_P",
+    "R_F",
+    "R_B",
+    "R_F_U",
+    "R_B_U",
+    "R_Up",
+    "R_Up_U",
+    "Pupil_Up_R",
+    "Pupil_Up_L",
+    "Pupil_In_R",
+    "Pupil_In_L",
+    "Pupil_Down_R",
+    "Pupil_Down_L",
+    "Pupil_Out_R",
+    "Pupil_Out_L",
+    "Pupil_Scale",
+    "E_Stare_R",
+    "E_Stare_L",
+    "Pupil_Up",
+    "Pupil_Down",
+    "Pupil_R",
+    "Pupil_L",
+    "E_Stare",
+    "B_Anger_R",
+    "B_Anger_L",
+    "B_Happy_R",
+    "B_Happy_L",
+    "B_Cheerful_R",
+    "B_Cheerful_L",
+    "B_Puzzled_R",
+    "B_Puzzled_L",
+    "B_Sad_R",
+    "B_Sad_L",
+    "B_Flat_R",
+    "B_Flat_L",
+    "B_Up_Add_R",
+    "B_Up_Add_L",
+    "B_Down_Add_R",
+    "B_Down_Add_L",
+    "E_Close_R",
+    "E_Close_L",
+    "E_Smile_R",
+    "E_Smile_L",
+    "E_Squint_R",
+    "E_Squint_L",
+    "E_Anger_R",
+    "E_Anger_L",
+    "E_Sad_R",
+    "E_Sad_L",
+    "E_Focus",
+    "E_Insipid",
+    "Aa",
+    "A",
+    "E",
+    "I",
+    "O",
+    "U",
+    "UTooth",
+    "M_Smile_R",
+    "M_Smile_L",
+    "M_Ennui_R",
+    "M_Ennui_L",
+    "M_Squint_R",
+    "M_Squint_L",
+    "M_OpenSmall",
+    "M_Laugh",
+    "M_Scared",
+    "M_ScaredTooth",
+    "M_Anger",
+    "M_Puff",
+    "M_Trapezoid",
+    "M_O"
+   ]
+  }
+ ],
+ "armaduras": [],
+ "drivers": 112,
+ "render": {
+  "engine": "BLENDER_EEVEE",
+  "res": [
+   1440,
+   2560
+  ],
+  "fps": 24
+ }
+}

@@ -1,0 +1,4049 @@
+{
+ "blender": "5.2.2 LTS",
+ "objetos": [
+  {
+   "nome": "Area.000",
+   "tipo": "LIGHT",
+   "oculto_render": false
+  },
+  {
+   "nome": "Area.000_empty",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "Area.032_empty",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "Area.033_empty",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "Area.034_empty",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "Area.037_empty",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "Area.038_empty",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "Basic Painties",
+   "tipo": "MESH",
+   "tris": 5070,
+   "verts": 5331,
+   "uvs": [
+    "Base 8.1 Female"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Basic panties"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": true
+  },
+  {
+   "nome": "Boots",
+   "tipo": "MESH",
+   "tris": 7084,
+   "verts": 6092,
+   "uvs": [
+    "UVMap",
+    "UV0",
+    "UVMap.001",
+    "UV1",
+    "UVMap.002",
+    "UV2",
+    "UVSet1",
+    "UV_Map.005"
+   ],
+   "cores": [
+    "Color",
+    "Col",
+    "COL0",
+    "Attribute",
+    "Attribute.001",
+    "Attribute.002",
+    "Attribute.003",
+    "Attribute.004",
+    "Attribute.005",
+    "PSKVTXCOL_0",
+    "SculptFreezeColorTemp",
+    "SculptMaskColorTemp",
+    "VertexColors",
+    "colorSet0",
+    "Normal",
+    "Night",
+    "Cd",
+    "Col.001",
+    "UVMap.003",
+    "__uvp2_group",
+    "Heightmap",
+    "Alpha",
+    "顶点色",
+    "UVMap.004"
+   ],
+   "custom_normals": true,
+   "materiais": [
+    "boots",
+    "Outline_clothes_RR_jacket_jeens_gloves_boots"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": false
+  },
+  {
+   "nome": "Camera",
+   "tipo": "CAMERA",
+   "oculto_render": false
+  },
+  {
+   "nome": "Cozy Shirts Offshoulder Shirt Mesh",
+   "tipo": "MESH",
+   "tris": 19119,
+   "verts": 19274,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Cozy_sweater"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    },
+    {
+     "tipo": "CORRECTIVE_SMOOTH",
+     "nome": "CorrectiveSmooth",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": true
+  },
+  {
+   "nome": "Earring Left",
+   "tipo": "MESH",
+   "tris": 576,
+   "verts": 576,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "earings"
+   ],
+   "mods": [
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 0,
+   "oculto_render": true
+  },
+  {
+   "nome": "Earring Right",
+   "tipo": "MESH",
+   "tris": 576,
+   "verts": 576,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "earings"
+   ],
+   "mods": [
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 0,
+   "oculto_render": true
+  },
+  {
+   "nome": "Effect control",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "Empty.009",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "Genesis 9",
+   "tipo": "ARMATURE",
+   "ossos_n": 497,
+   "ossos": [
+    "master",
+    "hip",
+    "DEF-spine",
+    "spine.twk",
+    "DEF-spine-1",
+    "spine-1.twk",
+    "DEF-chest",
+    "chest.twk",
+    "pectoral.L",
+    "pectoral.R",
+    "DEF-chest-1",
+    "chest-1.twk",
+    "clavicle.L",
+    "armSocket.L",
+    "elbowPoleA.L",
+    "clavicle.R",
+    "armSocket.R",
+    "elbowPoleA.R",
+    "neckhead",
+    "neckParent",
+    "neck",
+    "neck.twk",
+    "neck-1",
+    "neck-1.twk",
+    "head",
+    "upperteeth",
+    "lowerjaw",
+    "lowerteeth",
+    "tongue01",
+    "tongue02",
+    "tongue03",
+    "tongue04",
+    "tongue05",
+    "tongue_parent",
+    "ik_tongue05",
+    "inv_tongue05",
+    "inv_tongue04",
+    "inv_tongue03",
+    "inv_tongue02",
+    "inv_tongue01",
+    "ik_tongue04",
+    "ik_tongue03",
+    "ik_tongue02",
+    "ik_tongue01",
+    "tongue",
+    "lowerfacerig",
+    "lipcorner.L",
+    "liplower.L",
+    "liplowermiddle",
+    "liplower.R",
+    "lipcorner.R",
+    "cheeklower.L",
+    "cheeklower.R",
+    "chin",
+    "upperfacerig",
+    "browinner.L",
+    "browouter.L",
+    "browinner.R",
+    "browouter.R",
+    "centerbrow",
+    "eyelidupper.L",
+    "eyelidlower.L",
+    "eyelidupper.R",
+    "eyelidlower.R",
+    "squint.L",
+    "squint.R",
+    "cheek.L",
+    "cheek.R",
+    "nostril.L",
+    "nostril.R",
+    "lipuppermiddle",
+    "lipupper.L",
+    "lipupper.R",
+    "infraorbital.L",
+    "infraorbital.R",
+    "nose",
+    "eye.L",
+    "eye.R",
+    "ear.L",
+    "ear.R",
+    "irislocal.L",
+    "l_iris",
+    "l_highlight1",
+    "l_highlight2",
+    "irislocal.R",
+    "r_iris",
+    "r_highlight1",
+    "r_highlight2",
+    "eye.L(drv)",
+    "eye.R(drv)",
+    "gaze0",
+    "Hair",
+    "Hair.001",
+    "Hair.002",
+    "Hair.003",
+    "Hair.004",
+    "Hair.032",
+    "Hair.006",
+    "Hair.007",
+    "Hair.029",
+    "Hair.008",
+    "Hair.009",
+    "Hair.010",
+    "Hair.039",
+    "Hair.028",
+    "Hair.011",
+    "Hair.012",
+    "Hair.013",
+    "Hair.030",
+    "Hair.014",
+    "Hair.015",
+    "Hair.016",
+    "Hair.033",
+    "Hair.017",
+    "Hair.018",
+    "Hair.019",
+    "Hair.034",
+    "Hair.020",
+    "Hair.021",
+    "Hair.037",
+    "Hair.022",
+    "Hair.023",
+    "Hair.024",
+    "Hair.031",
+    "Hair.005",
+    "Hair.025",
+    "Hair.035",
+    "Hair.026",
+    "Hair.027",
+    "Hair.036",
+    "Hair.038",
+    "pelvis",
+    "pelvis.twk",
+    "rectum_01",
+    "rectum_02",
+    "rectum_03",
+    "rectum_04",
+    "rectum_05",
+    "rectum_06",
+    "rectum_07",
+    "anus_01",
+    "anus_02",
+    "pelvis2",
+    "lLabiumMajora1",
+    "lLabiumMajora2",
+    "lLabiumMajora3",
+    "lLabiumMajora4",
+    "rLabiumMajora1",
+    "rLabiumMajora2",
+    "rLabiumMajora3",
+    "rLabiumMajora4",
+    "lLabiumMinora1",
+    "lLabiumMinora2",
+    "lLabiumMinora3",
+    "lLabiumMinora4",
+    "rLabiumMinora1",
+    "rLabiumMinora2",
+    "rLabiumMinora3",
+    "rLabiumMinora4",
+    "clitoris",
+    "clitzilla01",
+    "clitzilla02",
+    "clitzilla03",
+    "clitzilla04",
+    "clitzilla05",
+    "clitzilla06",
+    "clitzilla07",
+    "clitzilla08",
+    "clitzilla09",
+    "clitzilla10",
+    "clitzilla11",
+    "clitzilla12",
+    "clitzilla13",
+    "clitzilla14",
+    "vagina",
+    "lLowTentacleA1",
+    "lLowTentacleA2",
+    "lLowTentacleA3",
+    "lLowTentacleA4",
+    "lLowTentacleB1",
+    "lLowTentacleB2",
+    "lLowTentacleB3",
+    "lLowTentacleB4",
+    "lLowTentacleC1",
+    "lLowTentacleC2",
+    "lLowTentacleC3",
+    "lLowTentacleC4",
+    "lLowTentacleD1",
+    "lLowTentacleD2",
+    "lLowTentacleD3",
+    "lLowTentacleD4",
+    "rLowTentacleA1",
+    "rLowTentacleA2",
+    "rLowTentacleA3",
+    "rLowTentacleA4",
+    "rLowTentacleB1",
+    "rLowTentacleB2",
+    "rLowTentacleB3",
+    "rLowTentacleB4",
+    "rLowTentacleC1",
+    "rLowTentacleC2",
+    "rLowTentacleC3",
+    "rLowTentacleC4",
+    "rLowTentacleD1",
+    "rLowTentacleD2",
+    "rLowTentacleD3",
+    "rLowTentacleD4",
+    "mediumTentacleA1",
+    "mediumTentacleA2",
+    "mediumTentacleA3",
+    "lMediumTentacleB1",
+    "lMediumTentacleB2",
+    "lMediumTentacleB3",
+    "leftMediumTentacleC1",
+    "leftMediumTentacleC2",
+    "leftMediumTentacleC3",
+    "leftMediumTentacleD1",
+    "leftMediumTentacleD2",
+    "leftMediumTentacleD3",
+    "mediumTentacleE1",
+    "mediumTentacleE2",
+    "mediumTentacleE3",
+    "rMediumTentacleB1",
+    "rMediumTentacleB2",
+    "rMediumTentacleB3",
+    "rMediumTentacleC1",
+    "rMediumTentacleC2",
+    "rMediumTentacleC3",
+    "rMediumTentacleD1",
+    "rMediumTentacleD2",
+    "rMediumTentacleD3",
+    "lHightTentacleA1",
+    "lHightTentacleA2",
+    "lHightTentacleA3",
+    "lHightTentacleB1",
+    "lHightTentacleB2",
+    "lHightTentacleB3",
+    "lHighTentacleC1",
+    "lHighTentacleC2",
+    "lHighTentacleC3",
+    "lHighTentacleD1",
+    "lHighTentacleD2",
+    "lHighTentacleD3",
+    "rHightTentacleA1",
+    "rHightTentacleA2",
+    "rHightTentacleA3",
+    "rHighTentacleB1",
+    "rHighTentacleB2",
+    "rHighTentacleB3",
+    "rHighTentacleC1",
+    "rHighTentacleC2",
+    "rHighTentacleC3",
+    "rHighTentacleD1",
+    "rHighTentacleD2",
+    "rHighTentacleD3",
+    "monsVeneris",
+    "urethra1",
+    "urethra2",
+    "labiumMajoraBack",
+    "legSocket.L",
+    "kneePoleA.L",
+    "legSocket.R",
+    "kneePoleA.R",
+    "MCH-back",
+    "back",
+    "REV-back",
+    "MCH-spine",
+    "spine",
+    "MCH-spine-1",
+    "spine-1",
+    "MCH-chest",
+    "chest",
+    "MCH-chest-1",
+    "chest-1",
+    "arm_parent.L",
+    "upper_arm.L",
+    "forearm.L",
+    "hand.L",
+    "hand0.L",
+    "hand.twk.L",
+    "l_hand_anchor",
+    "thumb.01.L",
+    "thumb.02.L",
+    "thumb.03.L",
+    "palm_index.L",
+    "f_index.01.L",
+    "f_index.02.L",
+    "f_index.03.L",
+    "index.L",
+    "palm_middle.L",
+    "f_middle.01.L",
+    "f_middle.02.L",
+    "f_middle.03.L",
+    "middle.L",
+    "palm_ring.L",
+    "f_ring.01.L",
+    "f_ring.02.L",
+    "f_ring.03.L",
+    "ring.L",
+    "palm_pinky.L",
+    "f_pinky.01.L",
+    "f_pinky.02.L",
+    "f_pinky.03.L",
+    "pinky.L",
+    "thumb.L",
+    "fingers.L",
+    "thumb.ik.L",
+    "index.ik.L",
+    "middle.ik.L",
+    "ring.ik.L",
+    "pinky.ik.L",
+    "forearm.bend.L",
+    "forearm.twist.L",
+    "forearm.twist.twk.L",
+    "forearm.bend.twk.L",
+    "upper_arm.bend.L",
+    "upper_arm.twist.L",
+    "upper_arm.twist.twk.L",
+    "upper_arm.bend.twk.L",
+    "upper_arm.fk.L",
+    "forearm.fk.L",
+    "hand.fk.L",
+    "upper_arm.ik.L",
+    "forearm.ik.L",
+    "forearm.ik.twist.L",
+    "hand0.ik.L",
+    "upper_arm.ik.twist.L",
+    "elbow.link.L",
+    "elbowPoleP.L",
+    "leg_parent.L",
+    "thigh.bend.L",
+    "thigh.twist.L",
+    "thigh.twist.twk.L",
+    "thigh.bend.twk.L",
+    "thigh.L",
+    "shin.bend.L",
+    "shin.twist.L",
+    "shin.twist.twk.L",
+    "shin.bend.twk.L",
+    "shin.L",
+    "shin.twk.L",
+    "foot.L",
+    "foot.twk.L",
+    "toe.L",
+    "big_toe.01.L",
+    "big_toe.02.L",
+    "small_toe_1.01.L",
+    "small_toe_1.02.L",
+    "small_toe_2.01.L",
+    "small_toe_2.02.L",
+    "small_toe_3.01.L",
+    "small_toe_3.02.L",
+    "small_toe_4.01.L",
+    "small_toe_4.02.L",
+    "toe.marker.L",
+    "tarsal.L",
+    "ball.marker.L",
+    "heel.marker.L",
+    "thigh.fk.L",
+    "shin.fk.L",
+    "foot.fk.L",
+    "toe.fk.L",
+    "toe.inv.fk.L",
+    "foot.inv.fk.L",
+    "thigh.ik.L",
+    "shin.ik.L",
+    "shin.ik.twist.L",
+    "thigh.ik.twist.L",
+    "knee.link.L",
+    "kneePoleP.L",
+    "arm_parent.R",
+    "upper_arm.R",
+    "forearm.R",
+    "hand.R",
+    "hand0.R",
+    "hand.twk.R",
+    "r_hand_anchor",
+    "thumb.01.R",
+    "thumb.02.R",
+    "thumb.03.R",
+    "palm_index.R",
+    "f_index.01.R",
+    "f_index.02.R",
+    "f_index.03.R",
+    "index.R",
+    "palm_middle.R",
+    "f_middle.01.R",
+    "f_middle.02.R",
+    "f_middle.03.R",
+    "middle.R",
+    "palm_ring.R",
+    "f_ring.01.R",
+    "f_ring.02.R",
+    "f_ring.03.R",
+    "ring.R",
+    "palm_pinky.R",
+    "f_pinky.01.R",
+    "f_pinky.02.R",
+    "f_pinky.03.R",
+    "pinky.R"
+   ],
+   "twist_bones": 24,
+   "oculto_render": false
+  },
+  {
+   "nome": "Genesis 9 Mesh.001",
+   "tipo": "MESH",
+   "tris": 34634,
+   "verts": 34654,
+   "uvs": [
+    "Base Multi UDIM"
+   ],
+   "cores": [
+    "Color"
+   ],
+   "custom_normals": true,
+   "materiais": [
+    "head",
+    "Outline_body",
+    "body",
+    "legs",
+    "arms",
+    "nails"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature Genesis 9",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subsurf",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes.001",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 257,
+   "oculto_render": false
+  },
+  {
+   "nome": "Genesis 9 Tear Mesh",
+   "tipo": "MESH",
+   "tris": 220,
+   "verts": 280,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Tear-1.001"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature Genesis 9",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subsurf",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 9,
+   "oculto_render": false
+  },
+  {
+   "nome": "Genesis 9 Toon Brows Paint Mesh.001",
+   "tipo": "MESH",
+   "tris": 400,
+   "verts": 451,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Brow.001"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature Genesis 9",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subsurf",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 14,
+   "oculto_render": false
+  },
+  {
+   "nome": "Genesis 9 Toon Eye Socket Mesh.001",
+   "tipo": "MESH",
+   "tris": 366,
+   "verts": 400,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [
+    "Color"
+   ],
+   "custom_normals": true,
+   "materiais": [
+    "Eye Socket.001"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature Genesis 9",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 7,
+   "oculto_render": false
+  },
+  {
+   "nome": "Genesis 9 Toon Eyelashes Mesh.001",
+   "tipo": "MESH",
+   "tris": 352,
+   "verts": 418,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Eyelashes.001"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature Genesis 9",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subsurf",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 9,
+   "oculto_render": false
+  },
+  {
+   "nome": "Genesis 9 Toon Floating Iris Mesh.001",
+   "tipo": "MESH",
+   "tris": 640,
+   "verts": 644,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [
+    "Color"
+   ],
+   "custom_normals": false,
+   "materiais": [
+    "Eye_Left.001",
+    "Highlight Upper.001"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature Genesis 9",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subsurf",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 7,
+   "oculto_render": false
+  },
+  {
+   "nome": "Genesis 9 Toon Mouth Mesh.001",
+   "tipo": "MESH",
+   "tris": 848,
+   "verts": 854,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Mouth.001",
+    "Teeth.001"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature Genesis 9",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subsurf",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 8,
+   "oculto_render": false
+  },
+  {
+   "nome": "Genesis 9 Toon Shadow Plane Mesh.001",
+   "tipo": "MESH",
+   "tris": 94,
+   "verts": 128,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Shadow.001"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature Genesis 9",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subsurf",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 9,
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_Arrows",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 14,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_Ball",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_Circle",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_CircleChest",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 68,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_CircleHips",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 68,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_CircleSpine",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 68,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_Cone",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_CrownHips",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 64,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_Cube",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_Foot",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 16,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_FootRev",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 4,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_Gaze",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_Hand",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 16,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_HandIK",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 32,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_Knuckle",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 18,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_Line",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 2,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_Master",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 43,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_MHead",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 16,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_MJaw",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 16,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_MNeck",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 16,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_MTongue",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 8,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_Pectoral",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 16,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_Shoulder",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 8,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_Toe",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 16,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "GZM_ToeRev",
+   "tipo": "MESH",
+   "tris": 0,
+   "verts": 4,
+   "uvs": [],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [],
+   "oculto_render": false
+  },
+  {
+   "nome": "Implant",
+   "tipo": "MESH",
+   "tris": 12284,
+   "verts": 12572,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "implant base",
+    "implant light"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    },
+    {
+     "tipo": "CORRECTIVE_SMOOTH",
+     "nome": "CorrectiveSmooth",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": false
+  },
+  {
+   "nome": "Jacket.001",
+   "tipo": "MESH",
+   "tris": 18374,
+   "verts": 18589,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [
+    "Attribute"
+   ],
+   "custom_normals": false,
+   "materiais": [
+    "jacket_main",
+    "jacket_sleeves",
+    "Outline_clothes_jacket"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature Genesis 9",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    },
+    {
+     "tipo": "CORRECTIVE_SMOOTH",
+     "nome": "CorrectiveSmooth",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 534,
+   "oculto_render": false
+  },
+  {
+   "nome": "key light (R)",
+   "tipo": "LIGHT",
+   "oculto_render": false
+  },
+  {
+   "nome": "Light nest",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "Lovelesss Bra Mesh",
+   "tipo": "MESH",
+   "tris": 4205,
+   "verts": 4430,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Lovelesss_bra"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": true
+  },
+  {
+   "nome": "Lovelesss Panties Mesh",
+   "tipo": "MESH",
+   "tris": 5180,
+   "verts": 5375,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Lovelesss_panties"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 274,
+   "oculto_render": true
+  },
+  {
+   "nome": "Nosering",
+   "tipo": "MESH",
+   "tris": 576,
+   "verts": 576,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "metal_nosering"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": false
+  },
+  {
+   "nome": "Point.004",
+   "tipo": "LIGHT",
+   "oculto_render": false
+  },
+  {
+   "nome": "Point.004_empty",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "Point.005",
+   "tipo": "LIGHT",
+   "oculto_render": false
+  },
+  {
+   "nome": "Point.005_empty",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "RR Belt",
+   "tipo": "MESH",
+   "tris": 3095,
+   "verts": 3097,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "metal_belt",
+    "RR_belt_color"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": true
+  },
+  {
+   "nome": "RR Boots",
+   "tipo": "MESH",
+   "tris": 7084,
+   "verts": 6092,
+   "uvs": [
+    "UVMap",
+    "UV0",
+    "UVMap.001",
+    "UV1",
+    "UVMap.002",
+    "UV2",
+    "UVSet1",
+    "UV_Map.005"
+   ],
+   "cores": [
+    "Col",
+    "COL0",
+    "Attribute",
+    "Attribute.001",
+    "Attribute.002",
+    "Attribute.003",
+    "Attribute.004",
+    "Attribute.005",
+    "PSKVTXCOL_0",
+    "SculptFreezeColorTemp",
+    "SculptMaskColorTemp",
+    "VertexColors",
+    "colorSet0",
+    "Normal",
+    "Night",
+    "Cd",
+    "Col.001",
+    "UVMap.003",
+    "__uvp2_group",
+    "Heightmap",
+    "Alpha",
+    "顶点色",
+    "UVMap.004"
+   ],
+   "custom_normals": true,
+   "materiais": [
+    "RR_boots"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    },
+    {
+     "tipo": "CORRECTIVE_SMOOTH",
+     "nome": "CorrectiveSmooth",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": true
+  },
+  {
+   "nome": "RR Glove",
+   "tipo": "MESH",
+   "tris": 7936,
+   "verts": 7996,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "RR_gloves",
+    "Outline_clothes_RR_jacket_jeens_gloves_boots"
+   ],
+   "mods": [
+    {
+     "tipo": "MIRROR",
+     "nome": "Mirror",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 338,
+   "oculto_render": true
+  },
+  {
+   "nome": "RR Jacket",
+   "tipo": "MESH",
+   "tris": 20773,
+   "verts": 21361,
+   "uvs": [
+    "UVMap",
+    "Default UVs",
+    "uv_0"
+   ],
+   "cores": [
+    "Attribute"
+   ],
+   "custom_normals": true,
+   "materiais": [
+    "RR_jacket_main",
+    "Outline_clothes_RR_jacket_jeens_gloves_boots",
+    "metal_RR_button"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    },
+    {
+     "tipo": "CORRECTIVE_SMOOTH",
+     "nome": "CorrectiveSmooth",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": true
+  },
+  {
+   "nome": "RR Jeens",
+   "tipo": "MESH",
+   "tris": 25628,
+   "verts": 25838,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "RR_jeens",
+    "Outline_clothes_RR_jacket_jeens_gloves_boots"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    },
+    {
+     "tipo": "CORRECTIVE_SMOOTH",
+     "nome": "CorrectiveSmooth",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": true
+  },
+  {
+   "nome": "RR Turtle Neck Top",
+   "tipo": "MESH",
+   "tris": 2764,
+   "verts": 2834,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "RR_top"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": true
+  },
+  {
+   "nome": "Scarlett Lingerie",
+   "tipo": "MESH",
+   "tris": 45303,
+   "verts": 45637,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "CorsetCutout-1",
+    "Support2-1",
+    "BreastCutout-1",
+    "BreastSide-1",
+    "Panty2-1"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": true
+  },
+  {
+   "nome": "Soft Rim light (B)",
+   "tipo": "LIGHT",
+   "oculto_render": false
+  },
+  {
+   "nome": "subject",
+   "tipo": "EMPTY",
+   "oculto_render": false
+  },
+  {
+   "nome": "Subsurface light (G)",
+   "tipo": "LIGHT",
+   "oculto_render": false
+  },
+  {
+   "nome": "Top",
+   "tipo": "MESH",
+   "tris": 30497,
+   "verts": 30994,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "clothes_top",
+    "Outline_clothes_top"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": false
+  },
+  {
+   "nome": "Trousers",
+   "tipo": "MESH",
+   "tris": 33289,
+   "verts": 33481,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [
+    "Color"
+   ],
+   "custom_normals": false,
+   "materiais": [
+    "Pants",
+    "belt"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    },
+    {
+     "tipo": "CORRECTIVE_SMOOTH",
+     "nome": "CorrectiveSmooth",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": false
+  },
+  {
+   "nome": "Ugly Sweater Mesh",
+   "tipo": "MESH",
+   "tris": 30680,
+   "verts": 30920,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "SweaterMain",
+    "SweaterSleeves"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    },
+    {
+     "tipo": "CORRECTIVE_SMOOTH",
+     "nome": "CorrectiveSmooth",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": true
+  },
+  {
+   "nome": "Vialin_Visi_mask",
+   "tipo": "MESH",
+   "tris": 4991,
+   "verts": 5112,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "RR_Visi_mask"
+   ],
+   "mods": [
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subdivision",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 0,
+   "oculto_render": true
+  },
+  {
+   "nome": "vizi hair.001",
+   "tipo": "MESH",
+   "tris": 19376,
+   "verts": 17468,
+   "uvs": [
+    "UVMap",
+    "UV0",
+    "UVMap.001",
+    "UV1",
+    "UVMap.002",
+    "UV2",
+    "UVSet1",
+    "UV_Map.005"
+   ],
+   "cores": [
+    "Col",
+    "COL0",
+    "Attribute",
+    "Attribute.001",
+    "Attribute.002",
+    "Attribute.003",
+    "Attribute.004",
+    "Attribute.005",
+    "PSKVTXCOL_0",
+    "SculptFreezeColorTemp",
+    "SculptMaskColorTemp",
+    "VertexColors",
+    "colorSet0",
+    "Normal",
+    "Night",
+    "Cd",
+    "Col.001",
+    "UVMap.003",
+    "__uvp2_group",
+    "Heightmap",
+    "Alpha",
+    "顶点色",
+    "UVMap.004"
+   ],
+   "custom_normals": true,
+   "materiais": [
+    "hair",
+    "Outline_hair"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 41,
+   "oculto_render": false
+  },
+  {
+   "nome": "Watch",
+   "tipo": "MESH",
+   "tris": 42184,
+   "verts": 42918,
+   "uvs": [
+    "Default UVs"
+   ],
+   "cores": [],
+   "custom_normals": true,
+   "materiais": [
+    "Watch",
+    "Face_Watch-1"
+   ],
+   "mods": [
+    {
+     "tipo": "SURFACE_DEFORM",
+     "nome": "SurfaceDeform",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": false
+  }
+ ],
+ "materiais": [
+  {
+   "nome": "arms",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 17,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 4,
+    "MIX": 5,
+    "HUE_SAT": 2,
+    "GROUP": 2,
+    "BSDF_PRINCIPLED": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "1004_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "1004_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "1004_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "1004_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Basic panties",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 16,
+   "nos_tipos": {
+    "TEX_IMAGE": 4,
+    "GAMMA": 2,
+    "BUMP": 1,
+    "BSDF_PRINCIPLED": 1,
+    "MIX": 1,
+    "OUTPUT_MATERIAL": 2,
+    "GROUP": 4,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "vykssb_08_bump.jpg.001",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "vykssb_08a_diffuse.jpg.001",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "vykssb_08a_trans.jpg.001",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "vykssb_08a_trans.jpg.001",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "belt",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 23,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 5,
+    "MIX": 6,
+    "HUE_SAT": 2,
+    "GROUP": 4,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "belt_BaseColor.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "belt_BaseColor.<UDIM>.png.001",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "belt_Metallic.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "body",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 17,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 4,
+    "MIX": 5,
+    "HUE_SAT": 2,
+    "GROUP": 2,
+    "BSDF_PRINCIPLED": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "1002_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "1002_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "1002_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "1002_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "boots",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 23,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 5,
+    "MIX": 6,
+    "HUE_SAT": 2,
+    "GROUP": 4,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "Boots_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Boots_Color.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Boots_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Boots_BaseColor.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Boots_Roughness.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "BreastCutout-1",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 12,
+   "nos_tipos": {
+    "TEX_IMAGE": 3,
+    "NORMAL_MAP": 1,
+    "BUMP": 1,
+    "VALTORGB": 1,
+    "OUTPUT_MATERIAL": 2,
+    "GROUP": 1,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1
+   },
+   "texturas": [
+    {
+     "img": "Scarlett3_NM",
+     "tam": [
+      0,
+      0
+     ]
+    },
+    {
+     "img": "Scarlett3Lace_Bump",
+     "tam": [
+      0,
+      0
+     ]
+    },
+    {
+     "img": "Scarlett3Lace_BaseColor",
+     "tam": [
+      0,
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "BreastSide-1",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 14,
+   "nos_tipos": {
+    "TEX_IMAGE": 3,
+    "NORMAL_MAP": 1,
+    "BUMP": 1,
+    "VALTORGB": 1,
+    "OUTPUT_MATERIAL": 2,
+    "GROUP": 2,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "Scarlett3_NM",
+     "tam": [
+      0,
+      0
+     ]
+    },
+    {
+     "img": "Scarlett3Lace_Bump",
+     "tam": [
+      0,
+      0
+     ]
+    },
+    {
+     "img": "Scarlett3Lace_BaseColor",
+     "tam": [
+      0,
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Brow.001",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 7,
+   "nos_tipos": {
+    "GROUP": 4,
+    "TEX_IMAGE": 1,
+    "OUTPUT_MATERIAL": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "Brows",
+     "tam": [
+      2048,
+      2048
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "clothes_top",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 23,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 5,
+    "MIX": 6,
+    "HUE_SAT": 2,
+    "GROUP": 4,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "top_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "top_color.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "top_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "top_BaseColor.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "top_Roughness.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "CorsetCutout-1",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 16,
+   "nos_tipos": {
+    "TEX_IMAGE": 3,
+    "NORMAL_MAP": 2,
+    "BUMP": 2,
+    "BSDF_PRINCIPLED": 1,
+    "MIX": 1,
+    "GROUP": 3,
+    "INVERT": 1,
+    "MIX_SHADER": 1,
+    "OUTPUT_MATERIAL": 1,
+    "VALTORGB": 1
+   },
+   "texturas": [
+    {
+     "img": "Scarlett3_NM",
+     "tam": [
+      0,
+      0
+     ]
+    },
+    {
+     "img": "Scarlett3Lace_Bump",
+     "tam": [
+      0,
+      0
+     ]
+    },
+    {
+     "img": "Scarlett3Lace_BaseColor",
+     "tam": [
+      0,
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Cozy_sweater",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 14,
+   "nos_tipos": {
+    "NORMAL_MAP": 1,
+    "OUTPUT_MATERIAL": 2,
+    "GROUP": 2,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "TEX_IMAGE": 3,
+    "RGB": 1,
+    "MIX": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "OOTClothing_Knit01.jpg",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "OOTClothing_Knit01_Specular.jpg",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "OffshoulderShirt_Normal.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Dots Stroke",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 5,
+   "nos_tipos": {
+    "FRAME": 1,
+    "OUTPUT_MATERIAL": 2,
+    "BSDF_PRINCIPLED": 1,
+    "BSDF_DIFFUSE": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "earings",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 7,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "GROUP": 2,
+    "MIX": 1,
+    "BSDF_PRINCIPLED": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Eye Socket.001",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 8,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 2,
+    "MIX": 1,
+    "HUE_SAT": 1,
+    "GROUP": 2,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "eyesocketcolor",
+     "tam": [
+      1024,
+      1024
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Eye_Left.001",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 8,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 2,
+    "MIX": 1,
+    "HUE_SAT": 1,
+    "GROUP": 2,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "eye.png",
+     "tam": [
+      258,
+      225
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Eyelashes.001",
+   "blend": "BLEND",
+   "backface": "False",
+   "nos_n": 7,
+   "nos_tipos": {
+    "GROUP": 4,
+    "TEX_IMAGE": 1,
+    "OUTPUT_MATERIAL": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "Genesis9_ToonEyelashes01_C.001",
+     "tam": [
+      2048,
+      2048
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Face_Watch-1",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 16,
+   "nos_tipos": {
+    "TEX_IMAGE": 4,
+    "OUTPUT_MATERIAL": 2,
+    "MIX": 4,
+    "HUE_SAT": 2,
+    "GROUP": 2,
+    "BSDF_PRINCIPLED": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "watch_face.png",
+     "tam": [
+      512,
+      512
+     ]
+    },
+    {
+     "img": "watch_face.png",
+     "tam": [
+      512,
+      512
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "hair",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 23,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "MIX": 6,
+    "TEX_IMAGE": 3,
+    "GROUP": 3,
+    "HUE_SAT": 2,
+    "BSDF_PRINCIPLED": 1,
+    "TEX_NOISE": 1,
+    "NORMAL_MAP": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "VALTORGB": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "hair_BaseColor.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "hair_BaseColor.<UDIM>.png.001",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "head",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 19,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 4,
+    "MIX": 5,
+    "HUE_SAT": 2,
+    "GROUP": 3,
+    "BSDF_PRINCIPLED": 1,
+    "ADD_SHADER": 2
+   },
+   "texturas": [
+    {
+     "img": "1001_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "1001_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "1001_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "1001_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Highlight Upper.001",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 9,
+   "nos_tipos": {
+    "GROUP": 6,
+    "TEX_IMAGE": 1,
+    "OUTPUT_MATERIAL": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "Highlight_Round.001",
+     "tam": [
+      0,
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "implant base",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 17,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 5,
+    "MIX": 4,
+    "HUE_SAT": 2,
+    "GROUP": 2,
+    "BSDF_PRINCIPLED": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "implant base_BaseColor.<UDIM>.png.001",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "implant base_BaseColor.<UDIM>.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "implant base_Roughness.<UDIM>.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "implant light",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 20,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 5,
+    "MIX": 1,
+    "HUE_SAT": 1,
+    "GROUP": 2,
+    "EMISSION": 1,
+    "MAPPING": 2,
+    "TEX_COORD": 2,
+    "BSDF_PRINCIPLED": 1,
+    "ADD_SHADER": 3
+   },
+   "texturas": [
+    {
+     "img": "implant light_BaseColor.<UDIM>.png.001",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "implant light_Emission.<UDIM>.png.001",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "implant light_Emission.<UDIM>.png.001",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "implant light_BaseColor.<UDIM>.png.002",
+     "tam": [
+      2048,
+      2048
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "jacket_main",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 23,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 5,
+    "MIX": 6,
+    "HUE_SAT": 2,
+    "GROUP": 4,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "jacket_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Image",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "jacket_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "jacket_BaseColor.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "jacket_Roughness.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "jacket_sleeves",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 23,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 5,
+    "MIX": 6,
+    "HUE_SAT": 2,
+    "GROUP": 4,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "jacket_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Image",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "jacket_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "jacket_BaseColor.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "jacket_Roughness.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "legs",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 17,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 4,
+    "MIX": 5,
+    "HUE_SAT": 2,
+    "GROUP": 2,
+    "BSDF_PRINCIPLED": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "1003_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "1003_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "1003_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "1003_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Lovelesss_bra",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 14,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "GROUP": 2,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "NORMAL_MAP": 1,
+    "TEX_IMAGE": 3,
+    "MIX": 1,
+    "VALTORGB": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "Lovelesss Bra_Lovelesss__Roughness.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Lovelesss Bra_Lovelesss__BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Lovelesss Bra_Lovelesss__Normal.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Lovelesss_panties",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 14,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "GROUP": 2,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "NORMAL_MAP": 1,
+    "MIX": 1,
+    "VALTORGB": 1,
+    "TEX_IMAGE": 3,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "Lovelesss Panties_Lovelesss__BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Lovelesss Panties_Lovelesss__Roughness.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Lovelesss Panties_Lovelesss__Normal.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "metal_belt",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 7,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "GROUP": 2,
+    "MIX": 1,
+    "BSDF_PRINCIPLED": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "metal_nosering",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 7,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "GROUP": 2,
+    "MIX": 1,
+    "BSDF_PRINCIPLED": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "metal_RR_button",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 7,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "GROUP": 2,
+    "MIX": 1,
+    "BSDF_PRINCIPLED": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Mouth.001",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 8,
+   "nos_tipos": {
+    "GROUP": 3,
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 1,
+    "MIX": 1,
+    "HUE_SAT": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "nails",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 17,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 4,
+    "MIX": 5,
+    "HUE_SAT": 2,
+    "GROUP": 2,
+    "BSDF_PRINCIPLED": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "1005_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "1005_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Outline_body",
+   "blend": "HASHED",
+   "backface": "True",
+   "nos_n": 14,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "EMISSION": 1,
+    "BSDF_TRANSPARENT": 1,
+    "MIX_SHADER": 2,
+    "NEW_GEOMETRY": 1,
+    "LIGHT_PATH": 1,
+    "TEX_COORD": 2,
+    "TEX_GRADIENT": 1,
+    "VALTORGB": 1,
+    "MIX": 2,
+    "TEX_NOISE": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Outline_clothes_jacket",
+   "blend": "HASHED",
+   "backface": "True",
+   "nos_n": 14,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "EMISSION": 1,
+    "BSDF_TRANSPARENT": 1,
+    "MIX_SHADER": 2,
+    "LIGHT_PATH": 1,
+    "NEW_GEOMETRY": 1,
+    "TEX_COORD": 2,
+    "TEX_GRADIENT": 1,
+    "VALTORGB": 1,
+    "MIX": 2,
+    "TEX_NOISE": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Outline_clothes_RR_jacket_jeens_gloves_boots",
+   "blend": "HASHED",
+   "backface": "True",
+   "nos_n": 14,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "EMISSION": 1,
+    "BSDF_TRANSPARENT": 1,
+    "MIX_SHADER": 2,
+    "LIGHT_PATH": 1,
+    "NEW_GEOMETRY": 1,
+    "TEX_COORD": 2,
+    "TEX_GRADIENT": 1,
+    "VALTORGB": 1,
+    "MIX": 2,
+    "TEX_NOISE": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Outline_clothes_top",
+   "blend": "HASHED",
+   "backface": "True",
+   "nos_n": 14,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "EMISSION": 1,
+    "BSDF_TRANSPARENT": 1,
+    "MIX_SHADER": 2,
+    "LIGHT_PATH": 1,
+    "NEW_GEOMETRY": 1,
+    "TEX_COORD": 2,
+    "TEX_GRADIENT": 1,
+    "VALTORGB": 1,
+    "MIX": 2,
+    "TEX_NOISE": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Outline_hair",
+   "blend": "HASHED",
+   "backface": "True",
+   "nos_n": 14,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "EMISSION": 1,
+    "BSDF_TRANSPARENT": 1,
+    "MIX_SHADER": 2,
+    "LIGHT_PATH": 1,
+    "NEW_GEOMETRY": 1,
+    "TEX_COORD": 2,
+    "TEX_GRADIENT": 1,
+    "VALTORGB": 1,
+    "MIX": 2,
+    "TEX_NOISE": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Pants",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 23,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 5,
+    "MIX": 6,
+    "HUE_SAT": 2,
+    "GROUP": 4,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "M2_Pants-1_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "M2_Pants-1_BaseColor.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "M2_Pants-1_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "M2_Pants-1_BaseColor.<UDIM>.png.001",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "M2_Pants-1_Roughness.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Panty2-1",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 12,
+   "nos_tipos": {
+    "TEX_IMAGE": 3,
+    "NORMAL_MAP": 1,
+    "BUMP": 1,
+    "VALTORGB": 1,
+    "OUTPUT_MATERIAL": 2,
+    "GROUP": 1,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1
+   },
+   "texturas": [
+    {
+     "img": "Scarlett3_NM",
+     "tam": [
+      0,
+      0
+     ]
+    },
+    {
+     "img": "Scarlett3Lace_Bump",
+     "tam": [
+      0,
+      0
+     ]
+    },
+    {
+     "img": "Scarlett3Lace_BaseColor",
+     "tam": [
+      0,
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "RR_belt_color",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 19,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "MIX": 6,
+    "HUE_SAT": 2,
+    "GROUP": 3,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "TEX_IMAGE": 2,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "RR_gloves_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "RR_gloves_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "RR_boots",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 25,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 5,
+    "MIX": 6,
+    "HUE_SAT": 2,
+    "GROUP": 4,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "VALTORGB": 2,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "Boots_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Boots_Color.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Boots_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Boots_BaseColor.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Boots_Roughness.<UDIM>.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "RR_gloves",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 24,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "MIX": 6,
+    "HUE_SAT": 2,
+    "GROUP": 4,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "NORMAL_MAP": 1,
+    "TEX_IMAGE": 5,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "RR_gloves_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "RR_gloves_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "RR_gloves_Normal.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "RR_gloves_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "RR_gloves_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "RR_jacket_main",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 20,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 2,
+    "MIX": 6,
+    "HUE_SAT": 2,
+    "GROUP": 4,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "jacket_ShadowMask.png.001",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "RR_jacket_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "RR_jeens",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 22,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "MIX": 6,
+    "HUE_SAT": 2,
+    "GROUP": 4,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "TEX_IMAGE": 4,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "jeens_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "RR_jeens_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "jeens_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "RR_jeens_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "RR_top",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 24,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 5,
+    "MIX": 6,
+    "HUE_SAT": 2,
+    "GROUP": 4,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "NORMAL_MAP": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "RR_top_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "RR_top_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "RR_top_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "RR_top_Normal.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "RR_top_ShadowMask.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "RR_Visi_mask",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 18,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "GROUP": 2,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "TEX_IMAGE": 5,
+    "NORMAL_MAP": 1,
+    "EMISSION": 1,
+    "GAMMA": 1,
+    "ADD_SHADER": 3
+   },
+   "texturas": [
+    {
+     "img": "Vilain_Visi_mask_Roughness.1001.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Vilain_Visi_mask_BaseColor.1001.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Vilain_Visi_mask_Metallic.1001.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Vilain_Visi_mask_Normal.1001.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "Vilain_Visi_mask_Emission.1001.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Shadow.001",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 6,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "GROUP": 2,
+    "EEVEE_SPECULAR": 1,
+    "ADD_SHADER": 1,
+    "BSDF_TRANSPARENT": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Support2-1",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 12,
+   "nos_tipos": {
+    "TEX_IMAGE": 3,
+    "NORMAL_MAP": 1,
+    "BUMP": 1,
+    "VALTORGB": 1,
+    "OUTPUT_MATERIAL": 2,
+    "GROUP": 1,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1
+   },
+   "texturas": [
+    {
+     "img": "Scarlett3_NM",
+     "tam": [
+      0,
+      0
+     ]
+    },
+    {
+     "img": "Scarlett3Lace_Bump",
+     "tam": [
+      0,
+      0
+     ]
+    },
+    {
+     "img": "Scarlett3Lace_BaseColor",
+     "tam": [
+      0,
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "SweaterMain",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 22,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 5,
+    "MIX": 4,
+    "HUE_SAT": 2,
+    "GROUP": 2,
+    "VALTORGB": 1,
+    "AMBIENT_OCCLUSION": 1,
+    "BSDF_PRINCIPLED": 1,
+    "NORMAL_MAP": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "sweater_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "sweater_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "sweater_Normal_1.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "SweaterSleeves",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 22,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 4,
+    "MIX": 4,
+    "HUE_SAT": 2,
+    "BSDF_PRINCIPLED": 1,
+    "GROUP": 2,
+    "VALTORGB": 2,
+    "AMBIENT_OCCLUSION": 1,
+    "NORMAL_MAP": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "sweater_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "sweater_BaseColor.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    },
+    {
+     "img": "sweater_Normal_1.png",
+     "tam": [
+      4096,
+      4096
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Tear-1.001",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 4,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "VALUE": 1,
+    "GROUP": 2
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Teeth.001",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 8,
+   "nos_tipos": {
+    "GROUP": 3,
+    "OUTPUT_MATERIAL": 1,
+    "TEX_IMAGE": 1,
+    "MIX": 1,
+    "HUE_SAT": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Watch",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 23,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 2,
+    "TEX_IMAGE": 5,
+    "MIX": 6,
+    "HUE_SAT": 2,
+    "GROUP": 4,
+    "BSDF_PRINCIPLED": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1,
+    "ADD_SHADER": 1
+   },
+   "texturas": [
+    {
+     "img": "Watch_BaseColor.<UDIM>.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "Watch_BaseColor.<UDIM>.png.001",
+     "tam": [
+      2048,
+      2048
+     ]
+    },
+    {
+     "img": "Watch_Roughness.<UDIM>.png",
+     "tam": [
+      2048,
+      2048
+     ]
+    }
+   ]
+  }
+ ],
+ "shape_keys_global": [
+  {
+   "Genesis 9 Mesh.001": [
+    "Basis",
+    "head_bs_MouthRealism_HD3",
+    "Belly Shape Muscular",
+    "Arms Muscular",
+    "Shin Muscular",
+    "Thigh Muscular",
+    "Abdomen Muscular",
+    "JW BCE - BL Expand Down - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BL Expand Front - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BL Expand SideL - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BL Expand SideR - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BL Move Down - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BL Move Front- Genesis 9 Feminine-0xa654045",
+    "JW BCE - BL Move In- Genesis 9 Feminine-0xa654045",
+    "JW BCE - BL Move Out - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BL Move Up- Genesis 9 Feminine-0xa654045",
+    "JW BCE - BL Press A - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BL Press B - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BL Press C - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BL Press D - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BR Expand Down - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BR Expand Front - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BR Expand SideL - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BR Expand SideR - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BR Move Down - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BR Move Front - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BR Move In - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BR Move Out - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BR Move Up - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BR Press A - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BR Press B - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BR Press C - Genesis 9 Feminine-0xa654045",
+    "JW BCE - BR Press D - Genesis 9 Feminine-0xa654045",
+    "JW BCE - Breasts Big A - Genesis 9 Feminine-0xa654045",
+    "JW BCE - Breasts Big B - Genesis 9 Feminine-0xa654045",
+    "JW BCE - Breasts Big C - Genesis 9 Feminine-0xa654045",
+    "JW BCE - Breasts Big D - Genesis 9 Feminine-0xa654045",
+    "JW BCE - Breasts Big E - Genesis 9 Feminine-0xa654045",
+    "JW BCE - Breasts Small A - Genesis 9 Feminine-0xa654045",
+    "JW BCE - Breasts Small B - Genesis 9 Feminine-0xa654045",
+    "JW BCE - Breasts Small C - Genesis 9 Feminine-0xa654045",
+    "JW BCE - Breasts Small D - Genesis 9 Feminine-0xa654045",
+    "!Breast Diameter",
+    "!Breast Pointed",
+    "!Breast Sag1",
+    "!Breast Sag2",
+    "!Breast Large",
+    "!Breast Top Curve1",
+    "!Breast Top Curve2",
+    "L Height1",
+    "L Height2",
+    "R Height1",
+    "RHeight2",
+    "URHD Pregnant Bump 01-0xa4d5f6e",
+    "URHD Pregnant Bump 02-0xa4e5c00",
+    "URHD Pregnant Bump 03-0xa4e5bef",
+    "URHD Pregnant Bump 04-0xa4e5be0",
+    "URHD Pregnant Bump 05-0xa4e5bc6",
+    "URHD Pregnant Bump 06-0xa57dcc6",
+    "URHD Pregnant Bump 07-0xa57dc9b",
+    "URHD Pregnant Head Weight-0xa4e8487",
+    "URHD Pregnant Lower Weight 01-0xa4e82fa",
+    "URHD Pregnant Upper Weight 01-0xa4e83f7",
+    "Belly Diameter",
+    "Belly Size",
+    "SS_body_bs_Ankle Definition",
+    "Ankle Thickness",
+    "Arm Flab",
+    "Arm Length",
+    "Arm Size",
+    "Glute Angle",
+    "Glute Crease",
+    "Glute Depth",
+    "Glute Depth 2",
+    "Glute Size 1",
+    "Glute Size 2",
+    "Glute Size 3",
+    "Hip Shape 1",
+    "Hip Shape 2",
+    "Hip Shape 3"
+   ]
+  },
+  {
+   "Genesis 9 Tear Mesh": [
+    "Basis",
+    "Armature SkinBinding",
+    "facs_BrowDownLeft",
+    "facs_BrowDownRight",
+    "facs_bs_BrowInnerUpLeft",
+    "facs_bs_BrowInnerUpRight",
+    "facs_BrowOuterUpLeft",
+    "facs_BrowOuterUpRight",
+    "facs_bs_CheekSquintLeft",
+    "facs_bs_CheekSquintRight",
+    "facs_bs_EyeBlinkLeft",
+    "facs_bs_EyeBlinkRight",
+    "facs_bs_EyeCornerTightnessInnerLeft",
+    "facs_bs_EyeCornerTightnessInnerRight",
+    "facs_bs_EyeCornerTightnessOuterLeft",
+    "facs_bs_EyeCornerTightnessOuterRight",
+    "facs_bs_EyeLidCloseUpperLeft",
+    "facs_bs_EyeLookDownLeft",
+    "facs_bs_EyeLookDownRight",
+    "facs_bs_EyeLookInLeft",
+    "facs_bs_EyeLookInRight",
+    "facs_bs_EyeLookOutLeft",
+    "facs_bs_EyeLookOutRight",
+    "facs_bs_EyeLookUpLeft",
+    "facs_bs_EyeLookUpRight",
+    "facs_bs_EyeSquintLeft",
+    "facs_bs_EyeSquintRight",
+    "facs_bs_EyelidCloseLowerLeft",
+    "facs_bs_EyelidCloseLowerRight",
+    "facs_bs_EyelidCloseUpperRight",
+    "facs_bs_EyelidOpenLowerLeft",
+    "facs_bs_EyelidOpenLowerRight",
+    "facs_bs_EyelidOpenUpperLeft",
+    "facs_bs_EyelidOpenUpperRight",
+    "facs_bs_NoseSneerLeft",
+    "facs_bs_NoseSneerRight",
+    "facs_cbs_EBL_BIU",
+    "facs_cbs_EBL_BOUL",
+    "facs_cbs_EBL_CSL",
+    "facs_cbs_EBL_ELIL",
+    "facs_cbs_EBL_ELOL",
+    "facs_cbs_EBL_ESL",
+    "facs_cbs_EBL_NSL",
+    "facs_cbs_EBR_BIU",
+    "facs_cbs_EBR_BOUR",
+    "facs_cbs_EBR_CSR",
+    "facs_cbs_EBR_ELIR",
+    "facs_cbs_EBR_ELOR",
+    "facs_cbs_EBR_ESR",
+    "facs_cbs_EBR_NSR",
+    "facs_cbs_EyeFullCompressionLeft",
+    "facs_cbs_EyeFullCompressionRight"
+   ]
+  },
+  {
+   "Genesis 9 Toon Brows Paint Mesh.001": [
+    "Basis",
+    "Armature SkinBinding",
+    "facs_BrowDownLeft",
+    "facs_BrowDownRight",
+    "facs_bs_BrowInnerUpLeft",
+    "facs_bs_BrowInnerUpRight",
+    "facs_BrowOuterUpLeft",
+    "facs_BrowOuterUpRight",
+    "facs_bs_BrowSqueezeLeft",
+    "facs_bs_BrowSqueezeRight",
+    "facs_bs_CheekSquintLeft",
+    "facs_bs_CheekSquintRight",
+    "facs_bs_EarPullBackLeft",
+    "facs_bs_EarPullBackRight",
+    "facs_bs_EyeBlinkLeft",
+    "facs_bs_EyeBlinkRight",
+    "facs_bs_EyeCornerTightnessInnerLeft",
+    "facs_bs_EyeCornerTightnessInnerRight",
+    "facs_bs_EyeCornerTightnessOuterLeft",
+    "facs_bs_EyeCornerTightnessOuterRight",
+    "facs_bs_EyeLidCloseUpperLeft",
+    "facs_bs_EyeLookDownLeft",
+    "facs_bs_EyeLookDownRight",
+    "facs_bs_EyeLookInLeft",
+    "facs_bs_EyeLookInRight",
+    "facs_bs_EyeLookOutLeft",
+    "facs_bs_EyeLookOutRight",
+    "facs_bs_EyeLookUpLeft",
+    "facs_bs_EyeLookUpRight",
+    "facs_bs_EyeSquintLeft",
+    "facs_bs_EyeSquintRight",
+    "facs_bs_EyelidCloseLowerLeft",
+    "facs_bs_EyelidCloseLowerRight",
+    "facs_bs_EyelidCloseUpperRight",
+    "facs_bs_EyelidOpenUpperLeft",
+    "facs_bs_EyelidOpenUpperRight",
+    "facs_bs_JawClenchLeft",
+    "facs_bs_JawClenchRight",
+    "facs_bs_JawLeft",
+    "facs_bs_JawOpen",
+    "facs_bs_JawOpenWide",
+    "facs_bs_JawRecess",
+    "facs_bs_JawRight",
+    "facs_bs_MouthSmileLeft",
+    "facs_bs_MouthSmileRight",
+    "facs_bs_NoseSneerLeft",
+    "facs_bs_NoseSneerRight",
+    "facs_bs_NoseSneerUpperLeft",
+    "facs_bs_NoseSneerUpperRight",
+    "facs_cbs_BIUL_BDL",
+    "facs_cbs_BIUR_BDR",
+    "facs_cbs_EBL_BIU",
+    "facs_cbs_EBL_BOUL",
+    "facs_cbs_EBL_CSL",
+    "facs_cbs_EBL_ELIL",
+    "facs_cbs_EBL_ELOL",
+    "facs_cbs_EBL_ESL",
+    "facs_cbs_EBL_NSL",
+    "facs_cbs_EBR_BIU",
+    "facs_cbs_EBR_BOUR",
+    "facs_cbs_EBR_CSR",
+    "facs_cbs_EBR_ELIR",
+    "facs_cbs_EBR_ELOR",
+    "facs_cbs_EBR_ESR",
+    "facs_cbs_EBR_NSR",
+    "facs_cbs_EyeFullCompressionLeft",
+    "facs_cbs_EyeFullCompressionRight"
+   ]
+  },
+  {
+   "Genesis 9 Toon Eye Socket Mesh.001": [
+    "Basis",
+    "Armature SkinBinding",
+    "facs_BrowDownLeft",
+    "facs_BrowDownRight",
+    "facs_bs_BrowInnerUpLeft",
+    "facs_bs_BrowInnerUpRight",
+    "facs_BrowOuterUpLeft",
+    "facs_BrowOuterUpRight",
+    "facs_bs_CheekSquintLeft",
+    "facs_bs_CheekSquintRight",
+    "facs_bs_EyeBlinkLeft",
+    "facs_bs_EyeBlinkRight",
+    "facs_bs_EyeCornerTightnessInnerLeft",
+    "facs_bs_EyeCornerTightnessInnerRight",
+    "facs_bs_EyeCornerTightnessOuterLeft",
+    "facs_bs_EyeCornerTightnessOuterRight",
+    "facs_bs_EyeLidCloseUpperLeft",
+    "facs_bs_EyeLookDownLeft",
+    "facs_bs_EyeLookDownRight",
+    "facs_bs_EyeLookInLeft",
+    "facs_bs_EyeLookInRight",
+    "facs_bs_EyeLookOutLeft",
+    "facs_bs_EyeLookOutRight",
+    "facs_bs_EyeLookUpLeft",
+    "facs_bs_EyeLookUpRight",
+    "facs_bs_EyeSquintLeft",
+    "facs_bs_EyeSquintRight",
+    "facs_bs_EyelidCloseLowerLeft",
+    "facs_bs_EyelidCloseLowerRight",
+    "facs_bs_EyelidCloseUpperRight",
+    "facs_bs_EyelidOpenLowerLeft",
+    "facs_bs_EyelidOpenLowerRight",
+    "facs_bs_EyelidOpenUpperLeft",
+    "facs_bs_EyelidOpenUpperRight",
+    "facs_bs_NoseSneerLeft",
+    "facs_bs_NoseSneerRight",
+    "facs_cbs_EBL_BIU",
+    "facs_cbs_EBL_CSL",
+    "facs_cbs_EBL_ELIL",
+    "facs_cbs_EBL_ELOL",
+    "facs_cbs_EBL_ESL",
+    "facs_cbs_EBL_NSL",
+    "facs_cbs_EBR_BIU",
+    "facs_cbs_EBR_CSR",
+    "facs_cbs_EBR_ELIR",
+    "facs_cbs_EBR_ELOR",
+    "facs_cbs_EBR_ESR",
+    "facs_cbs_EBR_NSR",
+    "facs_cbs_EyeFullCompressionLeft",
+    "facs_cbs_EyeFullCompressionRight"
+   ]
+  },
+  {
+   "Genesis 9 Toon Eyelashes Mesh.001": [
+    "Basis",
+    "Armature SkinBinding",
+    "facs_BrowDownLeft",
+    "facs_BrowDownRight",
+    "facs_bs_BrowInnerUpLeft",
+    "facs_bs_BrowInnerUpRight",
+    "facs_BrowOuterUpLeft",
+    "facs_BrowOuterUpRight",
+    "facs_bs_BrowSqueezeLeft",
+    "facs_bs_BrowSqueezeRight",
+    "facs_bs_CheekSquintLeft",
+    "facs_bs_CheekSquintRight",
+    "facs_bs_EarPullBackLeft",
+    "facs_bs_EarPullBackRight",
+    "facs_bs_EyeBlinkLeft",
+    "facs_bs_EyeBlinkRight",
+    "facs_bs_EyeCornerTightnessInnerLeft",
+    "facs_bs_EyeCornerTightnessInnerRight",
+    "facs_bs_EyeCornerTightnessOuterLeft",
+    "facs_bs_EyeCornerTightnessOuterRight",
+    "facs_bs_EyeLidCloseUpperLeft",
+    "facs_bs_EyeLookDownLeft",
+    "facs_bs_EyeLookDownRight",
+    "facs_bs_EyeLookInLeft",
+    "facs_bs_EyeLookInRight",
+    "facs_bs_EyeLookOutLeft",
+    "facs_bs_EyeLookOutRight",
+    "facs_bs_EyeLookUpLeft",
+    "facs_bs_EyeLookUpRight",
+    "facs_bs_EyeSquintLeft",
+    "facs_bs_EyeSquintRight",
+    "facs_bs_EyelidCloseLowerLeft",
+    "facs_bs_EyelidCloseLowerRight",
+    "facs_bs_EyelidCloseUpperRight",
+    "facs_bs_EyelidOpenLowerLeft",
+    "facs_bs_EyelidOpenLowerRight",
+    "facs_bs_EyelidOpenUpperLeft",
+    "facs_bs_EyelidOpenUpperRight",
+    "facs_bs_JawLeft",
+    "facs_bs_JawOpen",
+    "facs_bs_JawOpenWide",
+    "facs_bs_JawRight",
+    "facs_bs_MouthSmileLeft",
+    "facs_bs_MouthSmileRight",
+    "facs_bs_NoseSneerLeft",
+    "facs_bs_NoseSneerRight",
+    "facs_bs_NoseSneerUpperLeft",
+    "facs_bs_NoseSneerUpperRight",
+    "facs_cbs_BIUL_BDL",
+    "facs_cbs_BIUR_BDR",
+    "facs_cbs_EBL_BIU",
+    "facs_cbs_EBL_BOUL",
+    "facs_cbs_EBL_CSL",
+    "facs_cbs_EBL_ELIL",
+    "facs_cbs_EBL_ELOL",
+    "facs_cbs_EBL_ESL",
+    "facs_cbs_EBL_NSL",
+    "facs_cbs_EBR_BIU",
+    "facs_cbs_EBR_BOUR",
+    "facs_cbs_EBR_CSR",
+    "facs_cbs_EBR_ELIR",
+    "facs_cbs_EBR_ELOR",
+    "facs_cbs_EBR_ESR",
+    "facs_cbs_EBR_NSR",
+    "facs_cbs_EyeFullCompressionLeft",
+    "facs_cbs_EyeFullCompressionRight"
+   ]
+  },
+  {
+   "Genesis 9 Toon Floating Iris Mesh.001": [
+    "Basis",
+    "facs_bs_EyePupilsDilate-0xa381f1f"
+   ]
+  },
+  {
+   "Genesis 9 Toon Mouth Mesh.001": [
+    "Basis",
+    "head_bs_MouthRealism_HD3",
+    "Armature SkinBinding",
+    "facs_bs_MouthWidenLeft-0xa395004",
+    "facs_bs_MouthWidenRight-0xa395004",
+    "facs_bs_TongueIn",
+    "facs_bs_TongueNarrow",
+    "facs_bs_TongueOut",
+    "facs_bs_TongueRoll",
+    "facs_bs_TongueTipNarrow",
+    "facs_bs_TongueTipWide",
+    "facs_bs_MouthBackLowerLeft",
+    "facs_bs_MouthBackLowerRight",
+    "facs_bs_MouthSmileLeft",
+    "facs_bs_MouthSmileRight"
+   ]
+  },
+  {
+   "Genesis 9 Toon Shadow Plane Mesh.001": [
+    "Basis",
+    "Armature SkinBinding",
+    "facs_BrowDownLeft",
+    "facs_BrowDownRight",
+    "facs_bs_BrowInnerUpLeft",
+    "facs_bs_BrowInnerUpRight",
+    "facs_BrowOuterUpLeft",
+    "facs_BrowOuterUpRight",
+    "facs_bs_CheekSquintLeft",
+    "facs_bs_CheekSquintRight",
+    "facs_bs_EyeBlinkLeft",
+    "facs_bs_EyeBlinkRight",
+    "facs_bs_EyeCornerTightnessInnerLeft",
+    "facs_bs_EyeCornerTightnessInnerRight",
+    "facs_bs_EyeCornerTightnessOuterLeft",
+    "facs_bs_EyeCornerTightnessOuterRight",
+    "facs_bs_EyeLidCloseUpperLeft",
+    "facs_bs_EyeLookDownLeft",
+    "facs_bs_EyeLookDownRight",
+    "facs_bs_EyeLookInLeft",
+    "facs_bs_EyeLookInRight",
+    "facs_bs_EyeLookOutLeft",
+    "facs_bs_EyeLookOutRight",
+    "facs_bs_EyeLookUpLeft",
+    "facs_bs_EyeLookUpRight",
+    "facs_bs_EyeSquintLeft",
+    "facs_bs_EyeSquintRight",
+    "facs_bs_EyelidCloseLowerLeft",
+    "facs_bs_EyelidCloseLowerRight",
+    "facs_bs_EyelidCloseUpperRight",
+    "facs_bs_EyelidOpenLowerLeft",
+    "facs_bs_EyelidOpenLowerRight",
+    "facs_bs_EyelidOpenUpperLeft",
+    "facs_bs_EyelidOpenUpperRight",
+    "facs_bs_NoseSneerLeft",
+    "facs_bs_NoseSneerRight",
+    "facs_cbs_EBL_BIU",
+    "facs_cbs_EBL_BOUL",
+    "facs_cbs_EBL_CSL",
+    "facs_cbs_EBL_ELIL",
+    "facs_cbs_EBL_ELOL",
+    "facs_cbs_EBL_ESL",
+    "facs_cbs_EBL_NSL",
+    "facs_cbs_EBR_BIU",
+    "facs_cbs_EBR_BOUR",
+    "facs_cbs_EBR_CSR",
+    "facs_cbs_EBR_ELIR",
+    "facs_cbs_EBR_ELOR",
+    "facs_cbs_EBR_ESR",
+    "facs_cbs_EBR_NSR",
+    "facs_cbs_EyeFullCompressionLeft",
+    "facs_cbs_EyeFullCompressionRight"
+   ]
+  },
+  {
+   "Jacket.001": [
+    "Basis",
+    "facs_bs_JawOpen",
+    "facs_bs_JawOpenWide",
+    "facs_bs_JawRecess",
+    "facs_bs_MouthCloseLowerLeft",
+    "facs_bs_MouthCloseLowerRight",
+    "facs_bs_NeckFlexLeft",
+    "facs_bs_NeckFlexRight",
+    "facs_bs_NeckMastoidFlexLeft",
+    "facs_bs_NeckMastoidFlexRight",
+    "facs_bs_NeckUnderChinFlex"
+   ]
+  }
+ ],
+ "armaduras": [],
+ "drivers": 238,
+ "render": {
+  "engine": "BLENDER_EEVEE",
+  "res": [
+   1080,
+   1500
+  ],
+  "fps": 30
+ }
+}

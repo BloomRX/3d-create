@@ -1,0 +1,403 @@
+{
+ "blender": "5.2.2 LTS",
+ "objetos": [
+  {
+   "nome": "Fill_Light",
+   "tipo": "LIGHT",
+   "oculto_render": false
+  },
+  {
+   "nome": "Key_Light",
+   "tipo": "LIGHT",
+   "oculto_render": false
+  },
+  {
+   "nome": "Legs",
+   "tipo": "MESH",
+   "tris": 2238,
+   "verts": 2240,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Skin Simple"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes (Left)",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes (Right)",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 7,
+   "oculto_render": false
+  },
+  {
+   "nome": "Meat Dummy",
+   "tipo": "MESH",
+   "tris": 866,
+   "verts": 896,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Skin Simple"
+   ],
+   "mods": [
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subdivision",
+     "detalhe": ""
+    },
+    {
+     "tipo": "NODES",
+     "nome": "GeometryNodes",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": false
+  },
+  {
+   "nome": "Meat_Dummy_Band",
+   "tipo": "MESH",
+   "tris": 32,
+   "verts": 64,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Cloth"
+   ],
+   "mods": [
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subdivision",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SOLIDIFY",
+     "nome": "Solidify",
+     "detalhe": "thickness=0.009999999776482582"
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subdivision.001",
+     "detalhe": ""
+    }
+   ],
+   "oculto_render": false
+  },
+  {
+   "nome": "Meat_Dummy_Band_Dummy",
+   "tipo": "MESH",
+   "tris": 32,
+   "verts": 64,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [],
+   "mods": [
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subdivision",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SOLIDIFY",
+     "nome": "Solidify",
+     "detalhe": "thickness=0.009999999776482582"
+    }
+   ],
+   "oculto_render": false
+  },
+  {
+   "nome": "Rim_Light",
+   "tipo": "LIGHT",
+   "oculto_render": false
+  },
+  {
+   "nome": "Thighlet",
+   "tipo": "MESH",
+   "tris": 64,
+   "verts": 96,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Cloth"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subdivision",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SOLIDIFY",
+     "nome": "Solidify",
+     "detalhe": "thickness=0.009999999776482582"
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subdivision.001",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 7,
+   "oculto_render": false
+  },
+  {
+   "nome": "Thighlet_2",
+   "tipo": "MESH",
+   "tris": 128,
+   "verts": 192,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Cloth"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subdivision",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SOLIDIFY",
+     "nome": "Solidify",
+     "detalhe": "thickness=0.009999999776482582"
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subdivision.001",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 7,
+   "oculto_render": false
+  },
+  {
+   "nome": "Thighlet_2_Dummy",
+   "tipo": "MESH",
+   "tris": 192,
+   "verts": 256,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Cloth"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subdivision",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SOLIDIFY",
+     "nome": "Solidify",
+     "detalhe": "thickness=0.009999999776482582"
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subdivision.001",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 7,
+   "oculto_render": true
+  },
+  {
+   "nome": "Thighlet_Dummy",
+   "tipo": "MESH",
+   "tris": 96,
+   "verts": 128,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Cloth"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subdivision",
+     "detalhe": ""
+    },
+    {
+     "tipo": "SOLIDIFY",
+     "nome": "Solidify",
+     "detalhe": "thickness=0.009999999776482582"
+    },
+    {
+     "tipo": "SUBSURF",
+     "nome": "Subdivision.001",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 7,
+   "oculto_render": true
+  },
+  {
+   "nome": "Thighs_Rig",
+   "tipo": "ARMATURE",
+   "ossos_n": 7,
+   "ossos": [
+    "Root",
+    "Hip_L",
+    "Thigh_L",
+    "Hip_R",
+    "Thigh_R",
+    "HipSupport_L",
+    "HipSupport_R"
+   ],
+   "twist_bones": 0,
+   "oculto_render": false
+  },
+  {
+   "nome": "Underwear",
+   "tipo": "MESH",
+   "tris": 2270,
+   "verts": 2268,
+   "uvs": [
+    "UVMap"
+   ],
+   "cores": [],
+   "custom_normals": false,
+   "materiais": [
+    "Cloth"
+   ],
+   "mods": [
+    {
+     "tipo": "ARMATURE",
+     "nome": "Armature",
+     "detalhe": ""
+    }
+   ],
+   "vertex_groups": 7,
+   "oculto_render": false
+  }
+ ],
+ "materiais": [
+  {
+   "nome": "Cloth",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 9,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "VALTORGB": 2,
+    "BUMP": 1,
+    "BSDF_PRINCIPLED": 1,
+    "INVERT": 1,
+    "TEX_MAGIC": 1,
+    "MAPPING": 1,
+    "TEX_COORD": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Dots Stroke",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 5,
+   "nos_tipos": {
+    "FRAME": 1,
+    "OUTPUT_MATERIAL": 2,
+    "BSDF_PRINCIPLED": 1,
+    "BSDF_DIFFUSE": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Skin",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 6,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "BSDF_PRINCIPLED": 1,
+    "MIX": 2,
+    "AMBIENT_OCCLUSION": 1,
+    "VALTORGB": 1
+   },
+   "texturas": []
+  },
+  {
+   "nome": "Skin Simple",
+   "blend": "HASHED",
+   "backface": "False",
+   "nos_n": 10,
+   "nos_tipos": {
+    "OUTPUT_MATERIAL": 1,
+    "BSDF_PRINCIPLED": 1,
+    "VALTORGB": 2,
+    "AMBIENT_OCCLUSION": 1,
+    "BUMP": 1,
+    "TEX_COORD": 1,
+    "TEX_VORONOI": 1,
+    "MAPPING": 1,
+    "MIX": 1
+   },
+   "texturas": []
+  }
+ ],
+ "shape_keys_global": [],
+ "armaduras": [],
+ "drivers": 0,
+ "render": {
+  "engine": "BLENDER_EEVEE",
+  "res": [
+   1080,
+   1080
+  ],
+  "fps": 30
+ }
+}

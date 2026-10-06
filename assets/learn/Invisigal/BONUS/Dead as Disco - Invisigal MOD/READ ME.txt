@@ -1,0 +1,4 @@
+﻿Installation 
+
+Drag and drop the folder where your game installed: 
+/SteamLibrary/steamapps/common/Dead as Disco/Pagoda/Content/Paks
