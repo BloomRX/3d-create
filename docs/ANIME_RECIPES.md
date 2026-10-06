@@ -111,3 +111,34 @@ youtuber** para simular o estilo do jogo (não são assets do Wuwa) — uso
 liberado pelo autor do repo como base/exemplo. Texturas mantidas em
 `assets/learn/Aplaybox_Hsin/textures` como referência do pipeline. Plugins
 movidos p/ `plugins_src/` (o agent pode modificá-los — uso privado).
+
+## PIPELINE RÁPIDO — Stefan 3D AI, "From Idea to Game in ONE Day" (06/out/2026)
+Fonte: youtube.com/watch?v=CgslUZIAl4s (13:15; seções de rig/animação/VFX
+7:30+ NÃO estavam na transcrição pública — revisitar depois).
+
+1. **Separação de peças ANTES de gerar** (essencial p/ animação): head, body,
+   legs, armor, accessories, hair, wings — tudo em **A-pose** antes da geração.
+   → valida nossa arquitetura (roupas/cabelos exportados separados).
+2. **Tripo P2 + Smart UV**: 1 geração devolve **4 variantes de poly-count**;
+   escolher a melhor densidade/wireframe; UV "smart" ANTES de texturizar é o
+   que HABILITA editar mapas por cima (normal/roughness/metallic gerados
+   depois). 4 retries → escolher o melhor layout de UV.
+3. **Hack das asas** (peças muito detalhadas): NÃO gerar o 3D a partir da
+   imagem com detalhe proeminente (o gerador vira cada pena em geometria);
+   gerar com imagem "acalmada" → 3D com wireframe limpo → TEXTURIZAR com a
+   imagem detalhada → normal map derivado do color map.
+4. **Mapas por IA a partir do color map**: normal/roughness/metallic/emission
+   gerados por modelo de imagem (API) — sem sculpt high-poly nem bake.
+   Substitui o pipeline high→low→bake p/ personagens de jogo (não-cinema).
+   → candidato direto pra nossa etapa de texturas (M4) com ComfyUI-ZLUDA.
+5. **Montagem manual 12 min** (ele mesmo diz: agent até faz, mas 1–2h e
+   tokens; Elastic Grab resolve ajuste de encaixe) — confirma nossa tese:
+   determinístico no Blender + agent nos passos de risco/visão.
+6. Modelos citados: GPT-6 Astra, Opus 5.5 (multimodais pagos).
+
+**Leads relacionados (mesma busca):** "AI Can Do Everything in Blender Now —
+Mixar" (Z8xhELifAVs, fork do Blender com IA espacial — vigiar de perto);
+"New Open-Source AI Animation is Here!" (x-WSSlHNcJQ, PixelArtistry+Stefan —
+M5); "3D AI Models Are Finally Watertight (6GB VRAM, Free & Local)"
+(dmDrktqyT5o — desvio A local); "Easy Clothing with AI for Any Character"
+(gSHON893CCI — roupas, requisito nosso #3).
