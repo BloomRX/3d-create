@@ -142,3 +142,55 @@ Mixar" (Z8xhELifAVs, fork do Blender com IA espacial — vigiar de perto);
 M5); "3D AI Models Are Finally Watertight (6GB VRAM, Free & Local)"
 (dmDrktqyT5o — desvio A local); "Easy Clothing with AI for Any Character"
 (gSHON893CCI — roupas, requisito nosso #3).
+
+## PROBE — DNA dos 5 modelos reais (raio-X out/2026, arquivos em util/model_probe_*.json)
+
+### Aplaybox_Hsin (WuWa, produção real — MODELO-DE-OURO)
+- Blender 5.2.2 LTS | 133 meshes | 117k tris | 59 materiais | 112 drivers | EEVEE 1440×2560@24.
+- **2 armaduras**: `R2T1XinMd10011_LOD0_Skeleton` (498 ossos, jogo) + `RIG-…` (823, **Rigify**
+  por cima: ORG-/MCH-/VIS/tweak) → padrão: **esqueleto do jogo + Rigify como controle**.
+- Nomes: **Bip001** (export 3ds Max Biped) + Bone_* (289) + Facial (29) + ZSpring (10, molas).
+- **Twist**: UpArmTwist ×3 segmentos, ForeTwist ×2, HandTwist, ThighTwist ×2, CalfTwist —
+  por lado. NOSSO SUPERSET precisa disso (decidido).
+- **80 shape keys = biblioteca canônica de expressões**: B_* (sobrancelha, ±L/R + Add),
+  E_* (olho: Close/Smile/Squint/Anger/Sad/Focus/Insipid/Stare), Pupil_* (8 direções + Scale),
+  M_* (boca: Smile/Ennui/Squint/OpenSmall/Laugh/Scared/ScaredTooth/Anger/Puff/Trapezoid/O),
+  **visemas Aa/A/E/I/O/U/UTooth** (lip-sync pronto!), Default.
+- **Outlines = GEOMETRY NODES** (`Outline`, `Outline By Distance`, `Outline And Rim`,
+  `Outline And ShrinkWarp`) + material `Outline` = EMISSION + NEW_GEOMETRY(backfacing) +
+  MIX w/ TRANSPARENT (blend BLEND). **ZERO SOLIDIFY no arquivo.**
+- **Face**: mat `Gathering Wives - Face Xin` = Face_D + Face_HET + **T_FemaleMFace_SDF.png** +
+  Face_Blush + 8 node GROUPS + ATTRIBUTE(máscaras) — SDF facial CONFIRMADA em produção.
+- **Hair Xin**: _D+_FTM+_HM+_HN + SEPARATE_COLOR + ATTRIBUTE + 7 groups (sufixos que já temos!).
+- **Fur**: geonodes `FurImprove` no corpo (shells). **Custom normals**: mod DATA_TRANSFER
+  "Custom Normal" (shell de face). 12 NODES no total.
+→ DECISÕES: (1) shader v2.5 ganha outline modo "backfacing" (emission+mix, sem modificador)
+  além do Solidify; geonodes por-distância = fase 3. (2) Nosso rig canônico: twist conforme
+  acima; controle via Rigify; export no esqueleto do jogo. (3) Vocabulário de expressões:
+  adotar Hsin como biblioteca-alvo (map p/ FACS abaixo). (4) SDF/LUT/blush = fase 2 do shader.
+
+### Invisigal_v1_3 (Genesis 9 toon — kit facial overlay)
+- 52 meshes | 384k tris | 53 materiais | 238 drivers | 497 ossos (24 twist) — esqueleto **Genesis 9**.
+- **FACS shape keys** (`facs_BrowDownLeft`, `facs_bs_EyeBlinkLeft`, `facs_bs_MouthSmileLeft`,
+  língua completa, JawOpen…) repetidas em CADA mesh overlay toon: Brows Paint, Eye Socket,
+  Eyelashes, **Floating Iris** (2 keys: dilata), Mouth, **Shadow Plane** (sombra do rosto!).
+- **Roupas**: SURFACE_DEFORM×19 + CORRECTIVE_SMOOTH×8 (pilha roupa-sobre-corpo).
+- **Outline por MATERIAL** (14 nós): EMISSION + TRANSPARENT + MIX×2 + NEW_GEOMETRY +
+  LIGHT_PATH — um por peça (body/jacket/top/hair) p/ espessura por parte.
+- Cabelo com **UDIM** (hair_BaseColor.<UDIM>.png); olhos: eye.png + HUE_SAT + ADD_SHADER.
+→ DECISÕES: (5) receita de roupa separada = SURFACE_DEFORM + CORRECTIVE_SMOOTH (+SHRINKWRAP
+  quando precisar) — entra no M3. (6) FACS = segundo vocabulário suportado; map Hsin↔FACS/ARKit.
+- Obs: Artist_a1 = base com morphs de corpo (Thicc, Plane breast…) + rig 612 (.l/.r, _twk)
+  + PARTICLE_SYSTEM(4) p/ cabelo + CLOTH(2) → cabelo por partículas segue vivo como alternativa.
+
+### modular_female_base (segunda base modular — NOMES RIGIFY!)
+- 135 meshes | só 5.6k tris | 2 materiais | 74 ossos com nomes **Rigify puros**
+  (spine.001, shoulder.L, upper_arm.L, palm.01.L, f_index.01.L…) + **controles-slider**
+  (UI_Panel, Body_Type, Hip_Wide, Tall_Short, Breast_Size, Head_Size…).
+→ DECISÕES: (7) CONFIRMA a arquitetura Bloom: base modular + sliders de proporção +
+  Rigify; nossos _BODIEZ_PAIRS já falam a língua certa (Hip_Wide/Breast_*). (8) AssetBank:
+  aceitar esta base como segunda base física (leve, 5.6k tris).
+
+### SquishBulge_GeoNodes (estudo M5)
+- 7 ossos (Thighs_Rig) + NODES×3 + SOLIDIFY×6 → bulge suave por geometry nodes, sem simulação.
+→ DECISÃO: (9) M5: efeitos de "carne" via geonodes dirigidos por osso (barato, sem bake).
