@@ -12,7 +12,7 @@ Nada de template, nada embutido: o DevKit se adapta à pasta onde está.
 |---|---|
 | `sync` | Valida sintaxe → commit local → rebase com o remote → **push só da HEAD, nunca force** |
 | `pull` | Baixa a branch atual (rebase com autostash), sem commit das suas edições |
-| `validate` | Confere sintaxe Python/JS/HTML/JSON/notebooks **sem executar nada** |
+| `validate` | Confere sintaxe Python/JS/HTML/JSON/notebooks **sem executar nada** (aceita comentários JSONC em `.vscode/`) |
 | `validate --full` | Roda suítes de teste locais reconhecidas (nunca instala dependências) |
 | `branches` / `checkout` / `new-branch` | Gestão de branches com proteção de stash |
 | `pr` | Abre Pull Request para a branch base via GitHub CLI |

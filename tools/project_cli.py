@@ -381,6 +381,51 @@ class ScriptParser(HTMLParser):
             self.active = False
 
 
+def _strip_jsonc_comments(text):
+    """Remove comentários JSONC fora de strings, preservando o número das linhas."""
+    result = []
+    i = 0
+    in_string = escaped = False
+    while i < len(text):
+        char = text[i]
+        if in_string:
+            result.append(char)
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == '"':
+                in_string = False
+            i += 1
+        elif char == '"':
+            in_string = True
+            result.append(char)
+            i += 1
+        elif text.startswith("//", i):
+            while i < len(text) and text[i] not in "\r\n":
+                result.append(" ")
+                i += 1
+        elif text.startswith("/*", i):
+            result.extend((" ", " "))
+            i += 2
+            closed = False
+            while i < len(text):
+                if text.startswith("*/", i):
+                    result.extend((" ", " "))
+                    i += 2
+                    closed = True
+                    break
+                char = text[i]
+                result.append(char if char in "\r\n" else " ")
+                i += 1
+            if not closed:
+                raise ValueError("Comentário JSONC sem fechamento.")
+        else:
+            result.append(char)
+            i += 1
+    return "".join(result)
+
+
 def validate(p=None, full=False):
     p = p or local_project_root()
     project = ensure_project(p)
@@ -411,7 +456,11 @@ def validate(p=None, full=False):
             elif ext == ".ipynb":
                 magic_count += notebook_check(path); notebooks += 1
             elif ext == ".json":
-                json.loads(path.read_text(encoding="utf-8-sig")); json_count += 1
+                text = path.read_text(encoding="utf-8-sig")
+                relative = path.relative_to(project)
+                if relative.parts and relative.parts[0].lower() == ".vscode":
+                    text = _strip_jsonc_comments(text)
+                json.loads(text); json_count += 1
         except (SyntaxError, ValueError, UnicodeError, OSError) as exc:
             # Não imprimir a linha de código: ela pode conter uma credencial.
             line = getattr(exc, "lineno", None)
