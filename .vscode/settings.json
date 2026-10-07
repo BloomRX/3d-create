@@ -1,0 +1,6 @@
+{
+  // Painel "Testing" do VSCode/Copilot descobre os testes sozinho
+  "python.testing.unittestEnabled": true,
+  "python.testing.unittestArgs": ["-v", "-s", "tests", "-p", "test_*.py"],
+  "python.terminal.executeInFileDir": false
+}

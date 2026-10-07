@@ -579,6 +579,31 @@ def normalize_branch(name):
     return name
 
 
+def sync_tests(project):
+    """Automação dos testes: roda as suítes locais ANTES do commit do sync.
+
+    Falha NÃO bloqueia fluxos automáticos (sem terminal interativo), mas em
+    terminal de gente pergunta se envia mesmo assim."""
+    if not (Path(project) / "tests" / "run_all.py").is_file():
+        return
+    print("Testes locais (automático do sync)…")
+    try:
+        run([sys.executable, str(Path(project) / "tests" / "run_all.py")], cwd=project)
+    except RuntimeError:
+        print("=" * 62)
+        print("ATENÇÃO: HÁ TESTES FALHANDO (saída acima).")
+        print("Avise o agent na conversa antes de enviar.")
+        print("=" * 62)
+        try:
+            interativo = sys.stdin is not None and sys.stdin.isatty()
+        except Exception:
+            interativo = False
+        if interativo:
+            r = input("Enviar mesmo assim? (s/N): ").strip().lower()
+            if r != "s":
+                raise RuntimeError("Sync interrompido: testes falhando e você optou por não enviar.")
+
+
 def sync(message=None, push=True):
     p = root(); ensure_project(p); ensure_idle(p)
     b = branch(p)
@@ -589,6 +614,7 @@ def sync(message=None, push=True):
     if push: ensure_remote(p)
     print(f"Branch: {b}" + (f" → {REMOTE}/{destination}" if push else " (somente commit local)"))
     validate(p)
+    sync_tests(p)
     stage_project(p)
     status = run(["git", "diff", "--cached", "--quiet"], cwd=p, check=False, capture=True).returncode
     if status not in (0, 1): raise RuntimeError("Não foi possível verificar o stage.")

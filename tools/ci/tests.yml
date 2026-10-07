@@ -1,0 +1,21 @@
+# Automação remota: roda em TODO push (seu e do agent), de graça.
+# Veja o resultado na aba "Actions" do repo no GitHub.
+name: Testes
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch: {}
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Rodar suítes locais
+        run: python tests/run_all.py
