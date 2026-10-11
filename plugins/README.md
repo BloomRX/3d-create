@@ -9,7 +9,7 @@ Uso pessoal/estudo; não redistribuir.
 | Plugin | Uso previsto | Milestone |
 |---|---|---|
 | SKkeeper ✅ incluído | aplicar mods mantendo shape keys | M2/M3 |
-| Wiggle 2 ✅ incluído (.py legado) | física de mola por osso | M5 |
+| Wiggle Bones 1.1.2 ✅ incluído | física de mola por osso (refactor do Wiggle 2, mantido; oficial Blender 4.5+) | M5 |
 | mmd_tools ✅ incluído | importar PMX/MMD (probes #7) | estudo |
 | VRM Addon ✅ incluído | importar/exportar VRM + probe de .vrm | M3/export |
 | JiggleMaker / jigglegen2 / SquishyFX | física de peito/glúteos/cabelo | M5 |
@@ -21,3 +21,10 @@ Uso pessoal/estudo; não redistribuir.
 | onion_skinning | referência de animação | M5 |
 
 Referências de estudo (modelos/texturas) ficam em `assets/learn/`.
+
+> **Nota sobre o Wiggle 2:** o original (shteeve3d, `wiggle_2.py`) foi
+> abandonado em 2023 e não suporta Blender 4.2+. Substituído pelo
+> **Wiggle Bones** (Hans_Xwh, refactor oficialmente corrigido p/ Blender 5,
+> mantém o comportamento da física e traz migração de settings antigos).
+> Alternativas conhecidas, caso um dia precisemos: "Wiggle 2: RTX Edition"
+> (reescreva completa, 4.2+) e "Jiggle Physics" (naelstrof, algoritmo Verlet).
