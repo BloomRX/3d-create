@@ -50,7 +50,7 @@ class TestBloom(unittest.TestCase):
     def test_python_do_motor(self):
         txt = (REPO / "util" / "instalar_plugins.py").read_text(encoding="utf-8")
         for marca in ("plugins", "extension_install_file", "addon_install",
-                      "save_userpref"):
+                      "save_userpref", 'glob("*.py")', "wiggle"):
             self.assertIn(marca, txt)
         vrm = (REPO / "util" / "probe_vrm.py").read_text(encoding="utf-8")
         for marca in ("import_scene.vrm", "model_probe.py", "plugins_src"):

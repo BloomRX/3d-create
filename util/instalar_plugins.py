@@ -50,6 +50,23 @@ def main():
             resultado = instalar_zip(z)
             feitos.append((z.name, resultado))
             print(f"  {z.name}: {resultado}")
+    # addon legado em .py solto (ex.: wiggle_2.py do Wiggle 2)
+    for pasta in PASTAS:
+        if not pasta.is_dir():
+            continue
+        for py in sorted(pasta.glob("*.py")):
+            if py.name in ("__init__.py", "instalar_plugins.py"):
+                continue
+            try:
+                bpy.ops.preferences.addon_install(filepath=str(py), overwrite=True)
+                feitos.append((py.name, "ok (legado .py, desligado)"))
+            except Exception as exc:
+                msg = str(exc)
+                if "already" in msg.lower():
+                    feitos.append((py.name, "ja estava instalado (nada feito)"))
+                else:
+                    feitos.append((py.name, "FALHOU: " + msg.splitlines()[0][:90]))
+            print(f"  {py.name}: {feitos[-1][1]}")
     rar = [p.name for pasta in PASTAS if pasta.is_dir()
            for p in pasta.glob("*.rar")]
     if rar:
