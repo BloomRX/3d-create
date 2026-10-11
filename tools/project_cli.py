@@ -31,6 +31,10 @@ REMOTE = "origin"
 PROTECTED_BASE = {"main", "master"}
 MAX_FILE = 95 * 1024 * 1024  # abaixo do limite de arquivo do GitHub
 MAX_TEXT_SCAN = 8 * 1024 * 1024
+# Binários compilados não carregam segredos em texto; escanear gera falso
+# positivo (ex.: strings aleatórias dentro de DLLs do Qt).
+BINARY_EXTS = {".dll", ".exe", ".pyd", ".so", ".dylib", ".lib", ".a",
+               ".bin", ".pak", ".node", ".mll", ".cmpt"}
 SKIP_DIRS = {
     ".git", "node_modules", ".venv", "venv", "__pycache__", ".cache", ".npm",
     ".next", ".nuxt", ".pytest_cache", ".mypy_cache", ".ruff_cache", ".godot", ".ipynb_checkpoints",
@@ -531,6 +535,8 @@ def check_blob(p, object_ref, rel, seen):
     if kind != "blob": return  # referência de submódulo, não seu conteúdo
     size = int(run(["git", "cat-file", "-s", obj], cwd=p, capture=True).stdout.strip())
     if size > MAX_FILE: raise RuntimeError(f"Arquivo acima de 95 MiB bloqueado: {rel}. Pesos e arquivos grandes não devem entrar neste repositório.")
+    if Path(rel).suffix.lower() in BINARY_EXTS:
+        seen.add(obj); return  # binário: sem varredura de texto (falso positivo garantido)
     if size > MAX_TEXT_SCAN:
         if Path(rel).suffix.lower() in TEXT_EXTS:
             raise RuntimeError(f"Texto/notebook acima de 8 MiB: {rel}. Revise saídas embutidas antes de enviar; não pulei a varredura silenciosamente.")

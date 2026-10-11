@@ -24,6 +24,11 @@ cobrem o estudo), BlendAuUn (propósito incerto, sem marco no roadmap).
 | Stylized Asset Suite | 4.0 Pro | ⚠️ existe 4.2 Pro PAGO (dez/2025) — troque o zip aqui se um dia adquirir | M2/M3 |
 | SUPERTABs | 1.3.0 | ⚠️ existe 1.3.3 PAGO (testada 4.2–5.2) — UX, baixa prioridade | — |
 | Jiggle Maker | 2.2.2 | ✅ atual (gumroad lewdineer) | M5 |
+| Braids Generator | 5.1.1 | ✅ enviado pelo usuário — tranças procedurais | M2/M3 (cabelo) |
+| HairCard Studio | 1.5 | ✅ enviado pelo usuário — hair cards estilo jogo | M2/M3 (cabelo) |
+| Goo Physics | 1.0 | ✅ enviado pelo usuário — física mole | M5 |
+| Animation Snapper Pro | ? | ✅ enviado pelo usuário — auxiliar de animação | M5 |
+| MB UE5 Rig Creator Pro | 3.0.9 | ✅ enviado pelo usuário — rig padrão UE5 | M3 (export metahuman/UE5) |
 
 > Política: eu NÃO baixo versões pagas de sites não-oficiais. Se você possui
 > uma licença e atualizar algum zip, é só substituir aqui e rodar o BLOOM.bat.

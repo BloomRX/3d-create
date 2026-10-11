@@ -14,3 +14,6 @@ agent/bloom_agent_addon.zip
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# --- apps executáveis de estudo (não são referência versionável) ---
+assets/learn/Face_SDF_Generator_Old/

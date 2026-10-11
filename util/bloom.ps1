@@ -53,6 +53,7 @@ Write-Host ""
 Write-Host "  ==========================================" -ForegroundColor Cyan
 Write-Host "   BLOOM AGENT - ROTINA COMPLETA" -ForegroundColor Cyan
 Write-Host "  ==========================================" -ForegroundColor Cyan
+$HashAntes = (Get-FileHash $PSCommandPath -Algorithm MD5).Hash
 
 # ---------- [1/6] limpar temporarios ----------
 Get-ChildItem $env:TEMP -Filter "bloom_*" -File -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
@@ -65,6 +66,14 @@ if ($py) {
     Push-Location $Repo
     & $py "tools\project_cli.py" pull 2>&1 | ForEach-Object { Write-Host "        $_" }
     Pop-Location
+    # a rotina atualizou a si mesma? entao reinicia limpo com a versao nova
+    $HashDepois = (Get-FileHash $PSCommandPath -Algorithm MD5).Hash
+    if ($HashDepois -ne $HashAntes) {
+        Write-Host "        (a rotina se atualizou — reiniciando com a versao nova...)" -ForegroundColor Yellow
+        try { Stop-Transcript | Out-Null } catch { }
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $PSCommandPath
+        exit $LASTEXITCODE
+    }
 } else {
     Write-Host "        [!] Python nao encontrado; pulei o pull (rode git pull manual)." -ForegroundColor Yellow
 }
@@ -91,7 +100,7 @@ Write-Host "        instalado: $($VInst ?? 'nenhum')  |  repo: $($VRepo ?? '?')"
 $ZipAddon = Join-Path $Repo "agent\bloom_agent_addon.zip"
 if ($py) {
     Push-Location $RepoAddon
-    & $py -m zipfile -c $ZipAddon "bloom_agent" 2>&1 | Out-Null
+    & $py -m zipfile -c $ZipAddon "bloom_agent"
     Pop-Location
 }
 if ($Blender -and (Test-Path $ZipAddon) -and ($VRepo -ne $VInst)) {
