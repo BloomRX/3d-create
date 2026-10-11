@@ -238,3 +238,43 @@ Timelapse SEM narração (nada verbal p/ extrair). O valor está na estrutura:
   com rig + blend shapes — candidato a PROBE #6: personagem anime realtime
   (Warudo/VRM) feito por artista solo → exatamente nosso perfil-alvo.
   → AÇÃO: usuário baixa, roda o probe_modelo.bat e envia o JSON.
+
+## RADAR — arsenal 2AM enviado pelo usuário (out/2026) + ferramentas
+Prioridade de extração de transcrição (alta→baixa):
+
+1. **PjNtczZzSBk — "Reverse Engineering WuWa's Premium Look + Angel Ring"** (2AM)
+   → técnica do ANGEL RING (anel de brilho do cabelo anime) + look WuWa.
+   COLIDE DIRETO com nosso apply_anime_shader (fase 2). PRIORIDADE MÁXIMA.
+2. **-Ot5TzGMwrA — "Perfect 3D Shadows Like Genshin & Wuwa (Free Shader!)"** (2AM)
+   → shader GRATUITO com sombras Genshin/WuWa — referência/validação do nosso
+   toon por rampa + hue-shift. Comparar abordagens nó-a-nó se possível.
+3. **Anw8vuEX9xU — "Face SDF Generator" (MeshBites)** → GERADOR de SDF facial!
+   É exatamente a nossa "fase 2 do shader" (gerar SDF própria em vez da
+   recreação genérica). Estudar método (provavelmente bake de distância).
+4. **Qyrz4JoMP28 — "Blinking & Lip Sync + Final EXPORT"** (2AM) → piscada,
+   lip-sync e passos de EXPORTAÇÃO (provavelmente VRM) — alimenta M3/M5.
+5. **75ujnFHAaHQ — "20+ details I noticed" (2AM)** → catálogo de detalhes de
+   modelos de estúdio — checagem de qualidade p/ M1/M2 (proporções/estilo).
+6. **NO7a5AUef7U — "Beautiful 3D Bodies Like a Pro"** (2AM) → modelagem de
+   corpo — alimenta proporções do M1 e a base do AssetBank.
+7. **3guG5h5jX-E — "Beautiful 3D Hair"** (2AM, playlist processo completo
+   PL2BaVeFyzn9U77sZmVX478-mJ6wuAYuzD) → método curves p/ cabelo (M2/M3).
+8. **L0WyWY4pmvs — "Feet." (2AM)** → pés (ponto cego clássico de rigs anime).
+
+### FERRAMENTAS (regra: tudo desabilitado por padrão; habilito por milestone)
+| Tool | O que é | Quando habilitamos |
+|---|---|---|
+| **SKkeeper** (smokejohn, GPL, v1.8.2) | Aplica modificadores MANTENDO shape keys (3 ops no menu Object; limitações com Decimate/Weld) | **M2/M3** — crítico: aplicar proporções/roupas sem destruir as 80 shape keys de expressão |
+| **Wiggle 2** (shteeve3d) | Física de mola por osso, sem bake | M5 (física cabelo/peito) |
+| **mmd_tools** v2.10.3 (MMD-Blender) | Import/export PMX (MikuMikuDance): morphs, física rigid-body | Estudo de modelos MMD (abaixo) e bases MMD; não entra no produto final |
+
+### MODELOS MMD OFICIAIS — HoYoLAB 33521446 (UnknownStar)
+A HoYoverse distribui OFICIALMENTE modelos MMD dos personagens de **Zenless
+Zone Zero** (páginas bilibili "blackboard/era"; zips diretos nos comentários).
+Inclui **Astra Yao 1.5** (a nossa referência "Astra"!) + Ellen, Miyabi,
+Burnice, Jane Doe etc. Uso regido pelas MMD Guidelines da HoYoverse
+(não-comercial) — serve a ESTUDO igual nosso dossiê atual.
+**PROTOCOLO:** NÃO commitar os modelos (peso+licença) — apenas o probe JSON.
+Fluxo: baixar zip PMX → importar no Blender COM mmd_tools → salvar .blend →
+probe_modelo.bat → enviar JSON. Isso vira probe #7 (modelo oficial HoYoverse,
+física MMD, morphs PMX — comparação com WuWa/Hsin).
