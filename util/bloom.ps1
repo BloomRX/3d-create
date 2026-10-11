@@ -79,6 +79,7 @@ if ($py) {
 }
 
 # ---------- [3/7] addon Bloom Agent: versao instalada -> versao do repo ----------
+if (-not $Blender) { $Blender = Achar-Blender }
 Write-Host "  [3/7] Addon Bloom Agent..."
 function Versao-Manifesto($caminho) {
     if (Test-Path $caminho) {

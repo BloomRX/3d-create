@@ -566,6 +566,16 @@ def outgoing_secrets(p):
     print(f"Varredura: stage e {len(commits)} commit(s) ainda não publicados em {REMOTE}. Não substitui uma auditoria de segurança.")
 
 
+def git_ignorados(p, rels):
+    """Pergunta ao GIT quais caminhos são ignorados (fonte da verdade —
+    a lista interna não cobre todos os padrões, ex.: pasta com / no fim)."""
+    rels = [r for r in rels if r]
+    if not rels: return set()
+    out = run(["git", "check-ignore", "--stdin"], cwd=p, capture=True, check=False,
+              input_text="\n".join(rels) + "\n")
+    return {l for l in out.stdout.splitlines() if l}
+
+
 def changes(p):
     unstaged = set(git_names(p, ["diff", "--name-only"]))
     staged = set(git_names(p, ["diff", "--cached", "--name-only"]))
@@ -576,10 +586,11 @@ def changes(p):
 def stage_project(p):
     secrets(p)
     names, tracked_changes = changes(p)
+    ignorados_git = git_ignorados(p, sorted(names))
     selected, skipped = [], []
     for rel in sorted(names):
         path = p / rel
-        if ignored_path(rel) or sensitive_path(rel):
+        if ignored_path(rel) or sensitive_path(rel) or rel in ignorados_git:
             if rel in tracked_changes and (path.exists() or path.is_symlink()):
                 if ignored_path(rel) and not sensitive_path(rel):
                     # entrou no índice ANTES de virar ignorado (ex.: app binário

@@ -28,6 +28,18 @@ class TestBinarios(unittest.TestCase):
         gi = (REPO / ".gitignore").read_text(encoding="utf-8")
         self.assertIn("Face_SDF_Generator_Old/", gi)
 
+    def test_stage_usa_check_ignore_do_git(self):
+        txt = (REPO / "tools" / "project_cli.py").read_text(encoding="utf-8")
+        self.assertIn("def git_ignorados", txt)
+        self.assertIn("check-ignore", txt)
+        self.assertIn("rel in ignorados_git", txt)
+
+    def test_bloom_acha_blender_antes_do_passo3(self):
+        txt = (REPO / "util" / "bloom.ps1").read_bytes().decode("utf-8-sig")
+        passo3 = txt.index("[3/7] Addon Bloom Agent")
+        self.assertIn("Achar-Blender", txt[:passo3 + 60],
+                      "passo 3 precisa do $Blender resolvido antes de usar")
+
     def test_regex_de_versao_ancorada(self):
         # 'schema_version = "1.0.0"' NÃO pode ser lido como a versão do addon
         # (bug real: comparou 1.0.0 com 1.0.0 e pulou a atualização do 0.2.5)
