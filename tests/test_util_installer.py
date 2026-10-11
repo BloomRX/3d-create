@@ -25,8 +25,16 @@ class TestBloom(unittest.TestCase):
                       "SteamLibrary", "model_probe.py", "probe_vrm.py",
                       ".vrm", "probes", "libraryfolders.vdf",
                       "tools" + chr(92) + "ci" + chr(92) + "tests.yml",
-                      ".github", "sync", "Start-Process"):
+                      ".github", "sync", "Start-Process",
+                      "Start-Transcript", "Stop-Transcript", "logs",
+                      "VRM_ADDON_FOR_BLENDER", "vrmEsperando"):
             self.assertIn(marca, txt, f"bloom.ps1 perdeu: {marca}")
+
+    def test_logs_ficam_no_repo(self):
+        txt = (REPO / "util" / "bloom.ps1").read_bytes().decode("utf-8-sig")
+        self.assertIn('Join-Path $Repo "logs"', txt)
+        self.assertIn("bloom_{0:yyyy-MM-dd_HHmmss}", txt)
+        self.assertIn("Select-Object -Skip 10", txt, "deve guardar so as ultimas 10")
 
     def test_scripts_antigos_foram_removidos(self):
         for velho in ("util/probe_modelo.bat", "util/probe_modelo.ps1",

@@ -6,6 +6,10 @@
 # =====================================================================
 $ErrorActionPreference = "Continue"
 $Repo = Split-Path -Parent $PSScriptRoot
+$Logs = Join-Path $Repo "logs"
+New-Item -ItemType Directory -Force -Path $Logs | Out-Null
+$Log = Join-Path $Logs ("bloom_{0:yyyy-MM-dd_HHmmss}.txt" -f (Get-Date))
+Start-Transcript -Path $Log | Out-Null
 
 function Achar-Blender {
     $cmd = Get-Command blender.exe -ErrorAction SilentlyContinue
@@ -95,13 +99,23 @@ $modelos = @()
 foreach ($r in $raizes) {
     $modelos += Get-ChildItem -Path $r -Recurse -Include *.blend,*.vrm -File -ErrorAction SilentlyContinue
 }
+$temVrmZip = @(Get-ChildItem (Join-Path $Repo "plugins") -Filter "*vrm*.zip" -File -ErrorAction SilentlyContinue).Count -gt 0
 $faltando = @()
+$vrmEsperando = 0
 foreach ($m in ($modelos | Sort-Object LastWriteTime -Descending)) {
     $nome = [regex]::Replace([System.IO.Path]::GetFileNameWithoutExtension($m.Name), "[^\w\-]", "_").Trim("_")
     if (-not $nome) { $nome = "modelo" }
-    if (-not (Test-Path (Join-Path $Probes ("model_probe_{0}.json" -f $nome)))) { $faltando += $m }
+    if (Test-Path (Join-Path $Probes ("model_probe_{0}.json" -f $nome))) { continue }
+    if ($m.Extension -ieq ".vrm" -and -not $temVrmZip) { $vrmEsperando += 1; continue }
+    $faltando += $m
 }
 Write-Host "  [4/6] Raio-X: $($faltando.Count) modelo(s) novo(s) sem relatorio."
+if ($vrmEsperando -gt 0) {
+    Write-Host "        $vrmEsperando arquivo(s) .vrm aguardando o VRM ADDON:" -ForegroundColor Yellow
+    Write-Host "        1. Baixe o zip em github.com/saturday06/VRM_ADDON_FOR_BLENDER (Releases)"
+    Write-Host "        2. Solte o zip na pasta plugins\ do repo"
+    Write-Host "        3. Rode o BLOOM.bat de novo - os .vrm entram na fila sozinhos"
+}
 if ($faltando.Count -gt 0 -and $Blender) {
     for ($i = 0; $i -lt $faltando.Count; $i++) {
         $mb = [math]::Round($faltando[$i].Length / 1MB)
@@ -166,4 +180,8 @@ if ($Blender) {
     }
 }
 Write-Host ""
-Write-Host "  Rotina concluida." -ForegroundColor Cyan
+Write-Host "  Rotina concluida. Log salvo em: $Log" -ForegroundColor Cyan
+try { Stop-Transcript | Out-Null } catch { }
+Get-ChildItem $Logs -Filter "bloom_*.txt" -File -ErrorAction SilentlyContinue |
+    Sort-Object LastWriteTime -Descending | Select-Object -Skip 10 |
+    Remove-Item -Force -ErrorAction SilentlyContinue

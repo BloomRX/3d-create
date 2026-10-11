@@ -14,5 +14,11 @@ Os arquivos desta pasta são o motor que o BLOOM.bat usa:
 | `instalar_plugins.py` | roda DENTRO do Blender; instala zips desligados |
 | `probe_vrm.py` | roda DENTRO do Blender; importa .vrm p/ o raio-X |
 
-Relatórios de raio-X ficam em `probes/` (o agent lê no repo).
+Relatórios de raio-X ficam em `probes/`; **o log de cada rodada fica em
+`logs/`** (guarda as últimas 10) — os dois sobem no sync, então se algo der
+errado basta avisar o agent na conversa: ele lê o log direto do repo.
 Plugins (zips) ficam em `plugins/`. Referências de estudo em `assets/learn/`.
+
+**.vrm sem o VRM Addon instalado?** O BLOOM pula com um recado na tela:
+baixe o zip (github.com/saturday06/VRM_ADDON_FOR_BLENDER → Releases),
+solte em `plugins/` e rode de novo.
