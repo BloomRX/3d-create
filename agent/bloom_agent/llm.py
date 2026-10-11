@@ -162,6 +162,11 @@ def _is_busy(msg: str) -> bool:
 
 
 class Gemini:
+    # Freio GLOBAL de trocas por cota (compartilhado entre instâncias):
+    # mata ping-pong mesmo se a instância for recriada no meio do fluxo.
+    _QUOTA_SWAP_TS: list = []
+    _QUOTA_SWAP_MAX = 6         # trocas por cota...
+    _QUOTA_SWAP_WINDOW = 600.0  # ...a cada 10 minutos, no máximo
     def __init__(self, keys_path: Path, model: str | None = None, timeout: int = DEFAULT_TIMEOUT):
         self.keys_path = Path(keys_path)
         self.data = keysmod.load(self.keys_path)
@@ -326,10 +331,18 @@ class Gemini:
             idx = keysmod.pick_key(self.data, model=self.model)
             if idx is None or idx in tried:
                 if last_err and str(last_err).startswith("quota:"):
-                    if (self._quota_switches < 4 and self._switch_model(
-                            "cota do modelo esgotou em todas as chaves",
-                            require_free=True)):
+                    cls = type(self)
+                    agora = time.monotonic()
+                    cls._QUOTA_SWAP_TS[:] = [
+                        t for t in cls._QUOTA_SWAP_TS
+                        if agora - t < cls._QUOTA_SWAP_WINDOW]
+                    if (self._quota_switches < 4
+                            and len(cls._QUOTA_SWAP_TS) < cls._QUOTA_SWAP_MAX
+                            and self._switch_model(
+                                "cota do modelo esgotou em todas as chaves",
+                                require_free=True)):
                         self._quota_switches += 1
+                        cls._QUOTA_SWAP_TS.append(agora)
                         tried.clear()
                         busy = 0
                         continue
@@ -353,8 +366,11 @@ class Gemini:
                         tried.clear()
                         continue
                     raise LLMError(
-                        "Todas as chaves estouraram cota por agora. "
-                        f"Tente de novo em ~{int(wait)}s ou adicione outra chave."
+                        f"Cota esgotada nas {len(self.data['gemini'])} chaves "
+                        f"(modelo {self.model}). O agent PAROU p/ não queimar "
+                        f"requisições à toa — tente de novo em ~{int(wait)}s, "
+                        "adicione outra chave AIza, ou uma gsk_ do Groq "
+                        "(texto via Groq não gasta cota Gemini)."
                     )
                 raise last_err or LLMError("Nenhuma chave configurada.")
             tried.add(idx)

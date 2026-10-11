@@ -240,6 +240,8 @@ def _run_agent(message: str):
             raise LLMError("Nenhuma chave Gemini configurada. Adicione no painel "
                            "(a chave do AI Studio grátis basta).")
         cfg = _State.run_config
+        if cfg.get("bank_path"):
+            _bank_save(cfg["bank_path"])
         _State.session.mode = cfg.get("mode", "step")
         _State.session.auto_approve = cfg.get("auto_approve", False)
 
@@ -290,7 +292,52 @@ def _run_agent(message: str):
 # status
 # ---------------------------------------------------------------------------
 
+def _bank_prefs_path():
+    try:
+        return _State.root / "ui_prefs.json"
+    except Exception:
+        return None
+
+
+def _bank_autodetect() -> str:
+    """Onde esta o Asset Bank? Salvo > J:\\3d-Create\\assets > vazio."""
+    import json as _json
+    pp = _bank_prefs_path()
+    if pp and pp.exists():
+        try:
+            salvo = _json.loads(pp.read_text(encoding="utf-8")).get("bank_path", "")
+            if salvo and Path(salvo).exists():
+                return salvo
+        except Exception:
+            pass
+    for cand in ("J:\\3d-Create\\assets", "J:/3d-Create/assets"):
+        if Path(cand).exists():
+            return cand
+    return ""
+
+
+def _bank_save(caminho: str):
+    import json as _json
+    pp = _bank_prefs_path()
+    if not pp or not caminho:
+        return
+    try:
+        dados = {}
+        if pp.exists():
+            dados = _json.loads(pp.read_text(encoding="utf-8"))
+        dados["bank_path"] = caminho
+        pp.write_text(_json.dumps(dados, ensure_ascii=False, indent=1),
+                      encoding="utf-8")
+    except Exception:
+        pass
+
+
 def _refresh_status(props: "BloomProperties"):
+
+    if not props.bank_path:
+        auto = _bank_autodetect()
+        if auto:
+            props.bank_path = auto
     bits = []
     try:
         st = _gemini().status()
