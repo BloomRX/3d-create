@@ -33,7 +33,10 @@ def _id_do_manifest(z: zipfile.ZipFile):
 def instalar_extensao(zip_path, ligar: bool):
     """Extrai um zip de extensão em user_default/<id>. Retorna (msg, id)."""
     with zipfile.ZipFile(zip_path) as z:
-        nomes = [n for n in z.namelist() if not n.endswith("/")]
+        brutos = [n for n in z.namelist() if not n.endswith("/")]
+        nomes = [n.replace("\\", "/") for n in brutos]  # zips feitos no Windows usam "\\"
+        if not nomes:
+            return None, None  # zip vazio/corrompido
         if not any(n.endswith("blender_manifest.toml") for n in nomes):
             return None, None  # não é extensão
         addon_id = _id_do_manifest(z) or Path(zip_path).stem
@@ -46,13 +49,13 @@ def instalar_extensao(zip_path, ligar: bool):
             prefixo = list(tops)[0] + "/"
         else:
             prefixo = ""  # arquivos na raiz do zip
-        for n in nomes:
+        for bruto, n in zip(brutos, nomes):
             if prefixo and not n.startswith(prefixo):
                 continue
             rel = n[len(prefixo):] if prefixo else n
             destino = alvo / rel
             destino.parent.mkdir(parents=True, exist_ok=True)
-            with z.open(n) as src, open(destino, "wb") as dst:
+            with z.open(bruto) as src, open(destino, "wb") as dst:
                 shutil.copyfileobj(src, dst)
     mod = f"bl_ext.user_default.{addon_id}"
     estado = "ok (extensao em " + str(alvo.parent.name) + ")"

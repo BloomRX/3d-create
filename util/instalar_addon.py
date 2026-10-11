@@ -22,14 +22,9 @@ if not ZIP or not Path(ZIP).exists():
 
 estado, addon_id = ext_install.instalar_extensao(Path(ZIP), ligar=True)
 if not estado:
-    # não é extensão (sem manifest) — tenta legado
-    try:
-        bpy.ops.preferences.addon_install(filepath=str(Path(ZIP).resolve()),
-                                          overwrite=True)
-        estado, addon_id = "ok (legado)", "bloom_agent"
-    except Exception as exc:
-        print(f"[X] falhou instalar: {str(exc).splitlines()[0][:100]}")
-        sys.exit(1)
+    print("[X] o zip do addon nao tem blender_manifest.toml (vazio ou velho).")
+    print("    Rode BLOOM.bat de novo: o passo 3 recria o zip e instala no formato certo.")
+    sys.exit(1)
 print(f"  {estado}")
 
 # versão no disco, lida do lugar certo

@@ -102,9 +102,13 @@ $VRepoTxt = if ($VRepo) { $VRepo } else { "?" }
 Write-Host "        instalado: $VInstTxt  |  repo: $VRepoTxt"
 $ZipAddon = Join-Path $Repo "agent\bloom_agent_addon.zip"
 if ($py) {
-    Push-Location $RepoAddon
+    Push-Location (Join-Path $Repo "agent")
     & $py -m zipfile -c $ZipAddon "bloom_agent"
     Pop-Location
+    if (-not (Test-Path $ZipAddon) -or ((Get-Item $ZipAddon -ErrorAction SilentlyContinue).Length -lt 2048)) {
+        Write-Host "        zip do addon ficou oco — refazendo com Compress-Archive..."
+        Compress-Archive -Path (Join-Path $RepoAddon "*") -DestinationPath $ZipAddon -Force
+    }
 }
 if ($Blender -and (Test-Path $ZipAddon) -and ($VRepo -ne $VInst)) {
     if ($VInst -and $InstDir -and (Test-Path $InstDir)) {
@@ -121,6 +125,15 @@ if ($Blender -and (Test-Path $ZipAddon) -and ($VRepo -ne $VInst)) {
         if ($v) { $VConf = $v; break }
     }
     if ($VConf -eq $VRepo) {
+        foreach ($bv2 in @("5.2","5.1","5.0","4.5","4.2")) {
+            foreach ($lixo in @("bloom_agent","mmd_tools","wiggle_bones")) {
+                $lixoDir = Join-Path $env:APPDATA "Blender Foundation\Blender\$bv2\scripts\addons\$lixo"
+                if (Test-Path $lixoDir) {
+                    Remove-Item $lixoDir -Recurse -Force -ErrorAction SilentlyContinue
+                    Write-Host "        lixo legado removido: scripts\addons\$bv2\$lixo (extensao agora mora em extensions)"
+                }
+            }
+        }
         Write-Host "        CONFIRMADO: addon $VConf instalado (feche e reabra o Blender p/ carregar)." -ForegroundColor Green
     } else {
         $VConfTxt = if ($VConf) { $VConf } else { "nada" }

@@ -34,8 +34,8 @@ class TestBloom(unittest.TestCase):
 
     def test_instalador_do_addon(self):
         txt = (REPO / "util" / "instalar_addon.py").read_text(encoding="utf-8")
-        for marca in ("ext_install", "addon_install", "bloom_agent",
-                      "save_userpref", "--zip", "VERSAO_INSTALADA"):
+        for marca in ("ext_install", "bloom_agent", "save_userpref",
+                      "--zip", "VERSAO_INSTALADA", "sys.exit(1)"):
             self.assertIn(marca, txt, f"instalar_addon perdeu: {marca}")
 
     def test_logs_ficam_no_repo(self):

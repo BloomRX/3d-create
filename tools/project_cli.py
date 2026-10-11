@@ -306,9 +306,18 @@ def ensure_idle(p):
         raise RuntimeError("Há conflito, merge, rebase ou outra operação Git pendente. Use git status e resolva antes. Não fiz alterações.")
 
 
+def _git_bin(p, args, input_bytes=None):
+    """Como run(), mas SEM modo texto: nomes com \r/\n no meio sobrevivem."""
+    env = os.environ.copy()
+    env["GIT_TERMINAL_PROMPT"] = "0"
+    proc = subprocess.run(["git", *[str(a) for a in args]], cwd=str(p),
+                          capture_output=True, input=input_bytes, env=env)
+    return proc.stdout
+
+
 def git_names(p, args):
-    out = run(["git", *args, "-z"], cwd=p, capture=True).stdout
-    return [name for name in out.split("\0") if name]
+    out = _git_bin(p, [*args, "-z"])
+    return [n.decode("utf-8", "surrogateescape") for n in out.split(b"\0") if n]
 
 
 def ignored_path(name):
@@ -571,9 +580,9 @@ def git_ignorados(p, rels):
     a lista interna não cobre todos os padrões, ex.: pasta com / no fim)."""
     rels = [r for r in rels if r]
     if not rels: return set()
-    out = run(["git", "check-ignore", "--stdin"], cwd=p, capture=True, check=False,
-              input_text="\n".join(rels) + "\n")
-    return {l for l in out.stdout.splitlines() if l}
+    ent = ("\0".join(rels) + "\0").encode("utf-8", "surrogateescape")
+    out = _git_bin(p, ["check-ignore", "--stdin", "-z"], ent)
+    return {n.decode("utf-8", "surrogateescape") for n in out.split(b"\0") if n}
 
 
 def changes(p):
@@ -586,6 +595,18 @@ def changes(p):
 def stage_project(p):
     secrets(p)
     names, tracked_changes = changes(p)
+    # Fantasmas: entradas no índice com caractere de controle no nome (ex. \r
+    # herdado de commit feito com pathspec CRLF). O arquivo não pode existir no
+    # disco (NTFS proíbe) — desversiona e tira da seleção.
+    fantasmas = {r for r in names if any(ord(c) < 32 for c in r)}
+    if fantasmas:
+        run(["git", "--literal-pathspecs", "rm", "-r", "--cached", "--quiet",
+             "--pathspec-from-file=-", "--pathspec-file-nul"], cwd=p,
+            input_text="\0".join(sorted(fantasmas)) + "\0")
+        for rel in sorted(fantasmas):
+            print("desversionado fantasma (nome com caractere de controle): "
+                  + rel.encode("unicode_escape").decode("ascii")[:140])
+        names -= fantasmas
     ignorados_git = git_ignorados(p, sorted(names))
     selected, skipped = [], []
     for rel in sorted(names):
@@ -614,7 +635,8 @@ def stage_project(p):
     if sobra:
         selected = [r for r in selected if r not in sobra]
         for rel in sorted(sobra):
-            print(f"fora do stage (git diz ignorado): {rel}")
+            print("fora do stage (git diz ignorado): "
+                  + rel.encode("unicode_escape").decode("ascii")[:140])
     if selected:
         run(["git", "--literal-pathspecs", "add", "-A", "--pathspec-from-file=-", "--pathspec-file-nul"],
             cwd=p, input_text="\0".join(selected) + "\0")

@@ -52,6 +52,18 @@ class TestBinarios(unittest.TestCase):
         self.assertIn('"rm", "-r", "--cached"', txt)
         self.assertIn("fora do stage (git diz ignorado)", txt)
 
+    def test_zip_do_addon_reconstruido_e_fantasmas_cacados(self):
+        txt = (REPO / "util" / "bloom.ps1").read_text(encoding="utf-8-sig")
+        self.assertIn('Push-Location (Join-Path $Repo "agent")', txt)
+        self.assertIn("Compress-Archive", txt)
+        self.assertIn("lixo legado removido", txt)
+        core = (REPO / "util" / "ext_install.py").read_text(encoding="utf-8")
+        self.assertIn('replace("\\\\", "/")', core)
+        cli = (REPO / "tools" / "project_cli.py").read_text(encoding="utf-8")
+        self.assertIn('"check-ignore", "--stdin", "-z"', cli)
+        self.assertIn("surrogateescape", cli)
+        self.assertIn("fantasma (nome com caractere de controle)", cli)
+
     def test_bloom_compativel_powershell_51(self):
         # o .bat chama powershell.exe (5.1): nada de operadores do PS7
         txt = (REPO / "util" / "bloom.ps1").read_bytes().decode("utf-8-sig")
