@@ -117,6 +117,7 @@ if ($Blender -and (Test-Path $ZipAddon) -and ($VRepo -ne $VInst)) {
     $VConf = $null
     foreach ($bv in @("5.2","5.1","5.0","4.5","4.2")) {
         $v = Versao-Manifesto (Join-Path $env:APPDATA "Blender Foundation\Blender\$bv\extensions\user_default\bloom_agent\blender_manifest.toml")
+        if (-not $v) { $v = Versao-Manifesto (Join-Path $env:APPDATA "Blender Foundation\Blender\$bv\scripts\addons\bloom_agent\blender_manifest.toml") }
         if ($v) { $VConf = $v; break }
     }
     if ($VConf -eq $VRepo) {

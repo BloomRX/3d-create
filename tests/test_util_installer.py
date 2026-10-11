@@ -34,8 +34,8 @@ class TestBloom(unittest.TestCase):
 
     def test_instalador_do_addon(self):
         txt = (REPO / "util" / "instalar_addon.py").read_text(encoding="utf-8")
-        for marca in ("extension_install_file", "addon_install", "addon_utils",
-                      "bloom_agent", "save_userpref", "--zip"):
+        for marca in ("ext_install", "addon_install", "bloom_agent",
+                      "save_userpref", "--zip", "VERSAO_INSTALADA"):
             self.assertIn(marca, txt, f"instalar_addon perdeu: {marca}")
 
     def test_logs_ficam_no_repo(self):
@@ -57,9 +57,12 @@ class TestBloom(unittest.TestCase):
 
     def test_python_do_motor(self):
         txt = (REPO / "util" / "instalar_plugins.py").read_text(encoding="utf-8")
-        for marca in ("plugins", "extension_install_file", "addon_install",
-                      "save_userpref", 'glob("*.py")', "wiggle"):
+        for marca in ("plugins", "ext_install", "addon_install",
+                      "save_userpref", "ligar=False"):
             self.assertIn(marca, txt)
+        core = (REPO / "util" / "ext_install.py").read_text(encoding="utf-8")
+        for marca in ("user_default", "blender_manifest.toml", "modules_refresh"):
+            self.assertIn(marca, core, f"ext_install perdeu: {marca}")
         vrm = (REPO / "util" / "probe_vrm.py").read_text(encoding="utf-8")
         for marca in ("import_scene.vrm", "model_probe.py", "plugins_src"):
             self.assertIn(marca, vrm)

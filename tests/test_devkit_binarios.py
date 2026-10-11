@@ -48,8 +48,9 @@ class TestBinarios(unittest.TestCase):
 
     def test_stage_auto_remove_ignorado(self):
         txt = (REPO / "tools" / "project_cli.py").read_text(encoding="utf-8")
-        self.assertIn("removido do stage (agora ignorado)", txt)
-        self.assertIn('"restore", "--staged"', txt.replace('["git", "restore", "--staged", "--", rel]', '"restore", "--staged"'))
+        self.assertIn("desversionado (agora ignorado)", txt)
+        self.assertIn('"rm", "-r", "--cached"', txt)
+        self.assertIn("fora do stage (git diz ignorado)", txt)
 
     def test_bloom_compativel_powershell_51(self):
         # o .bat chama powershell.exe (5.1): nada de operadores do PS7

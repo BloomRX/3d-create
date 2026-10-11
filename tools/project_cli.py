@@ -592,13 +592,12 @@ def stage_project(p):
         path = p / rel
         if ignored_path(rel) or sensitive_path(rel) or rel in ignorados_git:
             if rel in tracked_changes and (path.exists() or path.is_symlink()):
-                if ignored_path(rel) and not sensitive_path(rel):
-                    # entrou no índice ANTES de virar ignorado (ex.: app binário
-                    # em assets/learn): tira do stage — o arquivo fica no disco,
-                    # e um commit local antigo com ele vira remoção no próximo
-                    # commit (nunca vai pro remoto).
-                    run(["git", "restore", "--staged", "--", rel], cwd=p, check=False)
-                    print(f"removido do stage (agora ignorado): {rel}")
+                if not sensitive_path(rel):
+                    # versionado ANTES de virar ignorado (ex.: app binário em
+                    # assets/learn): desversiona — o arquivo fica no disco e
+                    # sai do repo no próximo commit.
+                    run(["git", "rm", "-r", "--cached", "--quiet", "--", rel], cwd=p, check=False)
+                    print(f"desversionado (agora ignorado): {rel}")
                     skipped.append(rel); continue
                 raise RuntimeError(f"Alteração em arquivo gerado/sensível já controlado pelo Git: {rel}. Revise manualmente antes de sincronizar.")
             if rel not in tracked_changes:
@@ -611,6 +610,11 @@ def stage_project(p):
         selected.append(rel)
     if skipped:
         print("Fora do envio (permanecem no PC): " + ", ".join(skipped[:8]) + (" …" if len(skipped) > 8 else ""))
+    sobra = git_ignorados(p, selected)
+    if sobra:
+        selected = [r for r in selected if r not in sobra]
+        for rel in sorted(sobra):
+            print(f"fora do stage (git diz ignorado): {rel}")
     if selected:
         run(["git", "--literal-pathspecs", "add", "-A", "--pathspec-from-file=-", "--pathspec-file-nul"],
             cwd=p, input_text="\0".join(selected) + "\0")
