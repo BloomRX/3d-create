@@ -83,7 +83,7 @@ Write-Host "  [3/7] Addon Bloom Agent..."
 function Versao-Manifesto($caminho) {
     if (Test-Path $caminho) {
         foreach ($l in (Get-Content $caminho -ErrorAction SilentlyContinue)) {
-            if ($l -match 'version\s*=\s*"(\d+\.\d+\.\d+)"') { return $Matches[1] }
+            if ($l -match '^\s*version\s*=\s*"(\d+\.\d+\.\d+)"') { return $Matches[1] }
         }
     }
     return $null

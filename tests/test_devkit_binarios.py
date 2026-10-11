@@ -28,6 +28,17 @@ class TestBinarios(unittest.TestCase):
         gi = (REPO / ".gitignore").read_text(encoding="utf-8")
         self.assertIn("Face_SDF_Generator_Old/", gi)
 
+    def test_regex_de_versao_ancorada(self):
+        # 'schema_version = "1.0.0"' NÃO pode ser lido como a versão do addon
+        # (bug real: comparou 1.0.0 com 1.0.0 e pulou a atualização do 0.2.5)
+        txt = (REPO / "util" / "bloom.ps1").read_bytes().decode("utf-8-sig")
+        self.assertIn("'^\\s*version", txt, "regex precisa de ancora ^")
+
+    def test_stage_auto_remove_ignorado(self):
+        txt = (REPO / "tools" / "project_cli.py").read_text(encoding="utf-8")
+        self.assertIn("removido do stage (agora ignorado)", txt)
+        self.assertIn('"restore", "--staged"', txt.replace('["git", "restore", "--staged", "--", rel]', '"restore", "--staged"'))
+
     def test_bloom_compativel_powershell_51(self):
         # o .bat chama powershell.exe (5.1): nada de operadores do PS7
         txt = (REPO / "util" / "bloom.ps1").read_bytes().decode("utf-8-sig")
