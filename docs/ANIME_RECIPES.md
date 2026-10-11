@@ -194,3 +194,47 @@ M5); "3D AI Models Are Finally Watertight (6GB VRAM, Free & Local)"
 ### SquishBulge_GeoNodes (estudo M5)
 - 7 ossos (Thighs_Rig) + NODES×3 + SOLIDIFY×6 → bulge suave por geometry nodes, sem simulação.
 → DECISÃO: (9) M5: efeitos de "carne" via geonodes dirigidos por osso (barato, sem bake).
+
+## RIG ANIME COMPLETO — 2AM "How to Rig EVERYTHING" (blgGcbZzsWM, 509K views, mai/2023)
+A seção de rig que FALTAVA no dossiê (Hsin não narrava rig). Canal 2AM
+(@2amgoodnight). Receita extraída da narração:
+
+- **Cabelo — preparação**: separar partes MÓVEIS (franja) das estáticas;
+  fechar pontas recortadas (preencher face + bridge edge loops) →
+  **voxel remesh** → **decimate** (tri→quads opcional). Motivo: clipping
+  entre mechas quebra o auto-weights; remesh elimina vértices internos.
+- **Rosto = SHAPE KEYS, sem ossos faciais** (mesma decisão do Hsin!);
+  no metarig: DELETAR face bones e extrusar 1 osso de cabeça extra.
+- **Corpo**: Metarig humano escalado/rotacionado; ossos de peito empurrados
+  pra frente (acompanhar a forma); dedos conferidos em múltiplos ângulos.
+- **Regras de weight paint (AUTOMATIZÁVEL — futura tool `auto_weights_anime`):**
+  1. dedos/pé: vermelho total no osso do pé;
+  2. peito: osso Breast só no seio (subtract geral → add só a região);
+  3. **segredo anti-jiggle: passada de subtract com strength 0.7 no peito**
+     (amortece a física — regra determinística!);
+  4. pescoço: subtract FULL no crânio E no interior da boca (dentes/língua);
+  5. cabeça: tudo vermelho, INCLUINDO olhos externos/peças (auto-rig pega).
+  6. cabelo estático: parented ao osso da cabeça, 100% vermelho.
+- **Roupas: auto-rig via DATA TRANSFER do corpo** (+consertos manuais) —
+  a MESMA técnica do arquivo WuWa/Hsin. É o padrão da indústria; entra
+  na nossa tool de roupas (M3) junto de SurfaceDeform+CorrectiveSmooth.
+- Correntes/strapas: ossos extras dedicados. Cabelo móvel: ossos próprios +
+  combinar rigs. Saia: seção dedicada (ossos em anel).
+- **Física**: Blender = addon **Wiggle 2** (github shteeve3d/blender-wiggle-2,
+  grátis, spring physics por osso SEM simulação/bake — ideal p/ RX 580);
+  **VRM/Unity = UniVRM spring bones** (padrão VRM!) → blueprint direto do
+  nosso perfil de export vrm2: ossos de física viram SpringBones no VRM.
+- Leads: 2AM "Secret 3D Jiggle Physics — 4 Bones" (jk8_7dqoTv8, M5);
+  2AM playlist processo completo + "Make Hands EASY" (3CTSpfS_gCo);
+  Noggi: rigging basics + "Hair Bone Generator" grátis (80.lv, set/2026).
+
+## WULONG3D — timelapse "Arcana" (D4R8_UsavtE, 10/out/2026, 1h32)
+Timelapse SEM narração (nada verbal p/ extrair). O valor está na estrutura:
+- Ordem do workflow: Face → Body → Hair → Cloth → **Texture (59 dos 92 min!)**
+  → Rigging (5min) → Blend shapes (6min) → Showcase no **Warudo** (app de
+  VTuber/puppeteering = alvo realtime VRM). Confirma: texturas = a parte
+  longa (onde nosso agent+ComfyUI mais economiza tempo).
+- **MODELO COMPLETO DISPONÍVEL P/ DOWNLOAD** (Google Drive na descrição)
+  com rig + blend shapes — candidato a PROBE #6: personagem anime realtime
+  (Warudo/VRM) feito por artista solo → exatamente nosso perfil-alvo.
+  → AÇÃO: usuário baixa, roda o probe_modelo.bat e envia o JSON.
