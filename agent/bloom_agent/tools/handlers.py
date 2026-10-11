@@ -113,6 +113,7 @@ def run_blender_python(args: dict, ctx: dict) -> dict:
     ns = {
         "bpy": bl.bpy,
         "context": bl.bpy.context,
+        "scene": bl.bpy.context.scene,
         "math": math,
         "mathutils": mathutils,
         "bmesh": __import__("bmesh"),
@@ -125,15 +126,74 @@ def run_blender_python(args: dict, ctx: dict) -> dict:
         out = buf.getvalue().strip()
         return _ok((f"Executado ok.\nSaída: {out[:4000]}" if out else "Executado ok. (sem saída)"))
     except Exception as e:  # devolve o erro pro LLM corrigir
-        return _fail(f"Erro ao executar:\n{type(e).__name__}: {e}\n{traceback.format_exc()[-1500:]}")
+        dica = ""
+        if "has no attribute 'scene'" in f"{type(e).__name__}: {e}":
+            dica = ("\nDICA: bpy.scene NAO existe. Use a variavel `scene` "
+                    "(ja disponivel) ou bpy.context.scene.")
+        return _fail(f"Erro ao executar:\n{type(e).__name__}: {e}\n{traceback.format_exc()[-1500:]}{dica}")
+
+
+MAX_RENDERS_PER_TURN = 3   # freio anti-loop de câmera (queimou um turno inteiro)
 
 
 def render_view(args: dict, ctx: dict) -> dict:
+    sess = ctx.get("session") or {}
+    feitos = int(sess.get("renders_turn", 0))
+    if feitos >= MAX_RENDERS_PER_TURN:
+        return _fail(f"Limite de {MAX_RENDERS_PER_TURN} renders por turno atingido "
+                     f"({feitos} feitos). Só renderize de novo após mudar geometria "
+                     "de verdade; para enquadrar, use setup_camera_front.")
+    sess["renders_turn"] = feitos + 1
     size = int(args.get("size", 512))
     stamp = time.strftime("%H%M%S")
     out = Path(ctx["root"]) / "jobs" / "renders" / f"view_{stamp}.png"
     b64 = bl.quick_render(out, size=size, from_viewport=True)
-    return _ok(f"Render salvo em {out}.", images=[(b64, "image/png")])
+    return _ok(f"Render {sess['renders_turn']}/{MAX_RENDERS_PER_TURN} do turno salvo em {out}.",
+               images=[(b64, "image/png")])
+
+
+def setup_camera_front(args: dict, ctx: dict) -> dict:
+    """Câmera frontal DETERMINÍSTICA: enquadra as malhas pela bounding box
+    (lente 50mm, margem 25%) + luz básica se a cena não tiver nenhuma."""
+    bpy = bl.bpy
+    from mathutils import Vector
+    from math import atan, radians, tan
+
+    malhas = [o for o in bpy.data.objects if o.type == "MESH"
+              and not o.name.startswith(("BLOOM_REF", "Outline"))]
+    if not malhas:
+        return _fail("Nenhuma malha para enquadrar.")
+    bpy.context.view_layer.update()
+    cantos = [o.matrix_world @ Vector(c) for o in malhas for c in o.bound_box]
+    vmin = Vector((min(c.x for c in cantos), min(c.y for c in cantos),
+                   min(c.z for c in cantos)))
+    vmax = Vector((max(c.x for c in cantos), max(c.y for c in cantos),
+                   max(c.z for c in cantos)))
+    centro = (vmin + vmax) / 2
+    altura = max(0.5, vmax.z - vmin.z)
+    largura = max(0.3, vmax.x - vmin.x)
+    velha = bpy.data.objects.get("BloomCam")
+    if velha:
+        bpy.data.objects.remove(velha, do_unlink=True)
+    cam_data = bpy.data.cameras.new("BloomCam")
+    cam_data.lens = 50
+    cam = bpy.data.objects.new("BloomCam", cam_data)
+    bpy.context.collection.objects.link(cam)
+    half_fov = atan(18.0 / 50.0)  # sensor 36mm
+    dist = (max(altura, largura * 1.2) / (2 * tan(half_fov))) * 1.25
+    cam.location = (centro.x, centro.y - dist, centro.z)
+    cam.rotation_euler = (centro - cam.location).to_track_quat("-Z", "Y").to_euler()
+    if not any(o.type == "LIGHT" for o in bpy.data.objects):
+        sol = bpy.data.lights.new("BloomSol", "SUN")
+        sol.energy = 3.0
+        luz = bpy.data.objects.new("BloomSol", sol)
+        luz.rotation_euler = (radians(50), 0, radians(20))
+        bpy.context.collection.objects.link(luz)
+    cena = bpy.context.scene
+    cena.camera = cam
+    return _ok(f"Câmera frontal a {dist:.2f} m enquadra {altura:.2f} m "
+               f"(centro z={centro.z:.2f}, base z={vmin.z:.2f}). "
+               "Agora UM render_view para ver o personagem inteiro.")
 
 
 def reference_info(args: dict, ctx: dict) -> dict:
@@ -357,6 +417,7 @@ _SEM_KEY = ["head_size", "shoulder_w", "waist", "leg_len"]
 
 def apply_body_proportions(args: dict, ctx: dict) -> dict:
     bpy = bl.bpy
+    from mathutils import Vector
     lines = []
     objs = [o for o in bpy.data.objects if o.type == "MESH"
             and o.data.shape_keys is not None]
@@ -385,12 +446,12 @@ def apply_body_proportions(args: dict, ctx: dict) -> dict:
         alvos = [o for o in bpy.data.objects if o.type in {"MESH", "ARMATURE"}
                  and o.name.startswith(("MAN_", "Bodiez", "body", "body_base", "Base"))]
         if alvos:
-            zmin = min((o.matrix_world @ v.co).z
+            zmin = min((o.matrix_world @ Vector(c)).z
                        for o in alvos if o.type == "MESH"
-                       for v in o.bound_box)
-            zmax = max((o.matrix_world @ v.co).z
+                       for c in o.bound_box)
+            zmax = max((o.matrix_world @ Vector(c)).z
                        for o in alvos if o.type == "MESH"
-                       for v in o.bound_box)
+                       for c in o.bound_box)
             atual = zmax - zmin
             if atual > 0.01:
                 f = float(height) / atual
@@ -407,8 +468,9 @@ def rig_human(args: dict, ctx: dict) -> dict:
               and not o.name.startswith("BLOOM_REF")]
     if not malhas:
         return _fail("Nenhuma malha na cena para rigar (spawne o corpo antes).")
-    zmin = min((o.matrix_world @ v.co).z for o in malhas for v in o.bound_box)
-    zmax = max((o.matrix_world @ v.co).z for o in malhas for v in o.bound_box)
+    from mathutils import Vector
+    zmin = min((o.matrix_world @ Vector(c)).z for o in malhas for c in o.bound_box)
+    zmax = max((o.matrix_world @ Vector(c)).z for o in malhas for c in o.bound_box)
     height = max(0.5, zmax - zmin)
     pos = rig_profiles.bone_positions(height)
     arm_data = bpy.data.armatures.new("BloomRig")

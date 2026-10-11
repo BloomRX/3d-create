@@ -175,6 +175,15 @@ TOOLS = [
         "fn": "set_export_profile",
     },
     {
+        "name": "setup_camera_front",
+        "description": ("Posiciona a câmera FRENTE enquadrando todas as malhas "
+                        "(distância pela altura, lente 50mm) e cria luz básica se faltar. "
+                        "Use ESTA em vez de ajustar câmera por código; depois render_view "
+                        "(máx. 3/turno)."),
+        "parameters": {"type": "object", "properties": {}, "required": []},
+        "fn": "setup_camera_front",
+    },
+    {
         "name": "reference_backdrop",
         "description": ("Coloca a imagem de referência como fundo na 3D View (vista frontal) "
                         "para modelar olhando a foto. Altura configurável em metros."),

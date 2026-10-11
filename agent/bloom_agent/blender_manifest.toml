@@ -1,6 +1,6 @@
 schema_version = "1.0.0"
 id = "bloom_agent"
-version = "0.3.2"
+version = "0.3.3"
 name = "Bloom Agent"
 tagline = "Agent que modela, rige, texturiza e exporta personagens"
 maintainer = "BloomRX"

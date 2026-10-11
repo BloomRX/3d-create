@@ -39,7 +39,9 @@ FERRAMENTAS
   modificadores para hard-surface; shrinkwrap para encaixar peças no corpo;
   smart UV / UV atlas; shape keys; rig e pesos; materiais.
 - render_view: renderiza a vista e DEVOLVE a imagem para você. SEMPRE use após
-  mudar geometria; descreva o que vê antes de seguir.
+  mudar geometria; descreva o que vê antes de seguir. Máx. 3 por turno (freio).
+- setup_camera_front: enquadra TODAS as malhas de frente (determinística) e cria
+  luz básica se faltar. Use ESTA em vez de posicionar câmera por código.
 - reference_info: a imagem de referência do usuário (foto do personagem) está
   na conversa como imagem; analise-a com cuidado.
 - asset_scan / asset_import: Asset Bank local do usuário (acervo próprio).
@@ -57,11 +59,15 @@ Ao ver a referência e o pedido, determine o estilo (anime/cel, semi-realista,
 fotorrealista) e diga qual abordagem de textura/shader vai usar
 (toon com rampa, PBR, etc.). O usuário pode confirmar ou trocar.
 
-PRIORIDADE DE GERAÇÃO (sempre nesta ordem)
-1. MODELAR NO BLENDER com run_blender_python (topologia controlada de saída).
-2. ADAPTAR um asset do Asset Bank (asset_import + shrinkwrap/retextura).
-3. colab_job (gerador 3D por IA) — somente se 1 e 2 não forem bons o bastante;
-   explique por que precisa e instrua o usuário a abrir o notebook.
+PRIORIDADE DE GERAÇÃO (fonte da malha)
+- CORPO/PERSONAGEM inteiro ("crie o personagem da foto"): SEMPRE spawn_base_body
+  (Asset Bank/Bodiez) + apply_body_proportions. NUNCA monte o corpo com
+  primitivas (cube/cylinder/cone/ico_sphere) — corpo de primitiva NUNCA é aceitável.
+- PEÇAS (cabelo, chifres, roupas, acessórios): 1º procure no Asset Bank
+  (asset_scan/asset_import); modele com run_blender_python SOMENTE o que o banco
+  não tiver (metaballs/curvas + remesh p/ orgânicos; primitivas p/ hard-surface).
+- colab_job (gerador 3D por IA): último recurso; explique por quê e instrua o
+  usuário a abrir o notebook.
 
 RIG / ESQUELETO (padrões do projeto)
 O rig de trabalho usa o ESQUELETO CANÔNICO (rig_human): hips/spine/chest/neck/
@@ -98,6 +104,10 @@ ECONOMIA DE COTA (free tier — IMPORTANTE)
   pequenas.
 - render_view apenas em MARCOS (proporções aplicadas, antes do rig, pós-rig).
   Nunca re-renderize a mesma vista só para "conferir de novo".
+- Câmera: setup_camera_front UMA vez. NUNCA faça o ciclo render -> ajustar
+  câmera na mão -> render; esse ciclo queimou um turno inteiro e é proibido.
+- run_blender_python já injeta `scene` (= bpy.context.scene). NUNCA escreva
+  bpy.scene (não existe).
 
 REGRAS
 - Nunca inventou resultado: se o render mostrar problema, corrija antes de
@@ -182,6 +192,7 @@ def handle_message(session: AgentSession, gem: Gemini, text: str, ctx: dict,
 
     tools = tools_registry.schemas_for_llm()
     calls = 0
+    session.renders_turn = 0   # freio por turno (render_view lê via ctx["session"])
     reply = ""
     try:
         while calls < MAX_TOOL_CALLS:
@@ -224,8 +235,10 @@ def handle_message(session: AgentSession, gem: Gemini, text: str, ctx: dict,
                 _trim(session.history)
                 _slim_images(session.history)
         else:
-            reply = (f"Cheguei no limite de {MAX_TOOL_CALLS} ferramentas por turno. "
-                     "Resumo do estado: chame list_scene/scene_stats e diga o que fazer a seguir.")
+            reply = (f"⚠️ Bati no limite de {MAX_TOOL_CALLS} ferramentas deste turno "
+                     "(a cena está salva por autosave). Escreva \"continue\" que eu retomo "
+                     "do mesmo ponto; se eu estava ajustando câmera, da próxima uso "
+                     "setup_camera_front.")
     except LLMError as e:
         reply = f"⚠️ Erro na API: {e}"
     session.log("agent", reply)
