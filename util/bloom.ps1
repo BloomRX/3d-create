@@ -56,11 +56,11 @@ Write-Host "  ==========================================" -ForegroundColor Cyan
 
 # ---------- [1/6] limpar temporarios ----------
 Get-ChildItem $env:TEMP -Filter "bloom_*" -File -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
-Write-Host "  [1/6] Temporarios limpos."
+Write-Host "  [1/7] Temporarios limpos."
 
 # ---------- [2/6] pull ----------
 $py = Achar-Python
-Write-Host "  [2/6] Atualizando do repo (pull)..."
+Write-Host "  [2/7] Atualizando do repo (pull)..."
 if ($py) {
     Push-Location $Repo
     & $py "tools\project_cli.py" pull 2>&1 | ForEach-Object { Write-Host "        $_" }
@@ -69,7 +69,24 @@ if ($py) {
     Write-Host "        [!] Python nao encontrado; pulei o pull (rode git pull manual)." -ForegroundColor Yellow
 }
 
-# ---------- [3/6] plugins ----------
+# ---------- [3/7] addon Bloom Agent: recompila e reinstala ----------
+Write-Host "  [3/7] Addon Bloom Agent (recompila e reinstala)..."
+$ZipAddon = Join-Path $Repo "agent\bloom_agent_addon.zip"
+if ($py) {
+    Push-Location (Join-Path $Repo "agent")
+    & $py -m zipfile -c $ZipAddon "bloom_agent" 2>&1 | Out-Null
+    Pop-Location
+}
+if ($Blender -and (Test-Path $ZipAddon)) {
+    & $Blender --background --python (Join-Path $Repo "util\instalar_addon.py") -- --zip $ZipAddon 2>&1 |
+        Where-Object { $_ -match "addon|ADDON|ligado|salvas|\[X\]|\[!\]" } |
+        ForEach-Object { Write-Host "        $_" }
+    Write-Host "        (se o Blender ja estava aberto, feche e abra de novo p/ carregar a versao nova)"
+} else {
+    Write-Host "        [!] sem Blender/zip; atualize o addon manualmente (agent\zip_addon.bat)." -ForegroundColor Yellow
+}
+
+# ---------- [4/7] plugins ----------
 $Blender = Achar-Blender
 if (-not $Blender) {
     Write-Host "  Nao achei o blender.exe. Cole o caminho da PASTA do Blender:"
@@ -78,9 +95,9 @@ if (-not $Blender) {
     if ($pasta -and (Test-Path (Join-Path $pasta "blender.exe"))) { $Blender = Join-Path $pasta "blender.exe" }
 }
 if (-not $Blender -or -not (Test-Path $Blender)) {
-    Write-Host "  [3/6] Sem Blender; pulei a instalacao de plugins." -ForegroundColor Yellow
+    Write-Host "  [4/7] Sem Blender; pulei a instalacao de plugins." -ForegroundColor Yellow
 } else {
-    Write-Host "  [3/6] Plugins (instala os novos; todos ficam DESLIGADOS)..."
+    Write-Host "  [4/7] Plugins (instala os novos; todos ficam DESLIGADOS)..."
     & $Blender --background --python (Join-Path $Repo "util\instalar_plugins.py") 2>&1 |
         Where-Object { $_ -match "plugin|RESUMO|pulados|AVISO|salvas" } |
         ForEach-Object { Write-Host "        $_" }
@@ -109,7 +126,7 @@ foreach ($m in ($modelos | Sort-Object LastWriteTime -Descending)) {
     if ($m.Extension -ieq ".vrm" -and -not $temVrmZip) { $vrmEsperando += 1; continue }
     $faltando += $m
 }
-Write-Host "  [4/6] Raio-X: $($faltando.Count) modelo(s) novo(s) sem relatorio."
+Write-Host "  [5/7] Raio-X: $($faltando.Count) modelo(s) novo(s) sem relatorio."
 if ($vrmEsperando -gt 0) {
     Write-Host "        $vrmEsperando arquivo(s) .vrm aguardando o VRM ADDON:" -ForegroundColor Yellow
     Write-Host "        1. Baixe o zip em github.com/saturday06/VRM_ADDON_FOR_BLENDER (Releases)"
@@ -150,18 +167,18 @@ if ($faltando.Count -gt 0 -and $Blender) {
 $ciFonte = Join-Path $Repo "tools\ci\tests.yml"
 $ciDestino = Join-Path $Repo ".github\workflows\tests.yml"
 if ((Test-Path $ciFonte) -and (-not (Test-Path $ciDestino))) {
-    Write-Host "  [5/6] Ativando o CI do GitHub (testes a cada push)..."
+    Write-Host "  [6/7] Ativando o CI do GitHub (testes a cada push)..."
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $ciDestino) | Out-Null
     Push-Location $Repo
     git mv "tools/ci/tests.yml" ".github/workflows/tests.yml" 2>&1 | Out-Null
     Pop-Location
     if (Test-Path $ciDestino) { Write-Host "        CI pronto (sai no proximo sync)." -ForegroundColor Green }
 } else {
-    Write-Host "  [5/6] CI: nada a fazer."
+    Write-Host "  [6/7] CI: nada a fazer."
 }
 
 # ---------- [6/6] commit + push ----------
-Write-Host "  [6/6] Sincronizando (commit+push do que surgir)..."
+Write-Host "  [7/7] Sincronizando (commit+push do que surgir)..."
 if ($py) {
     Push-Location $Repo
     & $py "tools\project_cli.py" sync -m "bloom: rotina unica (probes/relatorios, plugins, ci)"
@@ -181,6 +198,7 @@ if ($Blender) {
 }
 Write-Host ""
 Write-Host "  Rotina concluida. Log salvo em: $Log" -ForegroundColor Cyan
+Write-Host "  Addon: se a versao mudou (v0.3.2), feche e abra o Blender." 
 try { Stop-Transcript | Out-Null } catch { }
 Get-ChildItem $Logs -Filter "bloom_*.txt" -File -ErrorAction SilentlyContinue |
     Sort-Object LastWriteTime -Descending | Select-Object -Skip 10 |

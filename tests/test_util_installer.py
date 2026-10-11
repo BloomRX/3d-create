@@ -27,8 +27,16 @@ class TestBloom(unittest.TestCase):
                       "tools" + chr(92) + "ci" + chr(92) + "tests.yml",
                       ".github", "sync", "Start-Process",
                       "Start-Transcript", "Stop-Transcript", "logs",
-                      "VRM_ADDON_FOR_BLENDER", "vrmEsperando"):
+                      "VRM_ADDON_FOR_BLENDER", "vrmEsperando",
+                      "instalar_addon.py", "bloom_agent_addon.zip",
+                      "[3/7]", "[7/7]"):
             self.assertIn(marca, txt, f"bloom.ps1 perdeu: {marca}")
+
+    def test_instalador_do_addon(self):
+        txt = (REPO / "util" / "instalar_addon.py").read_text(encoding="utf-8")
+        for marca in ("extension_install_file", "addon_install", "addon_utils",
+                      "bloom_agent", "save_userpref", "--zip"):
+            self.assertIn(marca, txt, f"instalar_addon perdeu: {marca}")
 
     def test_logs_ficam_no_repo(self):
         txt = (REPO / "util" / "bloom.ps1").read_bytes().decode("utf-8-sig")
