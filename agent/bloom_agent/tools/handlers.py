@@ -385,16 +385,40 @@ def _mannequin(height: float, gender: str) -> str:
     return f"manequim placeholder com {len(nomes)} partes"
 
 
+# lixo de kit/base modular que NUNCA deve vir com o corpo (probe real:
+# modular_female_base vem com 147 objetos, 133 deles widgets WGT-*)
+_LIXO_PREFIXOS = ("CS_UI_", "WGT-", "MAN_ui")
+_LIXO_TIPOS = {"LIGHT", "CAMERA", "FONT", "EMPTY"}
+
+
 def spawn_base_body(args: dict, ctx: dict) -> dict:
+    bpy = bl.bpy
     gender = (args.get("gender") or "any").lower()
     bank = _ctx_bank(ctx)
     achado = _find_body_in_bank(bank, gender)
     if achado:
         novos = bl.import_asset(achado, None)
-        malhas = [n.name for n in novos if n.type == "MESH"]
-        rigs = [n.name for n in novos if n.type == "ARMATURE"]
-        return _ok(f"Corpo base '{achado.name}' importado: {len(novos)} objeto(s); "
-                   f"malhas: {malhas[:6]}; armatures: {rigs or 'nenhum'}. "
+        mantidos, lixo = [], []
+        for ob in novos:
+            n = ob.name
+            if (ob.type in _LIXO_TIPOS or n.startswith(_LIXO_PREFIXOS)
+                    or (ob.type == "MESH" and len(ob.data.polygons) < 50
+                        and not n.startswith("Geo_"))):
+                lixo.append(n)
+            else:
+                mantidos.append(n)
+        for n in lixo:
+            ob = bpy.data.objects.get(n)
+            if ob is not None:
+                bpy.data.objects.remove(ob, do_unlink=True)
+        malhas = [n.name for n in novos if n.type == "MESH"
+                  and n.name in mantidos]
+        rigs = [n.name for n in novos if n.type == "ARMATURE"
+                and n.name in mantidos]
+        return _ok(f"Corpo base '{achado.name}' importado: mantidos "
+                   f"{len(mantidos)} ({', '.join(malhas[:4]) or 'sem malha'}; "
+                   f"armatures: {rigs or 'nenhum'}); removidos {len(lixo)} "
+                   "de kit/UI (WGT-*, luzes, câmera, planos). "
                    "(data.shape_keys das malhas) antes de "
                    "apply_body_proportions.")
     h = 1.70 if gender != "female" else 1.65
@@ -410,9 +434,10 @@ _BODIEZ_PAIRS = {
     "breast": {"Breast_Big": True, "Breast_Small": False},   # True = com +v, False = com -v
     "hips_w": {"Hip_Wide": True},
     "muscle": {"Muscular": True, "Fat": False},
+    "waist": {"Fat": True, "Thin": False},  # aproximação: corpo inteiro
 }
 # sem shape key no Bodiez (agent resolve por modelagem/escala depois):
-_SEM_KEY = ["head_size", "shoulder_w", "waist", "leg_len"]
+_SEM_KEY = ["head_size", "shoulder_w", "leg_len"]
 
 
 def apply_body_proportions(args: dict, ctx: dict) -> dict:
@@ -444,7 +469,8 @@ def apply_body_proportions(args: dict, ctx: dict) -> dict:
     height = args.get("height_m")
     if height:
         alvos = [o for o in bpy.data.objects if o.type in {"MESH", "ARMATURE"}
-                 and o.name.startswith(("MAN_", "Bodiez", "body", "body_base", "Base"))]
+                 and o.name.startswith(("MAN_", "Bodiez", "body", "body_base",
+                                        "Base", "Geo_"))]
         if alvos:
             zmin = min((o.matrix_world @ Vector(c)).z
                        for o in alvos if o.type == "MESH"
@@ -514,7 +540,10 @@ def rig_human(args: dict, ctx: dict) -> dict:
             eb.parent = edit[pai]
             eb.use_connect = False
     bpy.ops.object.mode_set(mode="OBJECT")
-    pesados = [m for m in malhas if m.name.startswith(("MAN_", "Bodiez", "body", "Base"))]
+    pesados = [m for m in malhas if m.name.startswith(
+        ("MAN_", "Bodiez", "body", "body_base", "Base", "Geo_"))]
+    if not pesados:  # fallback: a maior malha da cena é o corpo
+        pesados = [max(malhas, key=lambda m: len(m.data.polygons))]
     falhas = []
     for m in pesados:
         m.parent = arm
@@ -525,7 +554,11 @@ def rig_human(args: dict, ctx: dict) -> dict:
             bpy.ops.object.parent_set(type="ARMATURE_AUTO")
         except Exception as e:
             falhas.append(f"{m.name}: {e}")
-    rel = f"rig canônico '{arm.name}' com {len(criados)} ossos; malhas rigadas: {len(pesados) - len(falhas)}"
+    rigadas = len(pesados) - len(falhas)
+    if rigadas == 0:
+        return _fail("rig criado mas NENHUMA malha foi rigada — NÃO chame "
+                     "set_export_profile; verifique o corpo na cena.")
+    rel = f"rig canônico '{arm.name}' com {len(criados)} ossos; malhas rigadas: {rigadas}"
     if falhas:
         rel += "; pesos automáticos falharam em: " + "; ".join(falhas[:3])
     rel += ". Quando o usuário aprovar, chame set_export_profile com o host alvo."
@@ -542,6 +575,9 @@ def set_export_profile(args: dict, ctx: dict) -> dict:
     if src is None or src.type != "ARMATURE":
         rigs = [o.name for o in bpy.data.objects if o.type == "ARMATURE"]
         return _fail(f"armature {origem!r} não encontrada; rigs na cena: {rigs or 'nenhum'}")
+    if not [o for o in src.children if o.type == "MESH"]:
+        return _fail(f"rig '{src.name}' não tem NENHUMA malha parentada — rode "
+                     "rig_human com o corpo na cena ANTES de exportar. Nada foi criado.")
     tabela = rig_profiles.mapping_table(profile)
     copia = src.copy()
     copia.data = src.data.copy()

@@ -45,3 +45,37 @@ class TestV033(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class TestV034(unittest.TestCase):
+    """Lianções do FIELD RUN #3: kit de 147 objetos, rig 0 malhas, corpo recriado."""
+
+    def test_spawn_limpa_kit(self):
+        h = (PKG / "tools" / "handlers.py").read_text(encoding="utf-8")
+        for marca in ("_LIXO_PREFIXOS", '"CS_UI_", "WGT-"', '"LIGHT", "CAMERA", "FONT", "EMPTY"',
+                      "len(ob.data.polygons) < 50"):
+            self.assertIn(marca, h, f"filtro de kit faltando: {marca}")
+
+    def test_geo_e_prefixo_do_projeto(self):
+        h = (PKG / "tools" / "handlers.py").read_text(encoding="utf-8")
+        self.assertEqual(h.count('"Geo_"'), 3, "Geo_ precisa estar em altura, rig E filtro do spawn")
+
+    def test_rig_fallback_e_honesto(self):
+        h = (PKG / "tools" / "handlers.py").read_text(encoding="utf-8")
+        self.assertIn("max(malhas, key=lambda m: len(m.data.polygons))", h)
+        self.assertIn("NÃO chame \"\n                     \"set_export_profile", h)
+
+    def test_export_recusa_rig_sem_malha(self):
+        h = (PKG / "tools" / "handlers.py").read_text(encoding="utf-8")
+        self.assertIn("não tem NENHUMA malha parentada", h)
+        self.assertIn('src.children', h)
+
+    def test_waist_tem_mapeamento(self):
+        h = (PKG / "tools" / "handlers.py").read_text(encoding="utf-8")
+        self.assertIn('"waist": {"Fat": True, "Thin": False}', h)
+
+    def test_prompt_integridade_da_cena(self):
+        core = (PKG / "agent_core.py").read_text(encoding="utf-8")
+        for marca in ("corpo é INTOCÁVEL", '"malhas rigadas: 0" ou qualquer ✗',
+                      "Nunca anuncie"):
+            self.assertIn(marca, core, f"prompt integridade faltando: {marca}")

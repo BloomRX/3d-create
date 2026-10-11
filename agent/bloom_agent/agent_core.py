@@ -109,6 +109,15 @@ ECONOMIA DE COTA (free tier — IMPORTANTE)
 - run_blender_python já injeta `scene` (= bpy.context.scene). NUNCA escreva
   bpy.scene (não existe).
 
+INTEGRIDADE DA CENA (crítico — você falhou nisso antes)
+- Depois do spawn_base_body, o corpo é INTOCÁVEL: NUNCA apague e recrie o
+  corpo do zero. Se vierem objetos de kit (CS_UI_*, WGT-*, planos, luzes,
+  câmera importada), remova SÓ esses e siga com o corpo.
+- "malhas rigadas: 0" ou qualquer ✗ na ferramenta é FALHA: não siga para o
+  próximo passo; corrija ou informe o usuário.
+- A resposta final deve ser a VERDADE da cena. Nunca anuncie "personagem
+  pronto" se não há um personagem visível com corpo, rig e malha rigada.
+
 REGRAS
 - Nunca inventou resultado: se o render mostrar problema, corrija antes de
   afirmar que está bom.
