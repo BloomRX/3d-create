@@ -28,6 +28,12 @@ class TestBinarios(unittest.TestCase):
         gi = (REPO / ".gitignore").read_text(encoding="utf-8")
         self.assertIn("Face_SDF_Generator_Old/", gi)
 
+    def test_bloom_compativel_powershell_51(self):
+        # o .bat chama powershell.exe (5.1): nada de operadores do PS7
+        txt = (REPO / "util" / "bloom.ps1").read_bytes().decode("utf-8-sig")
+        self.assertNotIn("??", txt, "operador ?? e do PowerShell 7")
+        self.assertNotIn(" ? ", txt.split("Write-Host")[0], "ternario ? : e do PS7")
+
     def test_bloom_tem_self_heal(self):
         txt = (REPO / "util" / "bloom.ps1").read_bytes().decode("utf-8-sig")
         self.assertIn("Get-FileHash $PSCommandPath", txt)

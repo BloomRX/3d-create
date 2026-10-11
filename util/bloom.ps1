@@ -96,7 +96,9 @@ foreach ($bv in @("5.2","5.1","5.0","4.5","4.2")) {
     $v = Versao-Manifesto $cand
     if ($v) { $VInst = $v; $InstDir = Split-Path -Parent $cand; break }
 }
-Write-Host "        instalado: $($VInst ?? 'nenhum')  |  repo: $($VRepo ?? '?')"
+$VInstTxt = if ($VInst) { $VInst } else { "nenhum" }
+$VRepoTxt = if ($VRepo) { $VRepo } else { "?" }
+Write-Host "        instalado: $VInstTxt  |  repo: $VRepoTxt"
 $ZipAddon = Join-Path $Repo "agent\bloom_agent_addon.zip"
 if ($py) {
     Push-Location $RepoAddon
@@ -119,7 +121,8 @@ if ($Blender -and (Test-Path $ZipAddon) -and ($VRepo -ne $VInst)) {
     if ($VConf -eq $VRepo) {
         Write-Host "        CONFIRMADO: addon $VConf instalado (feche e reabra o Blender p/ carregar)." -ForegroundColor Green
     } else {
-        Write-Host "        [X] deveria ser $VRepo e ficou '$($VConf ?? 'nada')'. Me avise na conversa com um print." -ForegroundColor Red
+        $VConfTxt = if ($VConf) { $VConf } else { "nada" }
+        Write-Host "        [X] deveria ser $VRepo e ficou '$VConfTxt'. Me avise na conversa com um print." -ForegroundColor Red
     }
 } elseif ($VRepo -eq $VInst) {
     Write-Host "        ja esta na versao $VInst — nada a fazer."
