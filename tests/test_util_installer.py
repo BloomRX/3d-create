@@ -29,7 +29,7 @@ class TestBloom(unittest.TestCase):
                       "Start-Transcript", "Stop-Transcript", "logs",
                       "VRM_ADDON_FOR_BLENDER", "vrmEsperando",
                       "instalar_addon.py", "bloom_agent_addon.zip",
-                      "[3/7]", "[7/7]"):
+                      "[3/7]", "[7/7]", "Versao-Manifesto", "CONFIRMADO"):
             self.assertIn(marca, txt, f"bloom.ps1 perdeu: {marca}")
 
     def test_instalador_do_addon(self):

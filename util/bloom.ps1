@@ -69,19 +69,51 @@ if ($py) {
     Write-Host "        [!] Python nao encontrado; pulei o pull (rode git pull manual)." -ForegroundColor Yellow
 }
 
-# ---------- [3/7] addon Bloom Agent: recompila e reinstala ----------
-Write-Host "  [3/7] Addon Bloom Agent (recompila e reinstala)..."
+# ---------- [3/7] addon Bloom Agent: versao instalada -> versao do repo ----------
+Write-Host "  [3/7] Addon Bloom Agent..."
+function Versao-Manifesto($caminho) {
+    if (Test-Path $caminho) {
+        foreach ($l in (Get-Content $caminho -ErrorAction SilentlyContinue)) {
+            if ($l -match 'version\s*=\s*"(\d+\.\d+\.\d+)"') { return $Matches[1] }
+        }
+    }
+    return $null
+}
+$RepoAddon = Join-Path $Repo "agent\bloom_agent"
+$VRepo = Versao-Manifesto (Join-Path $RepoAddon "blender_manifest.toml")
+$VInst = $null
+foreach ($bv in @("5.2","5.1","5.0","4.5","4.2")) {
+    $cand = Join-Path $env:APPDATA "Blender Foundation\Blender\$bv\extensions\user_default\bloom_agent\blender_manifest.toml"
+    $v = Versao-Manifesto $cand
+    if ($v) { $VInst = $v; $InstDir = Split-Path -Parent $cand; break }
+}
+Write-Host "        instalado: $($VInst ?? 'nenhum')  |  repo: $($VRepo ?? '?')"
 $ZipAddon = Join-Path $Repo "agent\bloom_agent_addon.zip"
 if ($py) {
-    Push-Location (Join-Path $Repo "agent")
+    Push-Location $RepoAddon
     & $py -m zipfile -c $ZipAddon "bloom_agent" 2>&1 | Out-Null
     Pop-Location
 }
-if ($Blender -and (Test-Path $ZipAddon)) {
+if ($Blender -and (Test-Path $ZipAddon) -and ($VRepo -ne $VInst)) {
+    if ($VInst -and $InstDir -and (Test-Path $InstDir)) {
+        Remove-Item $InstDir -Recurse -Force -ErrorAction SilentlyContinue
+        Write-Host "        versao velha ($VInst) removida."
+    }
     & $Blender --background --python (Join-Path $Repo "util\instalar_addon.py") -- --zip $ZipAddon 2>&1 |
         Where-Object { $_ -match "addon|ADDON|ligado|salvas|\[X\]|\[!\]" } |
         ForEach-Object { Write-Host "        $_" }
-    Write-Host "        (se o Blender ja estava aberto, feche e abra de novo p/ carregar a versao nova)"
+    $VConf = $null
+    foreach ($bv in @("5.2","5.1","5.0","4.5","4.2")) {
+        $v = Versao-Manifesto (Join-Path $env:APPDATA "Blender Foundation\Blender\$bv\extensions\user_default\bloom_agent\blender_manifest.toml")
+        if ($v) { $VConf = $v; break }
+    }
+    if ($VConf -eq $VRepo) {
+        Write-Host "        CONFIRMADO: addon $VConf instalado (feche e reabra o Blender p/ carregar)." -ForegroundColor Green
+    } else {
+        Write-Host "        [X] deveria ser $VRepo e ficou '$($VConf ?? 'nada')'. Me avise na conversa com um print." -ForegroundColor Red
+    }
+} elseif ($VRepo -eq $VInst) {
+    Write-Host "        ja esta na versao $VInst — nada a fazer."
 } else {
     Write-Host "        [!] sem Blender/zip; atualize o addon manualmente (agent\zip_addon.bat)." -ForegroundColor Yellow
 }

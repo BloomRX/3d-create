@@ -340,6 +340,8 @@ def _refresh_status(props: "BloomProperties"):
             props.bank_path = auto
     bits = []
     try:
+        from . import __version__
+        bits.append("v" + __version__)
         st = _gemini().status()
         bits.append(st["model"])
         bits.append(f"{len(st['keys'])} chave(s)")

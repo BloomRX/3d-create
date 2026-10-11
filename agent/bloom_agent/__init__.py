@@ -9,6 +9,8 @@ Instalação (Blender 4.2+):
 Fora do Blender (sandbox/testes): os módulos llm/keys/bridge/agent_core/
 tools_registry são importáveis sem bpy — o __init__ não carrega a UI.
 """
+__version__ = "0.3.2"
+
 bl_info = {
     "name": "Bloom Agent",
     "author": "BloomRX",
