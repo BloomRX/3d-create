@@ -75,6 +75,7 @@ Write-Host "  [2/4] Procurando .blend..."
 $candidatos = @()
 foreach ($r in $raizes) {
     $candidatos += Get-ChildItem -Path $r -Recurse -Filter *.blend -File -ErrorAction SilentlyContinue
+    $candidatos += Get-ChildItem -Path $r -Recurse -Filter *.vrm -File -ErrorAction SilentlyContinue
 }
 $candidatos = $candidatos | Sort-Object LastWriteTime -Descending | Select-Object -First 15
 
@@ -123,7 +124,11 @@ Write-Host "        Relatorio: $Json"
 # ---------- [3/4] rodar o raio-X ----------
 Write-Host "  [3/4] Rodando o raio-X (sem abrir o Blender; pode levar ~1 min)..." -ForegroundColor Cyan
 if (Test-Path $Json) { Remove-Item $Json -Force }
-& $Blender --background --factory-startup $Blend --python $ProbePy -- --out $Json
+if ([System.IO.Path]::GetExtension($Blend) -ieq ".vrm") {
+    & $Blender --background --python (Join-Path $Util "probe_vrm.py") -- --vrm $Blend --out $Json
+} else {
+    & $Blender --background --factory-startup $Blend --python $ProbePy -- --out $Json
+}
 if (-not (Test-Path $Json)) {
     Write-Host "  [X] O raio-X falhou. Me mande uma foto do erro acima na conversa." -ForegroundColor Red
     exit 1

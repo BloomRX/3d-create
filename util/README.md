@@ -29,3 +29,22 @@ receitas genéricas do agent.
 Scripting > Open > `tools\model_probe.py` > ▶.
 
 > O .blend nunca vai pro repo — só os relatórios JSON (alguns KB cada).
+
+## instalar_plugins.bat — instala os plugins do repo no Blender (2 cliques)
+
+Instala todos os `.zip` de `plugins_src\` e `assets\learn\` no seu Blender
+(achado sozinho, Steam inclusive). **Todos ficam DESLIGADOS por padrão** —
+eu digo qual ligar em cada milestone (regra do projeto).
+
+- Já instalado? Ele avisa e pula. `.rar` é pulado (extrair antes).
+- Novo plugin? Solte o `.zip` em `plugins_src\` e rode o .bat de novo.
+  Fila sugerida: SKkeeper, Wiggle 2, mmd_tools, VRM Addon for Blender.
+
+## .vrm (ex.: Arcana do Wulong) — suportado pelo probe_modelo.bat
+
+O menu agora lista `.blend` **e** `.vrm`. Escolheu um `.vrm`? Ele importa
+com o **VRM Addon** (só nessa sessão; o addon continua desligado) e faz o
+raio-X normal, gerando o `model_probe_<nome>.json`.
+Se o addon VRM não estiver instalado, ele ensina na tela: baixe o zip
+(github saturday06 / VRM Addon for Blender) → `plugins_src\` →
+`instalar_plugins.bat` → probe de novo.
