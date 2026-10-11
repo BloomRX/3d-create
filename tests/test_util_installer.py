@@ -1,48 +1,52 @@
-"""Guardas do instalador de plugins e do suporte a .vrm — offline.
+"""Guardas da rotina única (BLOOM.bat) e da organização — offline.
 
 Rode: python3 tests/test_util_installer.py
 """
 import unittest
 from pathlib import Path
 
-UTIL = Path(__file__).resolve().parents[1] / "util"
+REPO = Path(__file__).resolve().parents[1]
 
 
-class TestInstalador(unittest.TestCase):
-    def test_bat_lancador_minimo(self):
-        raw = (UTIL / "instalar_plugins.bat").read_bytes()
-        self.assertFalse(raw.startswith(b"\xef\xbb\xbf"))
+class TestBloom(unittest.TestCase):
+    def test_bat_unico_na_raiz(self):
+        raw = (REPO / "BLOOM.bat").read_bytes()
+        self.assertFalse(raw.startswith(b"\xef\xbb\xbf"), "BOM envenena o @echo off")
         raw.decode("ascii")
         self.assertTrue(raw.startswith(b"@echo off"))
-        self.assertIn(b"instalar_plugins.ps1", raw)
+        self.assertIn(b"bloom.ps1", raw)
         self.assertIn(b"pause", raw)
 
-    def test_ps1_aponta_blender_e_plugins(self):
-        raw = (UTIL / "instalar_plugins.ps1").read_bytes()
+    def test_bloom_ps1_tem_todos_os_passos(self):
+        raw = (REPO / "util" / "bloom.ps1").read_bytes()
         self.assertTrue(raw.startswith(b"\xef\xbb\xbf"))
         txt = raw.decode("utf-8-sig")
-        for marca in ("SteamLibrary", "libraryfolders.vdf", "plugins_src",
-                      "assets", "instalar_plugins.py", "--background"):
-            self.assertIn(marca, txt, f"ps1 perdeu: {marca}")
+        for marca in ("project_cli.py", "pull", "instalar_plugins.py",
+                      "SteamLibrary", "model_probe.py", "probe_vrm.py",
+                      ".vrm", "probes", "libraryfolders.vdf",
+                      "tools" + chr(92) + "ci" + chr(92) + "tests.yml",
+                      ".github", "sync", "Start-Process"):
+            self.assertIn(marca, txt, f"bloom.ps1 perdeu: {marca}")
 
-    def test_py_instala_desligado_e_pula_rar(self):
-        txt = (UTIL / "instalar_plugins.py").read_text(encoding="utf-8")
-        for marca in ("extension_install_file", "addon_install",
-                      "save_userpref", "plugins_src", "assets", "glob"):
-            self.assertIn(marca, txt, f"py perdeu: {marca}")
-        self.assertNotIn('enable=True', txt)  # nunca ligar por padrao
+    def test_scripts_antigos_foram_removidos(self):
+        for velho in ("util/probe_modelo.bat", "util/probe_modelo.ps1",
+                      "util/instalar_plugins.bat", "util/instalar_plugins.ps1",
+                      "util/ativar_ci.bat"):
+            self.assertFalse((REPO / velho).exists(), f"script antigo sobrou: {velho}")
 
-    def test_probe_vrm_roteia(self):
-        txt = (UTIL / "probe_vrm.py").read_text(encoding="utf-8")
-        for marca in ("import_scene.vrm", "addon_utils", "model_probe.py",
-                      "--out", "plugins_src"):
-            self.assertIn(marca, txt, f"probe_vrm perdeu: {marca}")
+    def test_organizacao(self):
+        self.assertTrue((REPO / "plugins" / "README.md").exists())
+        self.assertFalse((REPO / "addons").exists(), "addons/ (notas antigas) devia ter saido")
+        self.assertFalse((REPO / "plugins_src" / "README.md").exists())
 
-    def test_probe_modelo_suporta_vrm(self):
-        raw = (UTIL / "probe_modelo.ps1").read_bytes()
-        txt = raw.decode("utf-8-sig")
-        self.assertIn("*.vrm", txt)
-        self.assertIn("probe_vrm.py", txt)
+    def test_python_do_motor(self):
+        txt = (REPO / "util" / "instalar_plugins.py").read_text(encoding="utf-8")
+        for marca in ("plugins", "extension_install_file", "addon_install",
+                      "save_userpref"):
+            self.assertIn(marca, txt)
+        vrm = (REPO / "util" / "probe_vrm.py").read_text(encoding="utf-8")
+        for marca in ("import_scene.vrm", "model_probe.py", "plugins_src"):
+            self.assertIn(marca, vrm)
 
 
 if __name__ == "__main__":

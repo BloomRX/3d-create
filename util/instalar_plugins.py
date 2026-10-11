@@ -11,7 +11,7 @@ import bpy
 
 UTIL = Path(__file__).resolve().parent
 REPO = UTIL.parent
-PASTAS = [REPO / "plugins_src", REPO / "assets" / "learn"]
+PASTAS = [REPO / "plugins", REPO / "plugins_src", REPO / "assets" / "learn"]
 
 
 def instalar_zip(caminho):

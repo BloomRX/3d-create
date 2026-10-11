@@ -52,33 +52,5 @@ class TestProbeCli(unittest.TestCase):
             self.assertTrue((Path(tmp) / "model_probe.json").exists())
 
 
-class TestBat(unittest.TestCase):
-    """O .bat é só lançador; a lógica vive no .ps1 (cmd é frágil)."""
-
-    def test_bat_lancador_minimo(self):
-        p = Path(__file__).resolve().parents[1] / "util" / "probe_modelo.bat"
-        raw = p.read_bytes()
-        self.assertFalse(raw.startswith(b"\xef\xbb\xbf"), "BOM envenena o @echo off")
-        raw.decode("ascii")
-        self.assertTrue(raw.startswith(b"@echo off"))
-        self.assertIn(b"\r\n", raw, "bat precisa de CRLF")
-        # minimal: poucas linhas, sem lógica complexa que o cmd possa mal-parsear
-        linhas = raw.decode("ascii").strip().split("\r\n")
-        self.assertLessEqual(len(linhas), 8)
-        self.assertIn(b"probe_modelo.ps1", raw)
-        self.assertIn(b"pause", raw)
-
-    def test_ps1_marcadores(self):
-        p = Path(__file__).resolve().parents[1] / "util" / "probe_modelo.ps1"
-        raw = p.read_bytes()
-        self.assertTrue(raw.startswith(b"\xef\xbb\xbf"),
-                        "ps1 precisa de BOM p/ Windows PowerShell 5.1 ler UTF-8")
-        txt = raw.decode("utf-8-sig")
-        for marca in ("libraryfolders.vdf", "SteamLibrary", "model_probe.py",
-                      "--out", "Out-GridView", "project_cli.py",
-                      "Blender Foundation", "3d-Create"):
-            self.assertIn(marca, txt, f"ps1 perdeu: {marca}")
-
-
 if __name__ == "__main__":
     unittest.main(verbosity=2)
