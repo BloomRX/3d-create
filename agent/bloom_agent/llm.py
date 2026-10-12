@@ -479,6 +479,7 @@ class GroqClient:
 
     API = "https://api.groq.com/openai/v1/chat/completions"
     MODEL_PADRAO = "llama-3.3-70b-versatile"
+    VISION_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"  # aceita imagens
 
     def __init__(self, keys_path: Path, model: str | None = None,
                  timeout: int = DEFAULT_TIMEOUT):
@@ -522,8 +523,6 @@ class GroqClient:
             frs = [p["functionResponse"] for p in parts
                    if isinstance(p, dict) and "functionResponse" in p]
             tem_img = any(isinstance(p, dict) and "inline_data" in p for p in parts)
-            if tem_img:
-                texto = (texto + " [imagem não enviada a este modelo-texto]").strip()
             if fcs:
                 tcs = []
                 for j, fc in enumerate(fcs):
@@ -546,8 +545,20 @@ class GroqClient:
                                      ensure_ascii=False)[:8000]})
             else:
                 role = "assistant" if c.get("role") == "model" else "user"
-                msgs.append({"role": role, "content": texto or "(vazio)"})
-        body = {"model": self.model, "messages": msgs, "temperature": 0.4}
+                if tem_img:
+                    conteudo = [{"type": "text", "text": texto or "(veja a imagem)"}]
+                    for p2 in parts:
+                        if isinstance(p2, dict) and "inline_data" in p2:
+                            d = p2["inline_data"]
+                            conteudo.append({"type": "image_url", "image_url": {
+                                "url": f"data:{d.get('mime_type', 'image/png')};"
+                                       f"base64,{d.get('data', '')}"}})
+                    msgs.append({"role": role, "content": conteudo})
+                else:
+                    msgs.append({"role": role, "content": texto or "(vazio)"})
+        tem_imagem = self._tem_imagem(contents)
+        body = {"model": self.VISION_MODEL if tem_imagem else self.model,
+                "messages": msgs, "temperature": 0.4}
         if tools:
             body["tools"] = [{"type": "function",
                               "function": {"name": t["name"],
@@ -555,6 +566,14 @@ class GroqClient:
                                            "parameters": t["parameters"]}}
                              for t in tools]
         return body
+
+    @staticmethod
+    def _tem_imagem(contents) -> bool:
+        for c in contents or []:
+            for p in c.get("parts") or []:
+                if isinstance(p, dict) and "inline_data" in p:
+                    return True
+        return False
 
     # --- chat (mesma assinatura do Gemini) ---------------------------------
     def chat(self, parts: list | None = None, system: str = "",
@@ -630,6 +649,7 @@ class Router:
         alvo_contents = contents
         if alvo_contents is None and parts is not None:
             alvo_contents = [{"role": "user", "parts": parts_to_wire(parts)}]
+        erro_gem: LLMError | None = None
         if self.groq is not None and not self._tem_imagem(alvo_contents):
             try:
                 r = self.groq.chat(parts=parts, system=system, tools=tools,
@@ -637,12 +657,28 @@ class Router:
                 r["provider"] = "groq"
                 return r
             except LLMError as e:
+                erro_gem = e
                 if self.on_log:
                     try: self.on_log(f"🔁 groq indisponível ({e}); usando Gemini")
                     except Exception: pass
-        r = self.gem.chat(parts=parts, system=system, tools=tools, contents=contents)
-        r["provider"] = "gemini"
-        return r
+        try:
+            r = self.gem.chat(parts=parts, system=system, tools=tools, contents=contents)
+            r["provider"] = "gemini"
+            return r
+        except LLMError as e:
+            erro_gem = e
+        # Gemini caiu (cota/rede) e a chamada TEM imagem: o Groq entra com o
+        # modelo de visão em vez de deixar o turno morrer.
+        if self.groq is not None:
+            if self.on_log:
+                try: self.on_log(f"🔁 gemini indisponível ({str(erro_gem)[:80]}) "
+                                 "-> groq visão; distribuindo a carga")
+                except Exception: pass
+            r = self.groq.chat(parts=parts, system=system, tools=tools,
+                               contents=contents)
+            r["provider"] = "groq"
+            return r
+        raise erro_gem
 
     def status(self) -> dict:
         st = self.gem.status()

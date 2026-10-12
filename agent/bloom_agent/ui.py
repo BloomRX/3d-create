@@ -58,14 +58,50 @@ class _State:
     worker_done = False
     stop_requested = False
     log_lines: list = []
+    # estado AO VIVO (o "não sei se travou" morre aqui): fase muda a cada
+    # evento e o timer redesenha — o painel sempre mostra o que roda agora
+    # e há quantos segundos.
+    fase: str = "pronto"          # pronto | pensando | ferramenta
+    fase_detalhe: str = ""        # nome da tool / provedor
+    t_fase: float = 0.0           # epoch da última troca de fase
+    turno_t0: float = 0.0         # início do turno (Elapsed total)
+    tool_count: int = 0           # ferramentas usadas no turno (teto 25)
+    render_count: int = 0         # renders no turno (teto 3)
     run_config: dict = {"mode": "step", "auto_approve": False, "bank_path": ""}
     root: Path = Path(__file__).resolve().parents[2]  # <root>/agent/bloom_agent/ui.py
 
 
 def _log(line: str):
-    _State.log_lines.append(f"[{time.strftime('%H:%M')}] {line}")
+    _State.log_lines.append(f"[{time.strftime('%H:%M:%S')}] {line}")
     if len(_State.log_lines) > 400:
         _State.log_lines = _State.log_lines[-300:]
+
+
+def _fase_evento(event: str, payload: dict | None = None):
+    """Atualiza o estado ao vivo a partir dos eventos do agent."""
+    payload = payload or {}
+    agora = time.time()
+    if event == "llm_call":
+        _State.fase = "pensando"
+        _State.fase_detalhe = ""
+        _State.t_fase = agora
+    elif event == "provider":
+        _State.fase_detalhe = str(payload.get("provider", ""))
+    elif event == "tool_start":
+        nome = str(payload.get("name", ""))
+        _State.fase = "ferramenta"
+        _State.fase_detalhe = nome
+        _State.t_fase = agora
+        _State.tool_count += 1
+        if nome == "render_view":
+            _State.render_count += 1
+    elif event == "tool_done":
+        _State.fase = "pensando"
+        _State.t_fase = agora
+    elif event == "done":
+        _State.fase = "pronto"
+        _State.fase_detalhe = ""
+        _State.t_fase = agora
 
 
 def _gemini() -> "Router | Gemini":
@@ -121,7 +157,8 @@ class BloomProperties(PropertyGroup):
     auto_approve: BoolProperty(default=False, description="No modo pleno: não parar em gates de aprovação")
     ref_image: StringProperty(default="", subtype="FILE_PATH",
                               description="Imagem de referência (foto do personagem-alvo)")
-    keys_text: StringProperty(default="", description="Chave(s) Gemini — uma por linha")
+    keys_text: StringProperty(default="",
+        description="Chave(s), uma por linha: AIza... = Gemini (visao) | gsk_... = Groq (texto/visor gratuito em console.groq.com)")
     bank_path: StringProperty(default="", subtype="FILE_PATH",
                               description="Pasta do Asset Bank no seu PC")
     ngrok_url_text: StringProperty(default="")
@@ -184,7 +221,13 @@ def _main_timer() -> float:
         props = _props()
         if props is not None:
             _refresh_status(props)
-        # 3) limpeza pós-worker
+        # 3) heartbeat: força redraw da viewport p/ o status TICKAR ao vivo
+        if _State.running:
+            for w in bpy.context.window_manager.windows:
+                for area in w.screen.areas:
+                    if area.type == "VIEW_3D":
+                        area.tag_redraw()
+        # 4) limpeza pós-worker
         if not _State.running and _State.worker_done:
             _State.worker_done = False
             _State.worker = None
@@ -235,6 +278,11 @@ def _dispatch(name: str, args: dict, timeout: float = 3600.0) -> dict:
 def _run_agent(message: str):
     try:
         _State.running = True
+        _State.turno_t0 = time.time()
+        _State.t_fase = time.time()
+        _State.fase = "pensando"
+        _State.tool_count = 0
+        _State.render_count = 0
         gem = _gemini()
         if not gem.status()["keys"]:
             raise LLMError("Nenhuma chave Gemini configurada. Adicione no painel "
@@ -247,6 +295,7 @@ def _run_agent(message: str):
 
         def on_event(event, payload=None):
             payload = payload or {}
+            _fase_evento(event, payload)
             if event == "tool_start":
                 _log(f"⚙ {payload.get('label', payload.get('name', ''))}")
             elif event == "tool_done":
@@ -283,6 +332,8 @@ def _run_agent(message: str):
         _log(f"⚠️ erro: {type(e).__name__}: {e}")
     finally:
         _State.running = False
+        _State.fase = "pronto"
+        _State.fase_detalhe = ""
         with _State.cond:
             _State.worker_done = True
             _State.cond.notify_all()
@@ -359,7 +410,22 @@ def _refresh_status(props: "BloomProperties"):
     else:
         bits.append("ponte OFF")
         props.ngrok_url_text = ""
-    bits.append("ocupado" if _State.running else "pronto")
+    if _State.running:
+        agora = time.time()
+        el = int(agora - _State.t_fase) if _State.t_fase else 0
+        tot = int(agora - _State.turno_t0) if _State.turno_t0 else 0
+        if _State.fase == "ferramenta":
+            bits.append(f"🔧 {_State.fase_detalhe or 'tool'} ha {el}s")
+        elif _State.fase == "pensando":
+            quem = f" ({_State.fase_detalhe})" if _State.fase_detalhe else ""
+            bits.append(f"🧠 pensando{quem} ha {el}s")
+        else:
+            bits.append("⚙ trabalhando…")
+        bits.append(f"tools {_State.tool_count}/25 · renders {_State.render_count}/3 · {tot}s")
+        if tot >= 75:
+            bits.append("⚠ lento — 'Parar' disponivel")
+    else:
+        bits.append("🟢 pronto")
     props.status_text = " | ".join(bits)
     props.log_text = "\n".join(_State.log_lines[-120:])
 
@@ -686,10 +752,21 @@ class BLOOM_PT_Main(Panel):
         if props is None:
             layout.label(text="propriedades não registradas")
             return
+        txt = props.status_text
+        icone = "INFO"
+        if "🔧" in txt or "🧠" in txt or "⚙" in txt:
+            icone = "TIME"
+        elif "⚠" in txt or "✗" in txt:
+            icone = "ERROR"
+        elif "pronto" in txt:
+            icone = "CHECKMARK"
         try:
-            layout.label(text=props.status_text, icon="INFO")
+            layout.label(text=txt, icon=icone)
         except TypeError:
-            layout.label(text=props.status_text)
+            layout.label(text=txt)
+        if _State.running:
+            n = max(0, min(_State.tool_count, 25))
+            layout.label(text="▮" * n + "▯" * (25 - n) + "  ferramentas do turno")
         _safe_box(layout, self._sec_chat, props)
         _safe_box(layout, self._sec_log, props)
         _safe_box(layout, self._sec_keys, props)

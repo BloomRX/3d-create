@@ -57,7 +57,12 @@ class TestConversao(unittest.TestCase):
         self.assertEqual(tc["function"]["name"], "list_scene")
         self.assertEqual(msgs[3]["role"], "tool")
         self.assertEqual(msgs[3]["tool_call_id"], tc["id"])
-        self.assertIn("[imagem não enviada", msgs[4]["content"])
+        # v0.3.5: imagem vai DE VERDADE (Groq visão llama-4-scout), não placeholder
+        conteudo = msgs[4]["content"]
+        self.assertIsInstance(conteudo, list)
+        self.assertIn({"type": "text", "text": "vê"}, conteudo)
+        self.assertIn("image_url", [p["type"] for p in conteudo])
+        self.assertTrue(conteudo[-1]["image_url"]["url"].startswith("data:image/png;base64,XX"))
         self.assertEqual(body["tools"][0]["function"]["name"], "list_scene")
 
     def test_chat_parse_tool_call(self):

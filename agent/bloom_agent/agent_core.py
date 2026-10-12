@@ -139,7 +139,7 @@ class AgentSession:
         self.created_at = time.strftime("%Y-%m-%d %H:%M:%S")
 
     def log(self, who: str, text: str):
-        self.tool_log.append((time.strftime("%H:%M"), who, text))
+        self.tool_log.append((time.strftime("%H:%M:%S"), who, text))
 
     def reset(self):
         self.history = []
