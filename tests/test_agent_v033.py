@@ -107,3 +107,27 @@ class TestV036(unittest.TestCase):
     def test_chave_groq_sozinha_persiste(self):
         ui = (PKG / "ui.py").read_text(encoding="utf-8")
         self.assertIn("if added or added_g:", ui)
+
+
+class TestV037(unittest.TestCase):
+    """RUN #4 pós-print: personagem desproporcional (bola-cabeça, braços de
+    palito, referência e corpo em escalas diferentes)."""
+
+    def test_head_ombro_perna_sao_estruturais(self):
+        h = (PKG / "tools" / "handlers.py").read_text(encoding="utf-8")
+        self.assertIn("def _proporcao_vertices", h)
+        self.assertIn("nunca criar bola nova por cima", h)
+        self.assertIn("linha do pescoço", h)
+        self.assertIn("_SEM_KEY = []", h)  # nada mais fica "para depois"
+        self.assertIn("_proporcao_vertices(\n                    corpo,", h)
+
+    def test_eixo_massa_e_exclusivo(self):
+        h = (PKG / "tools" / "handlers.py").read_text(encoding="utf-8")
+        self.assertIn('_MASSA = ("Thin", "Thin_old", "Regular", "Muscular", "Fat")', h)
+        self.assertIn("ganhou = max(massa, key=massa.get)", h)
+
+    def test_prompt_proibe_cabeca_nova(self):
+        core = (PKG / "agent_core.py").read_text(encoding="utf-8")
+        for marca in ("NUNCA crie esfera/cabeça", "bounding box da\n  MALHA DO CORPO",
+                      "MESMA altura", "cabeças de altura"):
+            self.assertIn(marca, core, f"prompt proporção faltando: {marca}")

@@ -442,8 +442,66 @@ _BODIEZ_PAIRS = {
     "muscle": {"Muscular": True, "Fat": False},
     "waist": {"Fat": True, "Thin": False},  # aproximação: corpo inteiro
 }
-# sem shape key no Bodiez (agent resolve por modelagem/escala depois):
-_SEM_KEY = ["head_size", "shoulder_w", "leg_len"]
+# eixo massa do Bodiez é EXCLUSIVO (sliders de rádio no painel): Fat+Thin
+# juntos deformam o corpo — só o maior pedido vale (resolvido no handler)
+_MASSA = ("Thin", "Thin_old", "Regular", "Muscular", "Fat")
+# head_size/shoulder_w/leg_len não têm shape key: agora são ESTRUTURAIS
+# (escalam vértices da malha real — ver _proporcao_vertices)
+_SEM_KEY = []
+
+
+def _proporcao_vertices(corpo, head_size=0.0, shoulder_w=0.0, leg_len=0.0) -> list:
+    """Ajustes que o Bodiez NÃO tem shape key para — escala VÉRTICES da malha
+    real (a cabeça verdadeira cresce/encolhe; nunca criar bola nova por cima)."""
+    import bmesh
+    me = corpo.data
+    bm = bmesh.new()
+    bm.from_mesh(me)
+    try:
+        zs = [v.co.z for v in bm.verts]
+        zmin, zmax = min(zs), max(zs)
+        h = max(1e-6, zmax - zmin)
+        xs = [v.co.x for v in bm.verts]
+        cx0 = (min(xs) + max(xs)) / 2.0
+        out = []
+        if head_size:
+            esc = 1.0 + 0.30 * max(-1.0, min(1.0, float(head_size)))
+            corte = zmin + 0.78 * h                      # linha do pescoço
+            alvo = [v for v in bm.verts if v.co.z > corte]
+            if alvo:
+                cx = sum(v.co.x for v in alvo) / len(alvo)
+                cy = sum(v.co.y for v in alvo) / len(alvo)
+                for v in alvo:
+                    v.co.x = cx + (v.co.x - cx) * esc
+                    v.co.y = cy + (v.co.y - cy) * esc
+                    v.co.z = corte + (v.co.z - corte) * esc
+                out.append(f"head_size: cabeça real {esc:.2f}x "
+                           f"({len(alvo)} vértices acima do pescoço)")
+        if shoulder_w:
+            esc = 1.0 + 0.25 * max(-1.0, min(1.0, float(shoulder_w)))
+            z0, z1 = zmin + 0.68 * h, zmin + 0.85 * h    # banda dos ombros
+            n = 0
+            for v in bm.verts:
+                if z0 < v.co.z < z1:
+                    v.co.x = cx0 + (v.co.x - cx0) * esc
+                    n += 1
+            if n:
+                out.append(f"shoulder_w: ombros {esc:.2f}x em X ({n} vértices)")
+        if leg_len:
+            esc = 1.0 + 0.20 * max(-1.0, min(1.0, float(leg_len)))
+            corte = zmin + 0.48 * h
+            n = 0
+            for v in bm.verts:
+                if v.co.z < corte:
+                    v.co.z = zmin + (v.co.z - zmin) * esc
+                    n += 1
+            if n:
+                out.append(f"leg_len: pernas {esc:.2f}x ({n} vértices)")
+        bm.to_mesh(me)
+        me.update()
+        return out
+    finally:
+        bm.free()
 
 
 def apply_body_proportions(args: dict, ctx: dict) -> dict:
@@ -453,18 +511,26 @@ def apply_body_proportions(args: dict, ctx: dict) -> dict:
     objs = [o for o in bpy.data.objects if o.type == "MESH"
             and o.data.shape_keys is not None]
     if objs:
-        aplicados = 0
+        pedidos = {}   # shape key -> valor (o maior pedido vence)
         for arg, pares in _BODIEZ_PAIRS.items():
             if arg not in args:
                 continue
             v = max(-1.0, min(1.0, float(args[arg])))
             for kb_name, com_positivo in pares.items():
                 val = max(0.0, v) if com_positivo else max(0.0, -v)
-                for o in objs:
-                    kb = o.data.shape_keys.key_blocks.get(kb_name)
-                    if kb is not None:
-                        kb.value = val
-                        aplicados += 1
+                pedidos[kb_name] = max(pedidos.get(kb_name, 0.0), val)
+        massa = {k: v for k, v in pedidos.items() if k in _MASSA}
+        if len(massa) > 1:  # ex.: muscle -0.5 (Fat .5) + waist -0.3 (Thin .3)
+            ganhou = max(massa, key=massa.get)
+            pedidos = {k: v for k, v in pedidos.items()
+                       if k not in massa or k == ganhou}
+        aplicados = 0
+        for o in objs:
+            for kb_name, val in pedidos.items():
+                kb = o.data.shape_keys.key_blocks.get(kb_name)
+                if kb is not None:
+                    kb.value = val
+                    aplicados += 1
         lines.append(f"shape keys Bodiez ajustadas: {aplicados}")
         sem = [a for a in _SEM_KEY if a in args]
         if sem:
@@ -472,6 +538,18 @@ def apply_body_proportions(args: dict, ctx: dict) -> dict:
                          + ", ".join(sem))
     else:
         lines.append("corpo sem shape keys (manequim) — pule esta etapa ou importe um corpo melhor")
+    if any(a in args for a in ("head_size", "shoulder_w", "leg_len")):
+        corpo = max((o for o in bpy.data.objects if o.type == "MESH"),
+                    key=lambda o: len(o.data.polygons), default=None)
+        if corpo is not None:
+            try:
+                lines.extend(_proporcao_vertices(
+                    corpo,
+                    head_size=float(args.get("head_size") or 0.0),
+                    shoulder_w=float(args.get("shoulder_w") or 0.0),
+                    leg_len=float(args.get("leg_len") or 0.0)))
+            except Exception as exc:
+                lines.append(f"proporções estruturais falharam: {exc}")
     height = args.get("height_m")
     if height:
         alvos = [o for o in bpy.data.objects if o.type in {"MESH", "ARMATURE"}

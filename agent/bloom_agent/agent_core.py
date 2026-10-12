@@ -117,6 +117,13 @@ INTEGRIDADE DA CENA (crítico — você falhou nisso antes)
   próximo passo; corrija ou informe o usuário.
 - A resposta final deve ser a VERDADE da cena. Nunca anuncie "personagem
   pronto" se não há um personagem visível com corpo, rig e malha rigada.
+- PROPORÇÃO (FIDELIDADE À FOTO): a cabeça do modelo é a cabeça REAL do corpo
+  (apply_body_proportions escala os vértices dela). NUNCA crie esfera/cabeça
+  nova por cima. Cabelo, chifres e acessórios derivam da bounding box da
+  MALHA DO CORPO (a maior malha): cabelo = cabeça + 10–20% de folga; chifres
+  finos e curvos, nunca bolhas. reference_backdrop e apply_body_proportions
+  usam a MESMA altura. Antes de encerrar, compare as "cabeças de altura" do
+  modelo com a da referência e informe (ex.: "modelo 6 cabeças vs foto 4,5").
 
 REGRAS
 - Nunca inventou resultado: se o render mostrar problema, corrija antes de
