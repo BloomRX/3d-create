@@ -140,9 +140,10 @@ def render_view(args: dict, ctx: dict) -> dict:
     sess = ctx.get("session") or {}
     feitos = int(sess.get("renders_turn", 0))
     if feitos >= MAX_RENDERS_PER_TURN:
-        return _fail(f"Limite de {MAX_RENDERS_PER_TURN} renders por turno atingido "
-                     f"({feitos} feitos). Só renderize de novo após mudar geometria "
-                     "de verdade; para enquadrar, use setup_camera_front.")
+        return _fail(f"Limite de {MAX_RENDERS_PER_TURN} renders por turno é FIXO "
+                     f"({feitos} usados) — edições de geometria NÃO resetam o contador. "
+                     "Descreva o resultado pelo que já viu, conclua o turno e espere "
+                     "o usuário (o turno seguinte recomeça os renders).")
     sess["renders_turn"] = feitos + 1
     size = int(args.get("size", 512))
     stamp = time.strftime("%H%M%S")
@@ -398,23 +399,28 @@ def spawn_base_body(args: dict, ctx: dict) -> dict:
     achado = _find_body_in_bank(bank, gender)
     if achado:
         novos = bl.import_asset(achado, None)
+        # snapshot ANTES de remover: do_unlink invalida a referência do objeto
+        # (ReferenceError: StructRNA removed) — decidir tudo pelos dados, nunca
+        # reapontar `novos` depois da faxina.
+        meta = [(ob.name, ob.type,
+                 len(ob.data.polygons) if ob.type == "MESH" else 10 ** 9)
+                for ob in novos]
         mantidos, lixo = [], []
-        for ob in novos:
-            n = ob.name
-            if (ob.type in _LIXO_TIPOS or n.startswith(_LIXO_PREFIXOS)
-                    or (ob.type == "MESH" and len(ob.data.polygons) < 50
-                        and not n.startswith("Geo_"))):
-                lixo.append(n)
+        for nome, tipo, polys in meta:
+            if (tipo in _LIXO_TIPOS or nome.startswith(_LIXO_PREFIXOS)
+                    or (tipo == "MESH" and polys < 50
+                        and not nome.startswith("Geo_"))):
+                lixo.append(nome)
             else:
-                mantidos.append(n)
-        for n in lixo:
-            ob = bpy.data.objects.get(n)
+                mantidos.append(nome)
+        for nome in lixo:
+            ob = bpy.data.objects.get(nome)
             if ob is not None:
                 bpy.data.objects.remove(ob, do_unlink=True)
-        malhas = [n.name for n in novos if n.type == "MESH"
-                  and n.name in mantidos]
-        rigs = [n.name for n in novos if n.type == "ARMATURE"
-                and n.name in mantidos]
+        malhas = [nome for nome, tipo, _ in meta
+                  if tipo == "MESH" and nome in mantidos]
+        rigs = [nome for nome, tipo, _ in meta
+                if tipo == "ARMATURE" and nome in mantidos]
         return _ok(f"Corpo base '{achado.name}' importado: mantidos "
                    f"{len(mantidos)} ({', '.join(malhas[:4]) or 'sem malha'}; "
                    f"armatures: {rigs or 'nenhum'}); removidos {len(lixo)} "
@@ -470,7 +476,7 @@ def apply_body_proportions(args: dict, ctx: dict) -> dict:
     if height:
         alvos = [o for o in bpy.data.objects if o.type in {"MESH", "ARMATURE"}
                  and o.name.startswith(("MAN_", "Bodiez", "body", "body_base",
-                                        "Base", "Geo_"))]
+                                        "Base", "Geo_", "rig_"))]
         if alvos:
             zmin = min((o.matrix_world @ Vector(c)).z
                        for o in alvos if o.type == "MESH"
@@ -481,10 +487,20 @@ def apply_body_proportions(args: dict, ctx: dict) -> dict:
             atual = zmax - zmin
             if atual > 0.01:
                 f = float(height) / atual
+                raizes = {o.name for o in alvos}
+                escalados = 0
                 for o in alvos:
-                    if o.parent is None:
+                    # raiz = sem pai OU pai fora do conjunto (ex.: corpo filho
+                    # da armadura: escala a ARMADURA e o corpo acompanha)
+                    if o.parent is None or o.parent.name not in raizes:
                         o.scale = (o.scale[0] * f, o.scale[1] * f, o.scale[2] * f)
-                lines.append(f"altura: {atual:.2f}m -> {height:.2f}m (escala {f:.3f})")
+                        escalados += 1
+                if escalados == 0:
+                    lines.append("altura: NADA foi escalado (sem raiz entre "
+                                 + ", ".join(o.name for o in alvos[:4]) + ") — relate como falha")
+                else:
+                    lines.append(f"altura: {atual:.2f}m -> {height:.2f}m "
+                                 f"(escala {f:.3f}, {escalados} objeto(s))")
     return _ok("Proporções aplicadas:\n" + "\n".join(lines))
 
 

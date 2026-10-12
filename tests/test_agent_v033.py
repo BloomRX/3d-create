@@ -53,7 +53,7 @@ class TestV034(unittest.TestCase):
     def test_spawn_limpa_kit(self):
         h = (PKG / "tools" / "handlers.py").read_text(encoding="utf-8")
         for marca in ("_LIXO_PREFIXOS", '"CS_UI_", "WGT-"', '"LIGHT", "CAMERA", "FONT", "EMPTY"',
-                      "len(ob.data.polygons) < 50"):
+                      "polys < 50", "snapshot ANTES de remover"):
             self.assertIn(marca, h, f"filtro de kit faltando: {marca}")
 
     def test_geo_e_prefixo_do_projeto(self):
@@ -79,3 +79,31 @@ class TestV034(unittest.TestCase):
         for marca in ("corpo é INTOCÁVEL", '"malhas rigadas: 0" ou qualquer ✗',
                       "Nunca anuncie"):
             self.assertIn(marca, core, f"prompt integridade faltando: {marca}")
+
+
+class TestV036(unittest.TestCase):
+    """FIELD RUN #4: spawn ReferenceError, altura que mentia, freio burlado,
+    chave Groq descartada."""
+
+    def test_spawn_snapshot_antes_de_remover(self):
+        h = (PKG / "tools" / "handlers.py").read_text(encoding="utf-8")
+        self.assertIn("snapshot ANTES de remover", h)
+        self.assertIn("meta = [(ob.name, ob.type,", h)
+        # o padrão que quebrava não pode mais existir
+        self.assertNotIn("malhas = [n.name for n in novos", h)
+
+    def test_altura_cobre_armadura_e_conta_escalados(self):
+        h = (PKG / "tools" / "handlers.py").read_text(encoding="utf-8")
+        self.assertIn('"rig_"', h)               # rig_modular_female entra nos alvos
+        self.assertIn("parent.name not in raizes", h)  # corpo filho acompanha via pai
+        self.assertIn("NADA foi escalado", h)    # falha honesta em vez de mentir
+
+    def test_freio_sem_loophole(self):
+        h = (PKG / "tools" / "handlers.py").read_text(encoding="utf-8")
+        self.assertIn("é FIXO", h)
+        self.assertIn("NÃO resetam o contador", h)
+        self.assertNotIn("após mudar geometria", h)  # a frase que ensinava a burlar
+
+    def test_chave_groq_sozinha_persiste(self):
+        ui = (PKG / "ui.py").read_text(encoding="utf-8")
+        self.assertIn("if added or added_g:", ui)

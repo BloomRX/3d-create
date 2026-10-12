@@ -501,9 +501,9 @@ def _action_add_key(props):
                     added += 1
             except ValueError as e:
                 erros.append(f"· {e}")
-        if added:
+        if added or added_g:   # groq sozinha TAMBÉM grava (bug: era descartada)
             keysmod.save(path, data)
-        _State.gem = None
+        _State.gem = None      # Router renasce e monta o GroqClient na próxima
         st = _gemini().status()
         msg = f"chaves: +{added} gemini; total {len(st['keys'])}"
         if added_g:
