@@ -278,3 +278,31 @@ Burnice, Jane Doe etc. Uso regido pelas MMD Guidelines da HoYoverse
 Fluxo: baixar zip PMX → importar no Blender COM mmd_tools → salvar .blend →
 probe_modelo.bat → enviar JSON. Isso vira probe #7 (modelo oficial HoYoverse,
 física MMD, morphs PMX — comparação com WuWa/Hsin).
+
+### VÍDEO STefan 3D AI — CFA8Pfw6OIs "Modular 3D Character Without Blender" (out/2026)
+O autor testou o **agente V5 do AssetHub.io** (vídeo = paid partnership, publi
+editorializada — tratar afirmações com ceticismo; NÃO vira dependência).
+Conceito: você dá 1 conceito/foto e o agente (a) divide o personagem em peças,
+(b) gera cada peça com o modelo de IA que LHE CONVÉM, (c) escolhe o polycount
+de cada parte, (d) monta tudo. É EXATAMENTE o Bloom Agent vendendo como
+serviço na nuvem — validação de mercado do que a gente constrói de graça,
+local, no PC do usuário. **O que roubamos do método** (ideias, não produto):
+1. **Roteamento POR PEÇA**: cada peça (cabelo/roupa/acessório) pode usar um
+   gerador diferente — nosso Router já roteia por payload; M5 pode estender
+   para "por peça, escolhe gen3d vs modelagem vs AssetBank".
+2. **Polycount automático por peça**: nosso export profile já tem 15–30k no
+   corpo; falta orçamento POR PEÇA no M3 (roupa 3–8k, cabelo 5–15k, acessório <2k).
+3. **Montagem automática por pontos de encaixe**: peças nascem na bbox da
+   peça-alvo (v0.3.7 já põe na cabeça real; formalizar "sockets" por osso no M3).
+
+### BÔNUS DA BUSCA — stack 100% FREE do mesmo autor (TkP-_LyacMI, fev/2026)
+Hy3D (Hunyuan3D, multiview) + Blender (montagem) + Modddif (textura IA) +
+Mixamo (rig) — "game-ready em 1h, zero assinatura". Mapeado:
+- **Hy3D multiview** → candidato a SUBSTITUIR/compor o Trellis no colab gen3d
+  (M5): multiview a partir da foto de referência = mais fidelidade de peça.
+- **Modddif** → textura IA grátis (requisito 5 — texture+UV, M4).
+- **AccuRIG** (outro vídeo do canal, mai/2026: Tripo 3.1 + AccuRIG + UE5) →
+  auto-rig grátis; comparar pesos com o rig_human nosso (M2) — se os pesos
+  do AccuRIG ganharem, vira receita de export (FBX → Mixamo compatível).
+Regra mantida: métodos OK por licença; personagens/outputs de terceiros NUNCA
+commitados; nada pago entra (AssetHub = referência de produto concorrente).
