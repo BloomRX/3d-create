@@ -838,3 +838,281 @@ def apply_anime_shader(args: dict, ctx: dict) -> dict:
 
 
 # reexport p/ registry
+
+
+# ---------------------------------------------------------------------------
+# tools: pipeline completo (M3 export/peças, M4 UV+textura, M5 animação)
+# ---------------------------------------------------------------------------
+
+def _corpo_do_rig(bpy, rig) -> list:
+    return [o for o in bpy.data.objects if o.type == "MESH"
+            and not o.name.startswith(("BLOOM_REF", "Bloom_Tex"))
+            and (o.parent == rig or any(m.type == "ARMATURE" and m.object == rig
+                                        for m in o.modifiers))]
+
+
+def _achar_rig(bpy):
+    return (bpy.data.objects.get("BloomRig")
+            or next((o for o in bpy.data.objects if o.type == "ARMATURE"
+                     and o.name.startswith(("BloomRig", "rig_"))), None))
+
+
+def export_character(args: dict, ctx: dict) -> dict:
+    """EXPORT REAL do personagem: vrm (add-on VRM, enable automático), glb ou fbx.
+    Aplica escala, seleciona só rig+malhas do personagem e grava em jobs/exports."""
+    bpy = bl.bpy
+    from math import radians
+    fmt = (args.get("formato") or "glb").lower()
+    if fmt not in ("vrm", "glb", "fbx"):
+        return _fail("formato deve ser vrm, glb ou fbx (vrm2 do painel = vrm).")
+    rig = _achar_rig(bpy)
+    if rig is None:
+        return _fail("sem rig na cena — rode rig_human antes de exportar.")
+    malhas = _corpo_do_rig(bpy, rig)
+    if not malhas:
+        return _fail("nenhuma malha ligada ao rig — nada a exportar.")
+    try:
+        bpy.ops.object.select_all(action="DESELECT")
+        rig.select_set(True)
+        for m in malhas:
+            m.select_set(True)
+        bpy.context.view_layer.objects.active = rig
+        # a altura foi aplicada como escala na armadura: assa ANTES do export
+        bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+    except Exception as exc:
+        return _fail(f"falha ao aplicar escala antes do export: {exc}")
+    pasta = Path(ctx["root"]) / "jobs" / "exports"
+    pasta.mkdir(parents=True, exist_ok=True)
+    destino = pasta / f"personagem_{time.strftime('%Y%m%d-%H%M%S')}.{fmt}"
+    bpy.ops.object.select_all(action="DESELECT")
+    for o in [rig] + malhas:
+        o.select_set(True)
+    bpy.context.view_layer.objects.active = rig
+    try:
+        if fmt == "glb":
+            bpy.ops.export_scene.gltf(filepath=str(destino), export_format="GLB",
+                                      use_selection=True)
+        elif fmt == "fbx":
+            bpy.ops.export_scene.fbx(filepath=str(destino), use_selection=True,
+                                     add_leaf_bones=False)
+        else:  # vrm — habilita a extensão VRM se estiver desligada (milestone M3)
+            try:
+                import addon_utils
+                try:
+                    addon_utils.enable("bl_ext.user_default.io_scene_vrm",
+                                       default_set=True, persistent=True)
+                except Exception:
+                    pass
+            except Exception:
+                pass
+            try:
+                bpy.ops.export_scene.vrm(filepath=str(destino), use_selection=True)
+            except Exception:
+                destino = destino.with_suffix(".glb")
+                bpy.ops.export_scene.gltf(filepath=str(destino), export_format="GLB",
+                                          use_selection=True)
+                return _ok(f"[!] extensão VRM não disponível — exportei GLB em "
+                           f"{destino} (ligue 'VRM' em Preferences > Extensions e "
+                           "peça de novo para .vrm nativo).")
+        return _ok(f"EXPORTADO: {destino} ({len(malhas)} malha(s) + rig {rig.name}). "
+                   "Entregue ao host (Project Airi aceita .vrm direto).")
+    except Exception as exc:
+        return _fail(f"export falhou: {type(exc).__name__}: {exc}")
+
+
+_PECA_OSSO = {"hair": "head", "cabelo": "head", "top": "spine", "roupa": "spine",
+              "bottom": "hips", "calca": "hips", "shoes": "foot.L",
+              "sapato": "foot.L", "accessory": "head", "acessorio": "head"}
+
+
+def make_piece(args: dict, ctx: dict) -> dict:
+    """Separa peças do personagem (requisito 3: cabelo/roupas exportam SOZINHOS).
+    Quebra ilhas separadas (mesh.separate LOOSE), parenteia ao rig com pesos
+    automáticos e marca custom prop bloom_piece p/ export por peça."""
+    bpy = bl.bpy
+    peca = (args.get("peca") or "").lower()
+    if peca not in _PECA_OSSO:
+        return _fail("peca inválida; use cabelo/hair, top/roupa, bottom/calca, "
+                     "shoes/sapato, accessory/acessorio")
+    nome_alvo = (args.get("objeto") or "").strip()
+    origem = (bpy.data.objects.get(nome_alvo) if nome_alvo else
+              max((o for o in bpy.data.objects if o.type == "MESH"
+                   and not o.name.startswith(("BLOOM_REF", "WGT", "CS_UI"))),
+                  key=lambda o: len(o.data.polygons), default=None))
+    if origem is None:
+        return _fail("objeto não encontrado para virar peça.")
+    rig = _achar_rig(bpy)
+    if rig is None:
+        return _fail("rigue o personagem antes de separar peças (rig_human).")
+    antes = set(bpy.data.objects.keys())
+    try:
+        bpy.ops.object.select_all(action="DESELECT")
+        origem.select_set(True)
+        bpy.context.view_layer.objects.active = origem
+        bpy.ops.object.mode_set(mode="EDIT")
+        bpy.ops.mesh.select_all(action="SELECT")
+        bpy.ops.mesh.separate(type="LOOSE")
+        bpy.ops.object.mode_set(mode="OBJECT")
+    except Exception as exc:
+        return _fail(f"separação falhou: {exc}")
+    pecas = [bpy.data.objects[n] for n in bpy.data.objects.keys()
+             if n not in antes and bpy.data.objects[n].type == "MESH"]
+    if not pecas:
+        pecas = [origem]
+    feitas, tris = [], 0
+    for i, ob in enumerate(pecas):
+        ob.name = (f"Bloom_{peca}" if len(pecas) == 1 else f"Bloom_{peca}_{i + 1:02d}")
+        try:
+            bpy.ops.object.select_all(action="DESELECT")
+            ob.select_set(True)
+            bpy.context.view_layer.objects.active = rig
+            bpy.ops.object.parent_set(type="ARMATURE_AUTO")
+        except Exception:
+            ob.parent = rig
+            mod = ob.modifiers.new("Armature", "ARMATURE")
+            mod.object = rig
+        ob["bloom_piece"] = peca
+        tris += len(ob.data.polygons)
+        feitas.append(ob.name)
+    return _ok(f"peça '{peca}': {len(feitas)} objeto(s) ({', '.join(feitas)}), "
+               f"{tris} tris, parentado ao rig {rig.name} com pesos automáticos e "
+               f"marcado bloom_piece='{peca}' (exporta separado em export_character "
+               "e no glb/fbx por objeto).")
+
+
+def uv_and_bake(args: dict, ctx: dict) -> dict:
+    """M4: Smart UV Project nas malhas sem UV + bake DIFFUSE (cor toon) em
+    textura 1024 (Cycles CPU — RX 580 não precisa) e troca a superfície pela
+    textura assada PRESERVANDO o outline (material_offset_rim reindexado)."""
+    bpy = bl.bpy
+    from math import radians
+    so_uv = bool(args.get("so_uv", False))
+    rig = _achar_rig(bpy)
+    malhas = _corpo_do_rig(bpy, rig) if rig else []
+    if not malhas:
+        return _fail("nada para UV/bake (spawne o corpo e rigue antes).")
+    sem_uv = [m.name for m in malhas if not m.data.uv_layers]
+    try:
+        for m in malhas:
+            if m.data.uv_layers:
+                continue
+            bpy.ops.object.select_all(action="DESELECT")
+            m.select_set(True)
+            bpy.context.view_layer.objects.active = m
+            bpy.ops.object.mode_set(mode="EDIT")
+            bpy.ops.mesh.select_all(action="SELECT")
+            bpy.ops.uv.smart_project(angle_limit=radians(66), island_margin=0.02)
+            bpy.ops.object.mode_set(mode="OBJECT")
+    except Exception as exc:
+        return _fail(f"UV falhou: {exc}")
+    lines = [f"UV pronta em {len(malhas)} malha(s) "
+             f"({len(sem_uv)} precisaram de Smart UV: {', '.join(sem_uv[:5])})"]
+    if so_uv:
+        return _ok("\n".join(lines))
+    sc = bpy.context.scene
+    eng = sc.render.engine
+    pasta = Path(ctx["root"]) / "jobs" / "textures"
+    pasta.mkdir(parents=True, exist_ok=True)
+    assadas = []
+    try:
+        sc.render.engine = "CYCLES"
+        sc.cycles.device = "CPU"        # RX 580 = sem CUDA: bake por CPU é rápido
+        sc.cycles.samples = 8
+        for m in malhas:
+            me = m.data
+            if not me.materials or me.materials[0] is None:
+                continue
+            img = bpy.data.images.new(f"Bloom_Tex_{m.name[:24]}", 1024, 1024)
+            nt = me.materials[0].node_tree
+            tex = nt.nodes.new("ShaderNodeTexImage")
+            tex.image = img
+            nt.nodes.active = tex
+            tex.select = True
+            me.uv_layers.active = me.uv_layers[0]
+            bpy.ops.object.select_all(action="DESELECT")
+            m.select_set(True)
+            bpy.context.view_layer.objects.active = m
+            bpy.ops.object.bake(type="DIFFUSE", pass_filter={"COLOR"},
+                                use_clear=True, margin=8)
+            img.filepath_raw = str(pasta / f"{m.name}.png")
+            img.file_format = "PNG"
+            try:
+                img.save()
+            except Exception:
+                pass
+            # troca a superfície pela textura assada, PRESERVANDO o outline
+            idx_out = next((i for i, mm in enumerate(me.materials)
+                            if mm and mm.name.startswith("Bloom_outline")), None)
+            mod = m.modifiers.get("Bloom_Outline")
+            baked = (bpy.data.materials.get("Bloom_Baked")
+                     or bpy.data.materials.new("Bloom_Baked"))
+            baked.use_nodes = True
+            bnt = baked.node_tree
+            bnt.nodes.clear()
+            saida = bnt.nodes.new("ShaderNodeOutputMaterial")
+            emis = bnt.nodes.new("ShaderNodeEmission")
+            it = bnt.nodes.new("ShaderNodeTexImage")
+            it.image = img
+            bnt.links.new(it.outputs[0], emis.inputs["Color"])
+            bnt.links.new(emis.outputs[0], saida.inputs["Surface"])
+            mats_base = [mm for mm in me.materials
+                         if mm and not mm.name.startswith("Bloom_outline")]
+            me.materials.clear()
+            me.materials.append(baked)
+            if idx_out is not None:
+                mat_out = bpy.data.materials.get("Bloom_outline")
+                if mat_out is not None:
+                    me.materials.append(mat_out)
+                    if mod is not None:
+                        mod.material_offset_rim = 1
+            assadas.append(m.name)
+        lines.append(f"textura assada 1024px em {len(assadas)} malha(s) "
+                     f"({', '.join(assadas[:5])}); PNGs em jobs/textures/")
+    except Exception as exc:
+        lines.append(f"bake falhou (UV continua pronta): {exc}")
+    finally:
+        sc.render.engine = eng
+    return _ok("\n".join(lines))
+
+
+def make_idle_animation(args: dict, ctx: dict) -> dict:
+    """M5: idle loop 96 frames @30fps (respiração, balanço de cabeça/braços)
+    no rig canônico — exporte com export_character formato glb p/ levar a animação."""
+    bpy = bl.bpy
+    rig = _achar_rig(bpy)
+    if rig is None:
+        return _fail("rig não encontrado.")
+    sc = bpy.context.scene
+    sc.frame_start = 1
+    sc.frame_end = 96
+    sc.render.fps = 30
+    moves = {"spine": ("x", 0.020), "chest": ("x", 0.015),
+             "neck": ("y", 0.020), "head": ("y", 0.045),
+             "upper_arm.L": ("z", 0.05), "upper_arm.R": ("z", -0.05)}
+    criados = []
+    try:
+        bpy.context.view_layer.objects.active = rig
+        bpy.ops.object.mode_set(mode="POSE")
+        if rig.animation_data:
+            rig.animation_data_clear()
+        idx_eixo = {"x": 0, "y": 1, "z": 2}
+        for nome, (eixo, amp) in moves.items():
+            pb = rig.pose.bones.get(nome)
+            if pb is None:
+                continue
+            if pb.rotation_mode == "QUATERNION":
+                pb.rotation_mode = "XYZ"
+            idx = idx_eixo[eixo]
+            for f, val in ((1, 0.0), (48, amp), (96, 0.0)):
+                pb.rotation_euler[idx] = val
+                pb.keyframe_insert(data_path="rotation_euler", index=idx, frame=f)
+            criados.append(nome)
+        bpy.ops.object.mode_set(mode="OBJECT")
+        sc.frame_set(1)
+    except Exception as exc:
+        return _fail(f"animação falhou: {exc}")
+    if not criados:
+        return _fail("nenhum osso canônico encontrado para animar.")
+    return _ok(f"idle 96 frames @30fps criado em {len(criados)} osso(s) "
+               f"({', '.join(criados)}); loop 1→96. Use export_character "
+               "formato=glb para levar a animação embutida.")

@@ -16,7 +16,7 @@ sys.path.insert(0, str(PKG.parent))
 class TestVersaoUnica(unittest.TestCase):
     def test_init_bl_info_e_constante(self):
         import bloom_agent
-        self.assertEqual(bloom_agent.__version__, "0.3.7")
+        self.assertEqual(bloom_agent.__version__, "0.4.0")
         self.assertEqual(tuple(bloom_agent.bl_info["version"]),
                          tuple(int(x) for x in bloom_agent.__version__.split(".")))
 

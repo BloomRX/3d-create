@@ -216,6 +216,53 @@ TOOLS = [
         "parameters": {"type": "object", "properties": {"job_id": {"type": "string"}}, "required": ["job_id"]},
         "fn": "colab_collect",
     },
+    {
+        "name": "export_character",
+        "description": ("EXPORTA o personagem pronto: vrm (Project Airi/VRoid), glb "
+                        "(leve, com animação) ou fbx (Mixamo/UE5). Só chame com corpo "
+                        "rigado e aprovado. Grava em jobs/exports e devolve o caminho."),
+        "parameters": {
+            "type": "object",
+            "properties": {"formato": {"type": "string", "enum": ["vrm", "glb", "fbx"]}},
+            "required": ["formato"],
+        },
+        "fn": "export_character",
+    },
+    {
+        "name": "make_piece",
+        "description": ("Separa PEÇAS do personagem (cabelo/top/bottom/shoes/acessorio) "
+                        "em objetos próprios parentados ao rig com pesos — cada peça "
+                        "exporta sozinha (sistema de outfits)."),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "peca": {"type": "string", "enum": ["cabelo", "top", "bottom",
+                                                    "shoes", "acessorio"]},
+                "objeto": {"type": "string", "description": "nome do mesh origem (opcional)"},
+            },
+            "required": ["peca"],
+        },
+        "fn": "make_piece",
+    },
+    {
+        "name": "uv_and_bake",
+        "description": ("M4: Smart UV nas malhas sem UV e (opcional, so_uv=false) bake "
+                        "DIFFUSE da cor toon em textura 1024px (Cycles CPU), preservando "
+                        "o outline. Rode antes do export final."),
+        "parameters": {
+            "type": "object",
+            "properties": {"so_uv": {"type": "boolean", "description": "true = só UV, sem bake"}},
+            "required": [],
+        },
+        "fn": "uv_and_bake",
+    },
+    {
+        "name": "make_idle_animation",
+        "description": ("Cria idle loop (respiração + balanço, 96 frames @30fps) no rig "
+                        "canônico. Depois export_character formato=glb leva a animação."),
+        "parameters": {"type": "object", "properties": {}, "required": []},
+        "fn": "make_idle_animation",
+    },
 ]
 
 
