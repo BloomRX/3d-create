@@ -306,3 +306,31 @@ Mixamo (rig) — "game-ready em 1h, zero assinatura". Mapeado:
   do AccuRIG ganharem, vira receita de export (FBX → Mixamo compatível).
 Regra mantida: métodos OK por licença; personagens/outputs de terceiros NUNCA
 commitados; nada pago entra (AssetHub = referência de produto concorrente).
+
+### VÍDEO 3d8u3fJJrMg — "Blender's NEW Character System" (Avatar Creator, out/2026)
+NÃO é sistema oficial da Blender Foundation: é o **Avatar Creator** (avcsuite.com,
+suíte PAGA — política: métodos OK, produto não entra). O que ele vende e o que
+INSPIRA:
+1. **AVC Wrap**: trazer malha externa (scan, mesh de IA) e "wrapar" numa
+   TOPOLOGIA CONSISTENTE editável ("one topology, unlimited characters") —
+   é EXATAMENTE o que falta pro nosso gen3d do Colab: malha suja do Trellis/
+   Hy3D → wrap na topologia do corpo base → vira personagem editável
+   (**M3/M4**: receita shrinkwrap+Data Transfer+retopo parcial sobre base fixa).
+2. **Sync nativo MetaHuman / Genesis 9**: transferir FORMA e TEXTURA em passos
+   separados para a base nativa do host — nosso set_export_profile hoje só
+   renomeia ossos; o passo 2 real é "transfer shape para a base MetaHuman"
+   (**M2/M3**: shape keys do corpo → alvos da base do host + bake de textura).
+3. Pacote dele (150+ morphs, cabelo geonodes, 50+ roupas auto-rig, Rigify+Face
+   Widget) = confirma nosso desenho: corpo base paramétrico + peças + Rigify.
+
+### ACHADOS GRÁTIS da mesma busca (candidatos a base de corpo)
+- **MPFB 2.0.18** (MakeHuman, GRÁTIS, extensions.blender.org, Blender 4.2+,
+  out/2026): gerador humano paramétrico + Rigify + materiais procedurais +
+  biblioteca de roupas/peças. Candidato a SUBSTITUIR o manequim de primitivas
+  do spawn_base_body quando o AssetBank estiver vazio (**M1.5**: add-on fica
+  DESLIGADO por padrão; habilito só nesse caminho).
+- **CharMorph v0.4+** (open source, sucessor do MB-Lab, modelo CC0 "Vitruvian",
+  Blender 4.4): personagem realista paramétrico GRATUITO e licença limpa p/ jogo
+  comercial — segunda opção de corpo-base de qualidade zero-custo.
+Regra mantida: nada pago/pirata (site de crack do CC5 que apareceu na busca:
+IGNORADO por política — CC5/Headshot 2 ficam só como referência de método).
