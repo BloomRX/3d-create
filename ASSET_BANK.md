@@ -25,3 +25,18 @@ Nomeie com a palavra-chave do tipo (shirt/camisa, hair/cabelo…) pra tag bater.
 **Política**: arquivo de asset NUNCA vai pro git (peso+licença) — só probes e
 o catálogo. Comprado = seu, local; free CC0 = distribuível, mas baixamos, não
 commitamos (o repo continua leve).
+
+## Formatos que o fluxo aceita (asset_scan indexa; adapt_asset importa)
+
+| Formato | Qualidade p/ nós | Detalhes |
+|---|---|---|
+| **.glb** | ⭐ MELHOR | tudo embutido (malha+material+textura+rig); leve; importa 1-clique |
+| **.gltf** | ótimo | idem, mas bin/texturas ficam AO LADO — mova a pasta inteira |
+| **.fbx** | ótimo | o mais comum em marketplaces; texturas junto (mesma pasta) |
+| **.blend** | máximo | append completo: até shape keys e materiais de nodes sobrevivem |
+| .obj | limitado | SEM rig/morphs; precisa do .mtl + texturas na mesma pasta |
+| .zip/.rar | — | NÃO indexa: extraia antes e jogue os arquivos |
+| .vrm | — | ainda fora do bank (rota de probe apartada); import nativo é upgrade futuro |
+
+**Regra prática**: prefira glb > fbx > blend > obj. Do Quaternius use o **glTF**;
+do Sketchfab baixe **glTF**; de CGTrader/Booth, **FBX** (texturas juntas).

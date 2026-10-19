@@ -1,7 +1,79 @@
 {
-  "versao": 1,
-  "nota": "Entradas com 'url' direta e licenca CC0/CC-BY são baixadas SOZINHAS pelo BLOOM.bat (passo 4.5). MANUAL = usuário baixa na página e joga o arquivo no Asset Bank.",
+  "versao": 2,
+  "nota": "url+CC0/CC-BY = BLOOM baixa SOZINHO (passo 4.5). MANUAL = usuário clica/baixa na página e joga em destino/. assets nunca vão pro git.",
   "assets": [
+    {
+      "id": "quaternius_outfits_fantasy",
+      "tipo": "pagina",
+      "licenca": "CC0",
+      "pagina": "https://quaternius.com/packs/modularcharacteroutfitsfantasy.html",
+      "destino": "assets/bank/roupas/quaternius_fantasy/",
+      "url": "",
+      "obs": "12 OUTITS MODULARES rigged Humanoid (62 partes, 3 texturas cada) — ideal pro adapt_asset. Versão grátis = FBX+glTF+OBJ (.blend só no Source pago)."
+    },
+    {
+      "id": "quaternius_modular_women",
+      "tipo": "pagina",
+      "licenca": "CC0",
+      "pagina": "https://quaternius.com/packs/ultimatemodularwomen.html",
+      "destino": "assets/bank/corpos/quaternius_women/",
+      "url": "",
+      "obs": "Corpos femininos modulares CC0 rigged — corpo base alternativo ao Bodiez."
+    },
+    {
+      "id": "quaternius_base_characters",
+      "tipo": "pagina",
+      "licenca": "CC0",
+      "pagina": "https://quaternius.com/packs/universalbasecharacters.html",
+      "destino": "assets/bank/corpos/quaternius_base/",
+      "url": "",
+      "obs": "Bases humanoides rigged compatíveis com os outfits fantasy."
+    },
+    {
+      "id": "meshy_gallery",
+      "tipo": "pagina",
+      "licenca": "CC0",
+      "pagina": "https://www.meshy.ai/free-3d-models",
+      "destino": "assets/bank/meshy/",
+      "url": "",
+      "obs": "Galeria comunitária CC0 (600k+): tags anime/clothing/hair em meshy.ai/tags/anime e /tags/clothing. Gerações PRÓPRIAS no plano free = CC-BY (credite Meshy)."
+    },
+    {
+      "id": "sketchfab_clothing_kit",
+      "tipo": "pagina",
+      "licenca": "CC0",
+      "pagina": "https://sketchfab.com/3d-models/clothing-and-character-kit-10-cc0-7c733dceb2e04c4fb7e7dbd85316c1e7",
+      "destino": "assets/bank/roupas/clothing_kit/",
+      "url": "",
+      "obs": "Kit humano+roupas britdawgmasterfunk (764k tris, base de estudo/wrap). Download Sketchfab exige login — manual."
+    },
+    {
+      "id": "sketchfab_cc0_busca",
+      "tipo": "pagina",
+      "licenca": "MANUAL",
+      "pagina": "https://sketchfab.com/search?features=downloadable&licenses=cc0&type=models&q=shirt",
+      "destino": "assets/bank/roupas/",
+      "url": "",
+      "obs": "Filtro CC0+downloadable; troque q= por dress/hair/horn. Cheque a licença de CADA modelo antes."
+    },
+    {
+      "id": "creazilla_hair",
+      "tipo": "pagina",
+      "licenca": "CC0",
+      "pagina": "https://creazilla.com/nodes/3283-set-of-hair-3d-model",
+      "destino": "assets/bank/cabelos/",
+      "url": "",
+      "obs": "Set de cabelo FBX game-ready; Creazilla tem mais em creazilla.com/category/hair."
+    },
+    {
+      "id": "cgtrader_free",
+      "tipo": "pagina",
+      "licenca": "MANUAL",
+      "pagina": "https://www.cgtrader.com/3d-models/anime-hair?free=1",
+      "destino": "assets/bank/",
+      "url": "",
+      "obs": "MUITOS itens 'FREE' mas licença ROYALTY-FREE própria (não CC0) — leia a ficha de cada um; uso ok, redistribuição não."
+    },
     {
       "id": "mpfb_clothes",
       "tipo": "addon",
@@ -9,16 +81,7 @@
       "pagina": "https://extensions.blender.org/add-ons/mpfb/",
       "destino": "assets/bank/roupas/",
       "url": "",
-      "obs": "MPFB (MakeHuman) traz biblioteca de roupas CC0 DENTRO do Blender; instale o add-on e exporte os itens pro bank (ou importe direto ao modelar)."
-    },
-    {
-      "id": "quaternius_packs",
-      "tipo": "pagina",
-      "licenca": "CC0",
-      "pagina": "https://quaternius.com/",
-      "destino": "assets/bank/quaternius/",
-      "url": "",
-      "obs": "Packs CC0 (personagens/props); baixe o zip da página e extraia DENTRO de assets/bank/quaternius/ — o asset_scan indexa sozinho."
+      "obs": "MPFB (MakeHuman): biblioteca de roupas CC0 DENTRO do Blender; exporte itens pro bank."
     },
     {
       "id": "kenney_kits",
@@ -27,16 +90,16 @@
       "pagina": "https://kenney.nl/assets",
       "destino": "assets/bank/kenney/",
       "url": "",
-      "obs": "Kits CC0; mesmo fluxo do Quaternius."
+      "obs": "Kits CC0; baixe e extraia dentro de destino/."
     },
     {
-      "id": "sketchfab_cc",
+      "id": "quaternius_packs",
       "tipo": "pagina",
-      "licenca": "MANUAL",
-      "pagina": "https://sketchfab.com/search?features=downloadable&licenses=cc0&type=models&q=shirt",
-      "destino": "assets/bank/roupas/",
+      "licenca": "CC0",
+      "pagina": "https://quaternius.com/",
+      "destino": "assets/bank/quaternius/",
       "url": "",
-      "obs": "Filtro CC0/downloadable; baixe manualmente (glTF) e jogue no destino. Cheque a licença de CADA modelo."
+      "obs": "Catálogo geral (60-70% grátis CC0)."
     },
     {
       "id": "vroid_hub",
@@ -45,7 +108,7 @@
       "pagina": "https://hub.vroid.com/",
       "destino": "assets/bank/vrm/",
       "url": "",
-      "obs": "VRMs com licença POR MODELO — leia os termos; muitos proíbem uso comercial. Nunca commitar o arquivo; só o probe JSON."
+      "obs": "VRMs licença POR MODELO — leia os termos; muitos proíbem comercial. Nunca commitar o arquivo; só probe JSON."
     }
   ]
 }
