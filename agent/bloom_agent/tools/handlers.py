@@ -148,9 +148,14 @@ def render_view(args: dict, ctx: dict) -> dict:
     size = int(args.get("size", 512))
     stamp = time.strftime("%H%M%S")
     out = Path(ctx["root"]) / "jobs" / "renders" / f"view_{stamp}.png"
-    b64 = bl.quick_render(out, size=size, from_viewport=True)
-    return _ok(f"Render {sess['renders_turn']}/{MAX_RENDERS_PER_TURN} do turno salvo em {out}.",
-               images=[(b64, "image/png")])
+    # com câmera na cena (setup_camera_front cria a BloomCam), renderiza ELA —
+    # determinístico. Renderizar a viewport do usuário era a raiz do loop de
+    # câmera: o agent via um ângulo arbitrário e brigava pra "consertar".
+    tem_cam = bl.bpy.context.scene.camera is not None
+    b64 = bl.quick_render(out, size=size, from_viewport=not tem_cam)
+    via = "câmera BloomCam" if tem_cam else "viewport do usuário"
+    return _ok(f"Render {sess['renders_turn']}/{MAX_RENDERS_PER_TURN} do turno ({via}) "
+               f"salvo em {out}.", images=[(b64, "image/png")])
 
 
 def setup_camera_front(args: dict, ctx: dict) -> dict:
@@ -465,7 +470,7 @@ def _proporcao_vertices(corpo, head_size=0.0, shoulder_w=0.0, leg_len=0.0) -> li
         cx0 = (min(xs) + max(xs)) / 2.0
         out = []
         if head_size:
-            esc = 1.0 + 0.30 * max(-1.0, min(1.0, float(head_size)))
+            esc = 1.0 + 0.45 * max(-1.0, min(1.0, float(head_size)))
             corte = zmin + 0.78 * h                      # linha do pescoço
             alvo = [v for v in bm.verts if v.co.z > corte]
             if alvo:
@@ -488,7 +493,7 @@ def _proporcao_vertices(corpo, head_size=0.0, shoulder_w=0.0, leg_len=0.0) -> li
             if n:
                 out.append(f"shoulder_w: ombros {esc:.2f}x em X ({n} vértices)")
         if leg_len:
-            esc = 1.0 + 0.20 * max(-1.0, min(1.0, float(leg_len)))
+            esc = 1.0 + 0.35 * max(-1.0, min(1.0, float(leg_len)))
             corte = zmin + 0.48 * h
             n = 0
             for v in bm.verts:

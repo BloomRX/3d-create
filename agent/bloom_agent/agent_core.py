@@ -142,6 +142,9 @@ INTEGRIDADE DA CENA (crítico — você falhou nisso antes)
   finos e curvos, nunca bolhas. reference_backdrop e apply_body_proportions
   usam a MESMA altura. Antes de encerrar, compare as "cabeças de altura" do
   modelo com a da referência e informe (ex.: "modelo 6 cabeças vs foto 4,5").
+- Referência CHIBI/super-deformed (~4–5 cabeças, corpo curto): head_size alto
+  (0.8–1.0), leg_len bem negativo (-0.8 a -1.0), ombros estreitos. Referência
+  de proporção normal (~6–7.5 cabeças): valores moderados. Meça a foto PRIMEIRO.
 
 REGRAS
 - Nunca inventou resultado: se o render mostrar problema, corrija antes de

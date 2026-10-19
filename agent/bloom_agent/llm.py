@@ -128,10 +128,13 @@ def _is_quota_error(status: int, payload) -> bool:
 
 
 def _error_message(status: int, payload) -> str:
+    # NUNCA retorna None (crashou .lower() no fallback pro Groq no momento
+    # em que todas as chaves Gemini estavam inválidas — turno morreu 2x)
     if isinstance(payload, dict):
         err = payload.get("error", {})
-        return f"HTTP {status}: {err.get('message', 'erro desconhecido')}"
-        return f"HTTP {status}: {str(payload)[:300]}"
+        msg = err.get("message") or str(payload)[:300]
+        return f"HTTP {status}: {msg}"
+    return f"HTTP {status}: {str(payload)[:300]}"
 
 
 def _is_model_gone(msg: str) -> bool:
@@ -601,8 +604,8 @@ class GroqClient:
                 self._persist()
                 continue
             if status != 200:
-                msg = _error_message(status, payload)
-                baixo = msg.lower()
+                msg = _error_message(status, payload) or f"HTTP {status}"
+                baixo = str(msg).lower()
                 if status in (401, 403) or "invalid" in baixo and "key" in baixo:
                     self.data["groq"].pop(i)
                     self._persist()

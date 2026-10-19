@@ -131,3 +131,32 @@ class TestV037(unittest.TestCase):
         for marca in ("NUNCA crie esfera/cabeça", "bounding box da\n  MALHA DO CORPO",
                       "MESMA altura", "cabeças de altura"):
             self.assertIn(marca, core, f"prompt proporção faltando: {marca}")
+
+
+class TestV041(unittest.TestCase):
+    """Run noturno: 8 chaves AQ.Ab8 inválidas derrubaram o Gemini E o fallback
+    Groq crashou (_error_message -> None -> .lower()); render_view ignorava a
+    BloomCam (renderizava a viewport do usuário = loop de câmera eterno)."""
+
+    def test_render_usa_a_camara_da_cena(self):
+        h = (PKG / "tools" / "handlers.py").read_text(encoding="utf-8")
+        self.assertIn("from_viewport=not tem_cam", h)
+        self.assertIn("câmera BloomCam", h)
+        self.assertIn("viewport do usuário", h)
+
+    def test_erro_da_api_nunca_none(self):
+        l = (PKG / "llm.py").read_text(encoding="utf-8")
+        self.assertIn("msg = err.get(\"message\") or str(payload)[:300]", l)
+        self.assertIn('return f"HTTP {status}: {str(payload)[:300]}"', l)
+        self.assertIn('_error_message(status, payload) or f"HTTP {status}"', l)
+        self.assertIn("str(msg).lower()", l)
+
+    def test_coeficientes_chibi(self):
+        h = (PKG / "tools" / "handlers.py").read_text(encoding="utf-8")
+        self.assertIn("esc = 1.0 + 0.45 * max(-1.0, min(1.0, float(head_size)))", h)
+        self.assertIn("esc = 1.0 + 0.35 * max(-1.0, min(1.0, float(leg_len)))", h)
+
+    def test_prompt_guia_chibi(self):
+        core = (PKG / "agent_core.py").read_text(encoding="utf-8")
+        self.assertIn("CHIBI/super-deformed", core)
+        self.assertIn("Meça a foto PRIMEIRO", core)
