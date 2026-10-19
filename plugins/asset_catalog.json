@@ -1,0 +1,51 @@
+{
+  "versao": 1,
+  "nota": "Entradas com 'url' direta e licenca CC0/CC-BY são baixadas SOZINHAS pelo BLOOM.bat (passo 4.5). MANUAL = usuário baixa na página e joga o arquivo no Asset Bank.",
+  "assets": [
+    {
+      "id": "mpfb_clothes",
+      "tipo": "addon",
+      "licenca": "CC0",
+      "pagina": "https://extensions.blender.org/add-ons/mpfb/",
+      "destino": "assets/bank/roupas/",
+      "url": "",
+      "obs": "MPFB (MakeHuman) traz biblioteca de roupas CC0 DENTRO do Blender; instale o add-on e exporte os itens pro bank (ou importe direto ao modelar)."
+    },
+    {
+      "id": "quaternius_packs",
+      "tipo": "pagina",
+      "licenca": "CC0",
+      "pagina": "https://quaternius.com/",
+      "destino": "assets/bank/quaternius/",
+      "url": "",
+      "obs": "Packs CC0 (personagens/props); baixe o zip da página e extraia DENTRO de assets/bank/quaternius/ — o asset_scan indexa sozinho."
+    },
+    {
+      "id": "kenney_kits",
+      "tipo": "pagina",
+      "licenca": "CC0",
+      "pagina": "https://kenney.nl/assets",
+      "destino": "assets/bank/kenney/",
+      "url": "",
+      "obs": "Kits CC0; mesmo fluxo do Quaternius."
+    },
+    {
+      "id": "sketchfab_cc",
+      "tipo": "pagina",
+      "licenca": "MANUAL",
+      "pagina": "https://sketchfab.com/search?features=downloadable&licenses=cc0&type=models&q=shirt",
+      "destino": "assets/bank/roupas/",
+      "url": "",
+      "obs": "Filtro CC0/downloadable; baixe manualmente (glTF) e jogue no destino. Cheque a licença de CADA modelo."
+    },
+    {
+      "id": "vroid_hub",
+      "tipo": "pagina",
+      "licenca": "MANUAL",
+      "pagina": "https://hub.vroid.com/",
+      "destino": "assets/bank/vrm/",
+      "url": "",
+      "obs": "VRMs com licença POR MODELO — leia os termos; muitos proíbem uso comercial. Nunca commitar o arquivo; só o probe JSON."
+    }
+  ]
+}

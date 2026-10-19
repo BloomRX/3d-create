@@ -160,3 +160,45 @@ class TestV041(unittest.TestCase):
         core = (PKG / "agent_core.py").read_text(encoding="utf-8")
         self.assertIn("CHIBI/super-deformed", core)
         self.assertIn("Meça a foto PRIMEIRO", core)
+
+
+class TestV042(unittest.TestCase):
+    """Asset Hub: auto-tags no bank + adapt_asset veste compra/free no corpo +
+    catalogo baixado pelo BLOOM (so CC0/CC-BY)."""
+
+    def test_auto_tags_por_nome(self):
+        import sys, tempfile
+        sys.path.insert(0, str(REPO2 := Path(__file__).resolve().parents[1] / "agent"))
+        from bloom_agent import bl
+        with tempfile.TemporaryDirectory() as td:
+            tdp = Path(td)
+            for n in ("School_Shirt.fbx", "braid_hair.blend", "dai_gyro.obj"):
+                (tdp / n).write_bytes(b"x")
+            achados = {e["name"]: e["tags"] for e in bl.list_bank_files(tdp)}
+            self.assertIn("roupa", achados["School_Shirt"])
+            self.assertIn("cabelo", achados["braid_hair"])
+            self.assertEqual(achados["dai_gyro"], [])
+
+    def test_adapt_asset_existe(self):
+        h = (PKG / "tools" / "handlers.py").read_text(encoding="utf-8")
+        for marca in ("def adapt_asset", "SHRINKWRAP", "CORRECTIVE_SMOOTH",
+                      "bloom_piece", "_PECA_OSSO"):
+            self.assertIn(marca, h, f"adapt_asset perdeu: {marca}")
+        reg = (PKG / "tools_registry.py").read_text(encoding="utf-8")
+        self.assertIn('"name": "adapt_asset"', reg)
+
+    def test_catalogo_somente_licencas_livres_baixam(self):
+        import json
+        cat = json.loads((Path(__file__).resolve().parents[1]
+                          / "plugins" / "asset_catalog.json").read_text(encoding="utf-8"))
+        for a in cat["assets"]:
+            self.assertIn(a["licenca"], ("CC0", "CC-BY", "MANUAL"), a["id"])
+            if a["url"]:
+                self.assertTrue(a["destino"].startswith("assets/bank"), a["id"])
+
+    def test_bloom_tem_passo_assets(self):
+        txt = (Path(__file__).resolve().parents[1] / "util" / "bloom.ps1"
+               ).read_bytes().decode("utf-8-sig")
+        for marca in ("[4.5] Assets do catalogo", "asset_catalog.json",
+                      "Invoke-WebRequest", "CREDITS.md"):
+            self.assertIn(marca, txt, f"passo 4.5 perdeu: {marca}")

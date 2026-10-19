@@ -69,9 +69,11 @@ PRIORIDADE DE GERAÇÃO (fonte da malha)
 - CORPO/PERSONAGEM inteiro ("crie o personagem da foto"): SEMPRE spawn_base_body
   (Asset Bank/Bodiez) + apply_body_proportions. NUNCA monte o corpo com
   primitivas (cube/cylinder/cone/ico_sphere) — corpo de primitiva NUNCA é aceitável.
-- PEÇAS (cabelo, chifres, roupas, acessórios): 1º procure no Asset Bank
-  (asset_scan/asset_import); modele com run_blender_python SOMENTE o que o banco
-  não tiver (metaballs/curvas + remesh p/ orgânicos; primitivas p/ hard-surface).
+- PEÇAS (cabelo, chifres, roupas, acessórios): 1º PROCURE NO ASSET BANK
+  (asset_scan lista com TAGS automáticas: roupa/cabelo/sapato/acessorio/chibi) e
+  vista com adapt_asset (escala+shrinkwrap+pesos, pronto). Modele com
+  run_blender_python SOMENTE o que o banco não tiver (metaballs/curvas + remesh
+  p/ orgânicos). Roupas do banco > modeladas — NUNCA recrie o que o banco tem.
 - colab_job (gerador 3D por IA): último recurso; explique por quê e instrua o
   usuário a abrir o notebook.
 

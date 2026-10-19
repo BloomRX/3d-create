@@ -247,6 +247,28 @@ def import_asset(path: Path, target_name: str | None = None) -> list:
             raise ValueError(f"Formato não suportado para import: {ext}")
 
 
+# auto-tags pelo NOME do arquivo: o agent encontra roupa/cabelo no banco
+# sem o usuário precisar criar .meta.json (que continua valendo e SOMA)
+_TAG_POR_NOME = {
+    "roupa": ("shirt", "tshirt", "camisa", "top", "blusa", "vestido", "dress",
+              "jacket", "jaqueta", "coat", "casaco", "hoodie", "cloth", "outfit",
+              "kimono", "sweater", "suit", "armor", "armadura"),
+    "saia": ("skirt", "saia"),
+    "calca": ("pants", "trousers", "jeans", "shorts", "calca", "calça", "leggings"),
+    "cabelo": ("hair", "cabelo", "ponytail", "braid", "fringe", "bangs", "wig"),
+    "sapato": ("shoe", "shoes", "boot", "boots", "sapato", "sneaker", "heels"),
+    "acessorio": ("horn", "chifre", "glasses", "oculos", "hat", "chapeu", "crown",
+                  "coroa", "earring", "brinco", "necklace", "colar", "accessory",
+                  "epaulette", "sword", "espada", "staff", "cajado", "wings", "asas"),
+    "chibi": ("chibi", "sd_"),
+}
+
+def _tags_do_nome(nome: str) -> list:
+    n = nome.lower()
+    return [cat for cat, chaves in _TAG_POR_NOME.items()
+            if any(c in n for c in chaves)]
+
+
 def list_bank_files(bank_dir: Path, exts=(".glb", ".gltf", ".fbx", ".obj", ".blend")) -> list:
     """Varre a pasta do asset bank (pure Python, testável sem bpy)."""
     bank_dir = Path(bank_dir)
@@ -264,6 +286,9 @@ def list_bank_files(bank_dir: Path, exts=(".glb", ".gltf", ".fbx", ".obj", ".ble
                     obs = meta.get("obs", "") or ""
                 except (OSError, ValueError):
                     pass
+            for t in _tags_do_nome(f.stem):
+                if t not in tags:
+                    tags.append(t)
             out.append({
                 "id": f.name,
                 "name": f.stem,

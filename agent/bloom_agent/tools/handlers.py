@@ -1121,3 +1121,102 @@ def make_idle_animation(args: dict, ctx: dict) -> dict:
     return _ok(f"idle 96 frames @30fps criado em {len(criados)} osso(s) "
                f"({', '.join(criados)}); loop 1→96. Use export_character "
                "formato=glb para levar a animação embutida.")
+
+
+def adapt_asset(args: dict, ctx: dict) -> dict:
+    """REQUISITO 6 — veste um asset do Asset Bank (roupa/cabelo comprado ou free)
+    no corpo atual: importa, centraliza, escala pela bbox, shrinkwrap + corrective
+    smooth, parenteia ao rig com pesos e marca bloom_piece. NÃO modela do zero."""
+    bpy = bl.bpy
+    from mathutils import Vector
+    nome = (args.get("arquivo") or "").strip()
+    peca = (args.get("peca") or "roupa").lower()
+    if peca not in _PECA_OSSO:
+        return _fail(f"peca inválida; use {sorted(set(_PECA_OSSO))}")
+    bank = _ctx_bank(ctx)
+    alvo_arq = None
+    if nome:
+        direto = bank / nome
+        if direto.is_file():
+            alvo_arq = direto
+        else:
+            for e in bl.list_bank_files(bank):
+                alvo = nome.lower()
+                if (alvo in e["id"].lower() or alvo in e["name"].lower()
+                        or alvo in (e.get("tags") or [])):
+                    alvo_arq = bank / e["rel"]
+                    break
+    else:  # sem nome: primeiro asset com a tag da peça
+        tag = {"cabelo": "cabelo", "top": "roupa", "roupa": "roupa",
+               "bottom": "calca", "calca": "calca", "shoes": "sapato",
+               "sapato": "sapato", "accessory": "acessorio",
+               "acessorio": "acessorio"}.get(peca)
+        for e in bl.list_bank_files(bank):
+            if tag in (e.get("tags") or []):
+                alvo_arq = bank / e["rel"]
+                break
+    if alvo_arq is None:
+        return _fail(f"asset '{nome or peca}' não encontrado no banco ({bank}). "
+                     "Use asset_scan para ver o que existe.")
+    corpo = max((o for o in bpy.data.objects if o.type == "MESH"
+                 and not o.name.startswith(("BLOOM_REF", "Outline"))),
+                key=lambda o: len(o.data.polygons), default=None)
+    if corpo is None:
+        return _fail("spawne o corpo base antes de vestir o asset.")
+    rig = _achar_rig(bpy)
+    novos = bl.import_asset(alvo_arq, f"Bloom_{peca}")
+    malhas = [o for o in novos if o.type == "MESH"]
+    if not malhas:
+        return _fail(f"'{alvo_arq.name}' não tem malhas para vestir.")
+    bpy.context.view_layer.update()
+    zs = [v for m in malhas for v in m.bound_box]
+    # bbox do asset em mundo
+    cantos = [m.matrix_world @ Vector(c) for m in malhas for c in m.bound_box]
+    amin = Vector((min(c.x for c in cantos), min(c.y for c in cantos),
+                   min(c.z for c in cantos)))
+    amax = Vector((max(c.x for c in cantos), max(c.y for c in cantos),
+                   max(c.z for c in cantos)))
+    acentro = (amin + amax) / 2
+    aalt = max(1e-4, amax.z - amin.z)
+    # corpo: referência de altura/centro
+    czs = [corpo.matrix_world @ Vector(c) for c in corpo.bound_box]
+    cmin = Vector((min(c.x for c in czs), min(c.y for c in czs), min(c.z for c in czs)))
+    cmax = Vector((max(c.x for c in czs), max(c.x for c in czs), max(c.z for c in czs)))
+    calt = max(1e-4, cmax.z - cmin.z)
+    ccentro = (cmin + cmax) / 2
+    # fração do corpo que a peça cobre (roupa ~torso, cabelo ~cabeça, etc.)
+    fracao = {"cabelo": 0.30, "top": 0.35, "roupa": 0.60, "bottom": 0.45,
+              "calca": 0.45, "shoes": 0.12, "sapato": 0.12,
+              "accessory": 0.20, "acessorio": 0.20}.get(peca, 0.5)
+    esc = (calt * fracao) / aalt
+    for m in malhas:
+        m.scale = (m.scale[0] * esc, m.scale[1] * esc, m.scale[2] * esc)
+        m.location = (ccentro.x, ccentro.y,
+                      cmin.z + calt * (0.5 + {"cabelo": 0.42, "top": 0.22,
+                                              "roupa": 0.0, "bottom": -0.15,
+                                              "calca": -0.15, "shoes": -0.44,
+                                              "sapato": -0.44,
+                                              "accessory": 0.45,
+                                              "acessorio": 0.45}.get(peca, 0.0))
+                      - (acentro.z - amin.z) * esc)
+    bpy.context.view_layer.update()
+    feitos = []
+    for m in malhas:
+        m.parent = rig if rig else corpo
+        try:
+            sw = m.modifiers.new("Bloom_Fit", "SHRINKWRAP")
+            sw.target = corpo
+            sw.wrap_method = "WRAP"
+            sw.offset = 0.004
+            cs = m.modifiers.new("Bloom_SmoothFit", "CORRECTIVE_SMOOTH")
+            cs.factor = 0.5
+        except Exception:
+            pass
+        m["bloom_piece"] = peca
+        feitos.append(m.name)
+    return _ok(f"asset '{alvo_arq.name}' vestido como '{peca}': {len(feitos)} malha(s) "
+               f"({', '.join(feitos)}), escala {esc:.2f}x, shrinkwrap em "
+               f"{corpo.name} + corrective smooth, parent ao "
+               f"{rig.name if rig else corpo.name}, marcado bloom_piece='{peca}'. "
+               "Confira com render_view; ajuste fino de posição/escala se a peça "
+               "flutuar ou afundar.")

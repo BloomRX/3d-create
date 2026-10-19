@@ -185,6 +185,41 @@ foreach ($m in ($modelos | Sort-Object LastWriteTime -Descending)) {
     if ($m.Extension -ieq ".vrm" -and -not $temVrmZip) { $vrmEsperando += 1; continue }
     $faltando += $m
 }
+# ---------- [4.5] assets do catalogo (so CC0/CC-BY baixam sozinhos) ----------
+Write-Host "  [4.5] Assets do catalogo..."
+$CatFile = Join-Path $Repo "plugins\asset_catalog.json"
+if (Test-Path $CatFile) {
+    try {
+        $Cat = ConvertFrom-Json (Get-Content $CatFile -Raw -Encoding UTF8)
+        foreach ($item in $Cat.assets) {
+            if (-not $item.url) { continue }
+            $lic = [string]$item.licenca
+            if ($lic -ne "CC0" -and $lic -ne "CC-BY") { continue }
+            $dest = Join-Path $Repo ([string]$item.destino)
+            New-Item -ItemType Directory -Force -Path $dest | Out-Null
+            $nomeArq = ([string]$item.url) -replace "^/.*/", ""
+            $nomeArq = ($nomeArq -split "\?")[0]
+            if (-not $nomeArq) { $nomeArq = "$($item.id).zip" }
+            $alvo = Join-Path $dest $nomeArq
+            if (Test-Path $alvo) { continue }
+            try {
+                [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+                Invoke-WebRequest -Uri ([string]$item.url) -OutFile $alvo -UseBasicParsing
+                Write-Host "        baixado: $($item.id) ($lic)"
+                if ($alvo -like "*.zip") {
+                    Expand-Archive -Path $alvo -DestinationPath $dest -Force
+                }
+                $cred = Join-Path $Repo "assets\bank\CREDITS.md"
+                Add-Content -Path $cred -Encoding UTF8 -Value "- $($item.id) | $lic | $($item.pagina) | $(Get-Date -Format yyyy-MM-dd)"
+            } catch {
+                Write-Host "        [!] falhou baixar $($item.id) — segue o baile" -ForegroundColor Yellow
+            }
+        }
+    } catch {
+        Write-Host "        [!] catalogo com problema (ignorado): $($_.Exception.Message)" -ForegroundColor Yellow
+    }
+}
+
 Write-Host "  [5/7] Raio-X: $($faltando.Count) modelo(s) novo(s) sem relatorio."
 if ($vrmEsperando -gt 0) {
     Write-Host "        $vrmEsperando arquivo(s) .vrm aguardando o VRM ADDON:" -ForegroundColor Yellow

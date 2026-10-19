@@ -9,12 +9,12 @@ Instalação (Blender 4.2+):
 Fora do Blender (sandbox/testes): os módulos llm/keys/bridge/agent_core/
 tools_registry são importáveis sem bpy — o __init__ não carrega a UI.
 """
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 
 bl_info = {
     "name": "Bloom Agent",
     "author": "BloomRX",
-    "version": (0, 4, 1),
+    "version": (0, 4, 2),
     "blender": (4, 0, 0),
     "location": "View3D > Sidebar (N) > Bloom",
     "description": "Agent que modela, rige, texturiza e exporta personagens (UE5/VRM) dentro do Blender",

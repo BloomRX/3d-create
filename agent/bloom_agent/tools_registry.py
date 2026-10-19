@@ -263,6 +263,23 @@ TOOLS = [
         "parameters": {"type": "object", "properties": {}, "required": []},
         "fn": "make_idle_animation",
     },
+    {
+        "name": "adapt_asset",
+        "description": ("Veste um asset do Asset Bank (roupa/cabelo/acessório free "
+                        "ou comprado pelo usuário) no corpo atual: escala pela bbox, "
+                        "shrinkwrap + corrective smooth, parent ao rig e marca "
+                        "bloom_piece. PREFIRA ISTO a modelar peça do zero."),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "arquivo": {"type": "string", "description": "nome/id no banco (vazio = 1º da tag da peça)"},
+                "peca": {"type": "string", "enum": ["cabelo", "top", "roupa", "bottom",
+                                                    "shoes", "acessorio"]},
+            },
+            "required": ["peca"],
+        },
+        "fn": "adapt_asset",
+    },
 ]
 
 

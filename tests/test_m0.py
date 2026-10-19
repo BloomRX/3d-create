@@ -244,7 +244,8 @@ class AssetIndexTests(unittest.TestCase):
             by_id = {e["id"]: e for e in entries}
             self.assertEqual(by_id["longo.glb"]["tags"], ["anime", "feminino"])
             self.assertEqual(by_id["longo.glb"]["obs"], "teste")
-            self.assertEqual(by_id["vestido.fbx"]["tags"], [])
+            # v0.4.2: auto-tags pelo nome — "vestido" cai na tag roupa
+            self.assertEqual(by_id["vestido.fbx"]["tags"], ["roupa"])
         finally:
             tmp.cleanup()
 
