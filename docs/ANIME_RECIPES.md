@@ -334,3 +334,42 @@ INSPIRA:
   comercial — segunda opção de corpo-base de qualidade zero-custo.
 Regra mantida: nada pago/pirata (site de crack do CC5 que apareceu na busca:
 IGNORADO por política — CC5/Headshot 2 ficam só como referência de método).
+
+### VÍDEO 58UpDAnbdkM — "New Local AI Turns Any Video Into Mixamo Animation" (Stefan 3D AI, out/2026) + 11 ferramentas da descrição
+**⭐ Motion2MixamoRig** (github.com/MaxLiu22/Motion2MixamoRig, v0.1.8 24/out/2026):
+vídeo → mocap → retarget para personagem rigged MIXAMO, LOCAL; **extensão de
+Blender 4.2+** (pasta blender_extension), Python 3.11+, aceita até FOTO de pose
+(--image), tem AGENTS.md (feito p/ operação por agent). **M5 IMEDIATO**:
+substitui o site do Mixamo; combina com nosso export profile mixamo —
+personagem nosso + vídeo do usuário = animação local, 100% grátis.
+CANDIDATO A EMPACOTAMENTO em plugins/ (checar licença no clone — LICENSE existe).
+**⭐ PartLLM** (github.com/czvvd/PartLLM, SIGGRAPH Asia 2026/TOG): segmentação
+de malha em PARTES guiada por TEXTO ("hair", "top", "shoes") com granularidade
+controlável + prompts de ponto; Qwen3-VL + vLLM, checkpoint no HF. Pesado =
+**Colab subagent**: malha do gen3d/personagem baixado → partes nomeadas →
+make_piece AUTOMÁTICO (rouba o método do AssetHub V5 por peça). M3/M5.
+**⭐ Charakuru** (github.com/nanocle/Charakuru, v1.1.0, patrocinado pela Tripo):
+ilustração → **VRM 1.0** "compartilhando o trabalho com um AI agent" (Node 22).
+ESPELHO DIRETO do Bloom (mesma proposta!) — estudar tutorial.md pelos MÉTODOS
+(tripo Smart Mesh = nuvem/pago; licença source-available com teto de receita);
+nunca depender. Concorrente a acompanhar.
+- **prompt2rig** (github.com/blendi-remade/prompt2rig): digita um movimento →
+  modelo de vídeo rápido + GVHMR + retarget Mixamo AO VIVO. Classe Kimodo
+  (texto→movimento) — M5, empacotável se licença deixar.
+- **DirtyMoCap** (github.com/WangLongZJU/DirtyMoCap): mocap de vídeo "sujo"
+  (in-the-wild) — irmão do Motion2MixamoRig; M5, comparar qualidade.
+- **EdenLive** (github.com/VAST-AI-Research/EdenLive): VAST-AI (makers do Tripo),
+  geração 3D ao vivo — assistir; possível fallback Colab além de Hy3D/Trellis.
+- **image-to-3dlab** (github.com/Bingeljell/image-to-3dlab): pipeline local
+  imagem→3D — candidato a compor o colab gen3d (verificar stack/GPU mínima).
+- **ActionForge** (actionforge.app): animação web — investigar depois (MANUAL).
+- **"Gemini 4 em 3D"**: capacidades 3D nativas do Gemini — se abrir tool de
+  3D na API, nosso Router pode ganhar um subagente gerador; RADAR de API.
+- **Anthropic anim** (x.com/0xWast3/status/2110373001057234970) e **GLOSS**
+  (x.com/chenyueccai/status/2109674634278789463): demos no X (sem acesso pelo
+  sandbox) — identificar por outra fonte antes de mapear.
+- **PAMI** (huggingface.co/papers/2609.38466): paper — ler resumo depois.
+PRIORIDADE EXTRAÍDA: 1º Motion2MixamoRig (M5 local, extensão Blender, quente
+do forno), 2º PartLLM no Colab (automatiza make_piece = roupa/chifre da chibi),
+3º estudar tutorial do Charakuru por métodos. Regra mantida: métodos OK,
+outputs/competidores NUNCA viram dependência.
