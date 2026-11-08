@@ -289,14 +289,26 @@ def colab_job(args: dict, ctx: dict) -> dict:
                  "Alternativa: modo manual (Drive).")
     input_dir = job_dir / "input"
     inputs = [f.name for f in sorted(input_dir.iterdir())] if input_dir.is_dir() else []
-    return _ok(
-        f"Job {job_id} criado (kind={kind}).\n"
-        f"Arquivos de entrada: {', '.join(inputs) if inputs else 'nenhum'}\n"
-        f"O usuário deve abrir colab/test_bridge.ipynb (ou o notebook do kind) com:\n"
-        f"  job_id = {job_id!r}\n  base_url = {where!r}\n"
-        f"Quando terminar, clique em 'Coletar resultados'.\n"
-        f"Pasta local: {job_dir}"
-    )
+    base = (f"Job {job_id} criado (kind={kind}).\n"
+            f"Arquivos de entrada: {', '.join(inputs) if inputs else 'nenhum'}\n"
+            f"  job_id = {job_id!r}\n  base_url = {where!r}\n"
+            f"Pasta local: {job_dir}\n")
+    if kind == "hairdeck":
+        msg = (base +
+               "NOTEBOOK: colab/hairdeck_bloom.ipynb (Google Colab, runtime T4 GPU).\n"
+               "PRÉ-REQUISITO do usuário (uma vez): token HF grátis em "
+               "hf.co/settings/tokens + aceitar as licenças de facebook/sam3 e "
+               "facebook/dinov3-vitl16-pretrain-lvd1689m (o notebook pede o token).\n"
+               "O notebook gera as cartas de cabelo da FOTO (GLB com spring bones + "
+               "cores da referência) e devolve pela ponte. No fim: 'Coletar "
+               "resultados' — eu IMPORTO o GLB, posiciono na cabeça e marco como "
+               "peça 'cabelo' sozinho. Diga ao usuário para usar a MESMA imagem da "
+               "referência no upload do notebook.")
+    else:
+        msg = (base +
+               "O usuário deve abrir colab/test_bridge.ipynb (ou o notebook do kind).\n"
+               "Quando terminar, clique em 'Coletar resultados'.")
+    return _ok(msg)
 
 
 def colab_collect(args: dict, ctx: dict) -> dict:
@@ -313,13 +325,69 @@ def colab_collect(args: dict, ctx: dict) -> dict:
         status = "aguardando o Colab" if not info.get("complete") else "concluído sem resultados"
         return _ok(f"Job {job_id}: {status}.\nParams: {json.dumps(info.get('params', {}), ensure_ascii=False)[:500]}")
     lines = []
+    hair_glbs = []
     for r in res:
         f = server.result_file(job_id, r["name"])
         lines.append(f"- {f} ({r['bytes'] // 1024} KB)")
+        if r["name"].lower().endswith(".glb"):
+            hair_glbs.append(f)
     extra = ""
     if info.get("complete"):
         extra = f"\ncomplete: {json.dumps(info['complete'], ensure_ascii=False)[:500]}"
-    return _ok(f"Job {job_id} tem {len(res)} resultado(s):\n" + "\n".join(lines) + extra)
+    msg = f"Job {job_id} tem {len(res)} resultado(s):\n" + "\n".join(lines) + extra
+    if hair_glbs:
+        msg += "\n" + _importar_cabelo_hairdeck(hair_glbs[0])
+    return _ok(msg)
+
+
+def _importar_cabelo_hairdeck(glb: Path) -> str:
+    """Importa o GLB do HairDeck, posiciona na cabeça do corpo e marca como
+    peça 'cabelo' (spring bones do próprio GLB cuidam da física do cabelo)."""
+    bpy = bl.bpy
+    from mathutils import Vector
+    try:
+        novos = bl.import_asset(Path(glb), "Bloom_HairCards")
+    except Exception as exc:
+        return f"[!] GLB do HairDeck baixado mas o import falhou: {exc}. " \
+               f"Importe manualmente: {glb}"
+    malhas = [o for o in novos if o.type == "MESH"]
+    raizes = [o for o in novos if o.parent is None]
+    corpo = max((o for o in bpy.data.objects if o.type == "MESH"
+                 and not o.name.startswith(("BLOOM_REF", "Outline", "Bloom_Hair"))),
+                key=lambda o: len(o.data.polygons), default=None)
+    detalhe = "importado"
+    if corpo is not None:
+        bpy.context.view_layer.update()
+        czs = [corpo.matrix_world @ Vector(c) for c in corpo.bound_box]
+        zmin = min(c.z for c in czs)
+        h = max(1e-4, max(c.z for c in czs) - zmin)
+        linha_cabeca = zmin + 0.78 * h            # mesma linha do pescoço das proporções
+        cantos = [o.matrix_world @ Vector(c) for o in malhas for c in o.bound_box]
+        amin_z = min(c.z for c in cantos)
+        aalt = max(1e-4, max(c.z for c in cantos) - amin_z)
+        esc = (h * 0.30) / aalt                    # cabelo ≈ 30% da altura (adapt_asset)
+        ccantos = [corpo.matrix_world @ Vector(c) for c in corpo.bound_box]
+        cx = (max(c.x for c in ccantos) + min(c.x for c in ccantos)) / 2
+        for r in raizes:
+            r.scale = (r.scale[0] * esc, r.scale[1] * esc, r.scale[2] * esc)
+            r.location = (cx, r.location.y, r.location.z + (linha_cabeca - amin_z * esc))
+        detalhe = f"posicionado na cabeça (linha z={linha_cabeca:.2f}, escala {esc:.2f}x)"
+    raiz_marca = raizes[0] if raizes else (malhas[0] if malhas else None)
+    if raiz_marca is not None:
+        raiz_marca["bloom_piece"] = "cabelo"
+    rig = _achar_rig(bpy)
+    if rig is not None:
+        for r in raizes:
+            try:
+                r.parent = rig
+            except Exception:
+                pass
+    n_malhas = len(malhas)
+    return (f" HAIRDECK IMPORTADO: GLB com {n_malhas} malha(s) de cartas de cabelo, "
+            f"{detalhe}, marcado bloom_piece='cabelo' "
+            f"(parent ao rig {rig.name}). As cartas vêm com SPRING BONES "
+            "(animação de cabelo pronta — requisito 4). Próximo: render_view, "
+            "apply_anime_shader nas cartas e conferir encaixe com o usuário.")
 
 
 # ---------------------------------------------------------------------------

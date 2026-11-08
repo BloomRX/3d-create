@@ -41,3 +41,5 @@ Referências de estudo (modelos/texturas) ficam em `assets/learn/`.
 > mantém o comportamento da física e traz migração de settings antigos).
 > Alternativas conhecidas, caso um dia precisemos: "Wiggle 2: RTX Edition"
 > (reescreva completa, 4.2+) e "Jiggle Physics" (naelstrof, algoritmo Verlet).
+
+| Motion2MixamoRig v0.1.8 | github.com/MaxLiu22/Motion2MixamoRig (tag v0.1.8, commit f05a718) | Apache-2.0 | extensão 4.2+, id `motion2mixamorig` | **M5**: vídeo/foto de pose → animação Mixamo retargetada, LOCAL (GVHMR). Uso: usuário habilita por milestone meu; grava diagnóstico em jobs/. |
