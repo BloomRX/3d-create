@@ -56,7 +56,7 @@ class TestV040Export(unittest.TestCase):
 class TestV040Prompt(unittest.TestCase):
     def test_pipeline_completo_no_prompt(self):
         core = (PKG / "agent_core.py").read_text(encoding="utf-8")
-        for marca in ("PIPELINE COMPLETO", "export_character (vrm | glb | fbx)",
+        for marca in ("PIPELINE COMPLETO", "export_character (vrm | glb | fbx | blend)",
                       "make_piece para cabelo/roupas", "uv_and_bake (M4)"):
             self.assertIn(marca, core, f"prompt do pipeline faltando: {marca}")
 

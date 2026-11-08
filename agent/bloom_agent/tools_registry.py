@@ -218,12 +218,18 @@ TOOLS = [
     },
     {
         "name": "export_character",
-        "description": ("EXPORTA o personagem pronto: vrm (Project Airi/VRoid), glb "
-                        "(leve, com animação) ou fbx (Mixamo/UE5). Só chame com corpo "
-                        "rigado e aprovado. Grava em jobs/exports e devolve o caminho."),
+        "description": ("EXPORTA o personagem pronto: blend (Lia Forge/Blender, ações "
+                        "preservadas), glb (leve, com animação), fbx (Mixamo/UE5) ou vrm "
+                        "(Project Airi/VRoid). 'destino' opcional = pasta do workspace do "
+                        "Lia Forge. 'peca' opcional = exporta só essa peça (item). Grava "
+                        "manifest .lia.json ao lado."),
         "parameters": {
             "type": "object",
-            "properties": {"formato": {"type": "string", "enum": ["vrm", "glb", "fbx"]}},
+            "properties": {
+                "formato": {"type": "string", "enum": ["vrm", "glb", "fbx", "blend"]},
+                "destino": {"type": "string", "description": "pasta alvo (ex.: workspace do Lia Forge)"},
+                "peca": {"type": "string", "description": "exporta só a peça com esse bloom_piece"},
+            },
             "required": ["formato"],
         },
         "fn": "export_character",
@@ -259,8 +265,15 @@ TOOLS = [
     {
         "name": "make_idle_animation",
         "description": ("Cria idle loop (respiração + balanço, 96 frames @30fps) no rig "
-                        "canônico. Depois export_character formato=glb leva a animação."),
-        "parameters": {"type": "object", "properties": {}, "required": []},
+                        "canônico como ação nomeada Bloom_<nome> (casada por token pelo "
+                        "Lia Forge). Depois export_character formato=blend|glb leva a "
+                        "animação."),
+        "parameters": {
+            "type": "object",
+            "properties": {"nome": {"type": "string",
+                                    "description": "nome da ação (ex.: idle, andar, atacar)"}},
+            "required": [],
+        },
         "fn": "make_idle_animation",
     },
     {

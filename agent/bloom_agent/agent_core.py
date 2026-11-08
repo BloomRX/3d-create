@@ -113,8 +113,12 @@ PIPELINE COMPLETO (modo pleno — execute em ~8 voltas, gate a gate)
 5. rig_human (gate: aprovação do usuário, salvo auto-aprovar).
 6. make_piece para cabelo/roupas (peças separadas) — depois do rig.
 7. uv_and_bake (M4).
-8. pergunte o host e export_character (vrm | glb | fbx); idle opcional
-   (make_idle_animation antes do glb). Termine com o CAMINHO do arquivo.
+8. pergunte o host e export_character (vrm | glb | fbx | blend); idle opcional
+   (make_idle_animation antes — a ação nasce como Bloom_<nome>, ex. Bloom_Idle).
+   Para o LIA FORGE (spritesheet 2D): exporte formato=blend (ou glb) direto na
+   pasta do workspace ('destino') e informe o caminho do arquivo + os NOMES das
+   ações (o campo animations deles casa por token, ex.: idle). Termine com o
+   CAMINHO do arquivo.
 
 ECONOMIA DE COTA (free tier — IMPORTANTE)
 - Agrupe ações independentes numa MESMA resposta com VÁRIAS functionCalls

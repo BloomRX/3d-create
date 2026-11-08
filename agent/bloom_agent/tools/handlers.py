@@ -868,14 +868,21 @@ def export_character(args: dict, ctx: dict) -> dict:
     bpy = bl.bpy
     from math import radians
     fmt = (args.get("formato") or "glb").lower()
-    if fmt not in ("vrm", "glb", "fbx"):
-        return _fail("formato deve ser vrm, glb ou fbx (vrm2 do painel = vrm).")
+    if fmt not in ("vrm", "glb", "fbx", "blend"):
+        return _fail("formato deve ser vrm, glb, fbx ou blend (blend = o mais "
+                     "completo p/ o Lia Forge: abre com open_mainfile, tudo preservado).")
     rig = _achar_rig(bpy)
     if rig is None:
         return _fail("sem rig na cena — rode rig_human antes de exportar.")
     malhas = _corpo_do_rig(bpy, rig)
     if not malhas:
         return _fail("nenhuma malha ligada ao rig — nada a exportar.")
+    peca_f = (args.get("peca") or "").strip().lower()
+    if peca_f:  # exportar SÓ uma peça (ex.: catálogo de roupas p/ item do Lia)
+        malhas = [m for m in malhas if m.get("bloom_piece") == peca_f]
+        if not malhas:
+            return _fail(f"nenhuma malha com bloom_piece='{peca_f}' "
+                         "(use make_piece antes).")
     try:
         bpy.ops.object.select_all(action="DESELECT")
         rig.select_set(True)
@@ -886,7 +893,8 @@ def export_character(args: dict, ctx: dict) -> dict:
         bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
     except Exception as exc:
         return _fail(f"falha ao aplicar escala antes do export: {exc}")
-    pasta = Path(ctx["root"]) / "jobs" / "exports"
+    pasta = Path(args.get("destino")) if args.get("destino") else (
+        Path(ctx["root"]) / "jobs" / "exports")
     pasta.mkdir(parents=True, exist_ok=True)
     destino = pasta / f"personagem_{time.strftime('%Y%m%d-%H%M%S')}.{fmt}"
     bpy.ops.object.select_all(action="DESELECT")
@@ -894,7 +902,9 @@ def export_character(args: dict, ctx: dict) -> dict:
         o.select_set(True)
     bpy.context.view_layer.objects.active = rig
     try:
-        if fmt == "glb":
+        if fmt == "blend":
+            bpy.ops.wm.save_as_mainfile(filepath=str(destino), copy=True)
+        elif fmt == "glb":
             bpy.ops.export_scene.gltf(filepath=str(destino), export_format="GLB",
                                       use_selection=True)
         elif fmt == "fbx":
@@ -919,8 +929,31 @@ def export_character(args: dict, ctx: dict) -> dict:
                 return _ok(f"[!] extensão VRM não disponível — exportei GLB em "
                            f"{destino} (ligue 'VRM' em Preferences > Extensions e "
                            "peça de novo para .vrm nativo).")
-        return _ok(f"EXPORTADO: {destino} ({len(malhas)} malha(s) + rig {rig.name}). "
-                   "Entregue ao host (Project Airi aceita .vrm direto).")
+        acoes = [{"nome": a.name,
+                  "frames": int(round(a.frame_range[1] - a.frame_range[0])) + 1}
+                 for a in bpy.data.actions if a.name]
+        pecas = sorted({m.get("bloom_piece") for m in malhas if m.get("bloom_piece")})
+        manifest = {
+            "schemaVersion": "bloom-lia-1",
+            "gerado_por": f"Bloom Agent {bpy.app.version_string}",
+            "modelo": destino.name,
+            "formato": fmt,
+            "rig": rig.name,
+            "animacoes": acoes,
+            "pecas": pecas,
+            "dica_lia": ("registre o arquivo como caminho de artefato existente; "
+                         "use os NOMES das animacoes no campo animations da task "
+                         "(casa por token, ex.: idle)"),
+        }
+        try:
+            (pasta / (destino.stem + ".lia.json")).write_text(
+                json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        except OSError:
+            pass
+        lista = ", ".join(a["nome"] for a in acoes) or "nenhuma"
+        return _ok(f"EXPORTADO: {destino} ({len(malhas)} malha(s) + rig {rig.name}; "
+                   f"ações: {lista}; peças: {', '.join(pecas) or '-'}). "
+                   "Manifest do Lia Forge: " + destino.stem + ".lia.json")
     except Exception as exc:
         return _fail(f"export falhou: {type(exc).__name__}: {exc}")
 
@@ -1087,6 +1120,7 @@ def make_idle_animation(args: dict, ctx: dict) -> dict:
     rig = _achar_rig(bpy)
     if rig is None:
         return _fail("rig não encontrado.")
+    nome_acao = (args.get("nome") or "Idle").strip() or "Idle"
     sc = bpy.context.scene
     sc.frame_start = 1
     sc.frame_end = 96
@@ -1113,14 +1147,26 @@ def make_idle_animation(args: dict, ctx: dict) -> dict:
                 pb.keyframe_insert(data_path="rotation_euler", index=idx, frame=f)
             criados.append(nome)
         bpy.ops.object.mode_set(mode="OBJECT")
+        act = rig.animation_data.action if rig.animation_data else None
+        if act is not None:
+            act.name = f"Bloom_{nome_acao}"   # Lia Forge casa ações por TOKEN
+            try:
+                act.use_fake_user = True      # sem isso a ação MORRE no save
+            except Exception:
+                pass
+            try:
+                act.use_cyclic = True
+            except Exception:
+                pass
         sc.frame_set(1)
     except Exception as exc:
         return _fail(f"animação falhou: {exc}")
     if not criados:
         return _fail("nenhum osso canônico encontrado para animar.")
-    return _ok(f"idle 96 frames @30fps criado em {len(criados)} osso(s) "
-               f"({', '.join(criados)}); loop 1→96. Use export_character "
-               "formato=glb para levar a animação embutida.")
+    return _ok(f"ação 'Bloom_{nome_acao}' criada (idle 96 frames @30fps, "
+               f"{len(criados)} ossos: {', '.join(criados)}). Exporte com "
+               "export_character formato=glb ou blend p/ o Lia Forge usar "
+               f"animations=[\"{nome_acao.lower()}\"]")
 
 
 def adapt_asset(args: dict, ctx: dict) -> dict:
