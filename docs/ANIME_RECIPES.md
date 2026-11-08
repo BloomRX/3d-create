@@ -373,3 +373,18 @@ PRIORIDADE EXTRAÍDA: 1º Motion2MixamoRig (M5 local, extensão Blender, quente
 do forno), 2º PartLLM no Colab (automatiza make_piece = roupa/chifre da chibi),
 3º estudar tutorial do Charakuru por métodos. Regra mantida: métodos OK,
 outputs/competidores NUNCA viram dependência.
+
+### VÍDEO c2ZsNhlYftM + HairDeck (github.com/hyz317/HairDeck, out/nov/2026) — ⭐ CABELO
+**HairDeck: Animation-Ready Stylized Hair Cards from a Single Image** (arXiv
+2610.40599, release 30/out/2026, weights no HF hyz317/HairDeck): FOTO → cartas
+de cabelo estilizado ANIMATION-READY → **GLB** + **export VRM com textura de
+cor POR CARTA** (modelo de cor prevê 16 cores/cartas a partir do crop da foto
++ matte — a COR do cabelo vem da referência sozinha). LOCAL; NVIDIA CUDA
+(nativo) / Apple MPS (acabou de entrar) / CPU (existe, lento); pasta blender/
+= integração c/ Blender 4.2+ (GLB dispensa Blender). **Encaixe exato no Bloom:
+(1) Colab T4 (CUDA grátis) via colab_job kind=hairdeck — foto da Lia → cartas
+GLB; (2) import GLB no Blender → make_piece cabelo → shader; (3) VRM direto
+pro Project Airi.** Resolve a parte mais difícil da chibi (cabelo) e o requisito
+4 (animação de cabelo: cartas JÁ nascem prontas pra animar). RX 580 = rota
+Colab ou CPU (testar). Patreon "free local hair" do Stefan = esse workflow.
+"Charakuru rigged" (Patreon) = avatar rigged do Charakuru (já dossiê acima).
